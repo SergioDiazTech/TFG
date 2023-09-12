@@ -3,3 +3,4 @@
 /backend/src/Files/keysTwitter.py
 /backend/src/components/Data
 /backend/venv
+.DS_Store
