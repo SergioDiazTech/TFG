@@ -32,7 +32,6 @@ function Dataset() {
         })
         .catch(error => {
           // Maneja cualquier error de la solicitud
-          // Prueba
           console.error('Error:', error);
           //setMessage('Error al cargar el archivo.'); // Guarda el mensaje de error en el estado
           setMessage(API);
