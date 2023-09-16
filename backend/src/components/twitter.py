@@ -58,13 +58,13 @@ def get_tweets(keyword, numeroDeTweets):
     print(keyword)
     print(numeroDeTweets)
 
-    '''
+    
     
     # Crea una instancia del geocodificador de OpenStreetMap
     geolocator = Nominatim(user_agent="my-app")
 
     # Conexión a MongoDB
-    MONGO_URI = 'mongodb://localhost'
+    MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
     db = client['BD_Twitter']
     tweets_collection = db['tweets']
@@ -174,7 +174,7 @@ def get_tweets(keyword, numeroDeTweets):
     # Serializar los tweets a JSON
     #tweets_json = json.dumps(tweets)
 
-    '''
+    
     print("Los tweets han sido guardados en la base de datos.")
 
     print(tweets_json)
