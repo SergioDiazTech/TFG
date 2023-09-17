@@ -8,9 +8,8 @@ import auth
 import json
 import time
 
-# Importar las claves de Twitter desde otro archivo
+# Importamos las claves de Twitter desde el archivo keysTwitter que se encuentra en el directorio Files
 from Files.keysTwitter import consumerKey, consumerSecret, accessToken, accessTokenSecret
-
 
 
 tweets_json = []
@@ -48,7 +47,7 @@ def get_tweets(keyword, numeroDeTweets):
     nltk.download('vader_lexicon')
 
 
-    #Authentication
+    # Autenticacion en la API de twitter
     auth = tweepy.OAuthHandler(consumerKey,consumerSecret)
     auth.set_access_token(accessToken,accessTokenSecret)
     api = tweepy.API(auth)
@@ -59,15 +58,14 @@ def get_tweets(keyword, numeroDeTweets):
     print(numeroDeTweets)
 
     
-    
     # Crea una instancia del geocodificador de OpenStreetMap
     geolocator = Nominatim(user_agent="my-app")
 
     # Conexión a MongoDB
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    db = client['BD_Twitter']
-    tweets_collection = db['tweets']
+    db = client['TFG-DATASETS-TWITTER']
+    twitter_collection = db[keyword]
 
     
     # Realizar la búsqueda de tweets
@@ -149,7 +147,6 @@ def get_tweets(keyword, numeroDeTweets):
             print("Pasando al siguiente intento...")
             time.sleep(60)
 
-    client.drop_database('DB_Twitter')
 
     dir_path = os.path.dirname(os.path.realpath(__file__)) # Directorio del proyecto
 
@@ -163,7 +160,7 @@ def get_tweets(keyword, numeroDeTweets):
 
     # Iterar a través de cada tweet y guardar en la base de datos
     for tweet in tweets_json:
-        tweets_collection.insert_one(tweet)
+        twitter_collection.insert_one(tweet)
     
     # Consultar los tweets de la base de datos y excluir el campo "_id"
     #tweets_cursor = tweets_collection.find({}, {"_id": 0}).limit(numeroDeTweets)
@@ -178,5 +175,3 @@ def get_tweets(keyword, numeroDeTweets):
     print("Los tweets han sido guardados en la base de datos.")
 
     print(tweets_json)
-
-
