@@ -1,6 +1,7 @@
 from pymongo import MongoClient #Biblioteca que nos permite conectarnos a mongoDB
 import json
 import os
+from datetime import datetime
 
 # Obtiene la ruta absoluta del directorio actual donde se encuentra el archivo dataset.py
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -62,6 +63,18 @@ def save_json_to_mongodb(filename):
                     dataset_collection.insert_one(tweet)
                     new_count  += 1
                     print(new_count)
+            
+
+        registro_collection = db["REGISTRO"]
+
+        documento_registro = {
+            'Nombre': filename,
+            'Fecha': datetime.now().strftime('%Y-%m-%d'),
+            'Hora': datetime.now().strftime('%H:%M:%S'),
+            'Documentos': dataset_collection.count_documents({})
+        }
+
+        registro_collection.insert_one(documento_registro)
 
         print(f"Total de documentos: {dataset_collection.count_documents({})}")
         print(f"Nuevos documentos añadidos: {new_count}")
