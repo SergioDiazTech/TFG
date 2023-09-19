@@ -3,30 +3,19 @@ import json
 import os
 from datetime import datetime
 
-# Obtiene la ruta absoluta del directorio actual donde se encuentra el archivo dataset.py
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_FOLDER = os.path.join(CURRENT_DIR, "Data")
+DATA_FOLDER = ('/Users/sergio/Desktop/TFG/backend/')
 
 MONGO_URI = 'mongodb://127.0.0.1'#Direccion donde esta el servidor de MongoDB , 
 #a partir del protocolo mongodb, va a conectarse al localhost (127.0.0.1)
 
 def save_json_to_mongodb(filename):
-    
-    # Verificar si la carpeta "Data" existe, si no, crearla
-    if not os.path.exists(DATA_FOLDER):
-        os.makedirs(DATA_FOLDER)
 
+    DATA_FILEPATH = os.path.join(DATA_FOLDER, filename)
 
-    # Mover el archivo a la carpeta "Data" y reemplazar si ya existe
-    new_filename = os.path.join(DATA_FOLDER, filename)
-    if os.path.exists(new_filename):
-        os.remove(new_filename)
-    os.rename(filename, new_filename)
-
-
-    with open(new_filename, 'r', encoding='utf-8') as file:
+    with open(DATA_FILEPATH, 'r', encoding='utf-8') as file:
         data = json.load(file)
 
+    os.remove(DATA_FILEPATH)
     
     if filename.endswith(".json"): # Comprobamos si el archivo que vamos a guardar en bbdd es un fichero json
         
@@ -76,6 +65,7 @@ def save_json_to_mongodb(filename):
 
         registro_collection.insert_one(documento_registro)
 
+        print(documento_registro)
+
         print(f"Total de documentos: {dataset_collection.count_documents({})}")
         print(f"Nuevos documentos añadidos: {new_count}")
-
