@@ -15,17 +15,20 @@ from Files.keysTwitter import consumerKey, consumerSecret, accessToken, accessTo
 tweets_json = []
 
 def load_tweets():
-    # Generamos y guardamos un archivo JSON con los tweets
-    dir_path = os.path.dirname(os.path.realpath(__file__)) # Directorio del proyecto
 
-    data_dir_path = os.path.join(dir_path, 'Data')
+    # Conexión a MongoDB
+    MONGO_URI = 'mongodb://127.0.0.1'
+    client = MongoClient(MONGO_URI)
+    db = client['TFG-DATASETS']
+    twitter_collection = db["data_01.json"]
 
-    if not os.path.exists(data_dir_path):
-        os.makedirs(data_dir_path)
-    
-    # Leer tweets desde archivo JSON
-    with open(os.path.join(dir_path, 'Data', 'data_01.json'), 'r') as file:
-        tweets_json = json.load(file)
+    tweets = list(twitter_collection.find({}))
+
+    # Convierte los ObjectId en strings, ya que si no lo convertimos _id es de tipo ObjectId que no es serializable en formato JSON y daria error
+    for tweet in tweets:
+        tweet["_id"] = str(tweet["_id"])
+
+    tweets_json = [tweet for tweet in tweets]
     
     return tweets_json
 
@@ -70,7 +73,6 @@ def get_tweets(keyword, numeroDeTweets):
     
     # Realizar la búsqueda de tweets
     tweets_encontrados = 0
-    tweets_json = []
     tweet_ids = []
 
     while tweets_encontrados < numeroDeTweets:
@@ -130,7 +132,7 @@ def get_tweets(keyword, numeroDeTweets):
                         "latitude": latitude
                     }
 
-                    tweets_json.append(tweet_data)
+                    twitter_collection.insert_one(tweet_data)
                     tweet_ids.append(tweet.id)
                     print(tweet.id)
                     tweets_encontrados += 1
@@ -146,31 +148,6 @@ def get_tweets(keyword, numeroDeTweets):
             print("Error: ", e)
             print("Pasando al siguiente intento...")
             time.sleep(60)
-
-
-    dir_path = os.path.dirname(os.path.realpath(__file__)) # Directorio del proyecto
-
-    data_dir_path = os.path.join(dir_path, 'Data')
-
-    if not os.path.exists(data_dir_path):
-        os.makedirs(data_dir_path)
-
-    with open(os.path.join(dir_path, 'Data', 'data_01.json'), 'w') as file:
-        json.dump(tweets_json, file)
-
-    # Iterar a través de cada tweet y guardar en la base de datos
-    for tweet in tweets_json:
-        twitter_collection.insert_one(tweet)
-    
-    # Consultar los tweets de la base de datos y excluir el campo "_id"
-    #tweets_cursor = tweets_collection.find({}, {"_id": 0}).limit(numeroDeTweets)
-
-    # Convertir los tweets a una lista de diccionarios
-    #tweets = [tweet for tweet in tweets_cursor]
-
-    # Serializar los tweets a JSON
-    #tweets_json = json.dumps(tweets)
-
     
     print("Los tweets han sido guardados en la base de datos.")
 
