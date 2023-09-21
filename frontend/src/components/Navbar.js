@@ -32,7 +32,7 @@ const Navbar = () => {
                         <Link className="nav-link" to="/tweets">
                             Datos
                         </Link>
-                        <Link className="nav-link" to="/heatmap">
+                        <Link className="nav-link" to="/pointmap">
                             Heatmap
                         </Link>
                         <Link className="nav-link" to="/about">

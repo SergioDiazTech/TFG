@@ -4,11 +4,11 @@ import 'leaflet/dist/leaflet.css';
 
 const API = process.env.REACT_APP_API;
 
-function Heatmap() {
+function Pointmap() {
   const [heatmapData, setHeatmapData] = useState([]);
 
   useEffect(() => {
-    fetch(`${API}/heatmap`)
+    fetch(`${API}/pointmap`)
       .then(response => response.json())
       .then(data => {
         if (data.longitude && data.latitude && data.compound) {
@@ -80,4 +80,4 @@ function getFillColor(value) {
   return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
 }
 
-export default Heatmap;
+export default Pointmap;

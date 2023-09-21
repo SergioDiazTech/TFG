@@ -30,7 +30,7 @@ def search_tweets_route():
     get_tweets(keyword, numeroDeTweets)
     return jsonify({'message': 'Tweets cargados correctamente'})
  
-@app.route('/heatmap', methods=['GET'])
+@app.route('/pointmap', methods=['GET'])
 def display_heatmap():
     data = draw_map()
     response_data = {
