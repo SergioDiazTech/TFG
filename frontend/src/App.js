@@ -5,6 +5,7 @@ import About from "./components/About"
 import Tweets from "./components/Tweets";
 import Navbar from "./components/Navbar"
 import Pointmap from "./components/Pointmap"
+import Heatmap from "./components/Heatmap"
 import TwitterAPI from "./components/TwitterAPI"
 import Dataset from "./components/Dataset"
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/dataset" element={<Dataset/>}/>
           <Route path="/tweets" element={<Tweets/>}/>
           <Route path="/pointmap" element={<Pointmap/>}/>
+          <Route path="/heatmap" element={<Heatmap/>}/>
           <Route path="/about" element={<About/>}/>
         </Routes>
       </div>
