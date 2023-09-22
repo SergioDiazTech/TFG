@@ -33,6 +33,9 @@ const Navbar = () => {
                             Datos
                         </Link>
                         <Link className="nav-link" to="/pointmap">
+                            Pointmap
+                        </Link>
+                        <Link className="nav-link" to="/heatmap">
                             Heatmap
                         </Link>
                         <Link className="nav-link" to="/about">
