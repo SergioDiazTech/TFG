@@ -25,7 +25,7 @@ def load_data():
 
 
 
-def draw_map():
+def draw_pointmap():
     map_data = load_data()
 
     lon = map_data['longitude'].tolist()  # Convierte a lista
