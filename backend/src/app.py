@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo, ObjectId
 from flask_cors import CORS, cross_origin
 from components.twitter import get_tweets, load_tweets
-from components.pointmap import draw_map
-from components.heatmap import draw_map
+from components.pointmap import draw_pointmap
+from components.heatmap import draw_heatmap
 from components.dataset import save_json_to_mongodb
 
 
@@ -33,7 +33,7 @@ def search_tweets_route():
  
 @app.route('/pointmap', methods=['GET'])
 def display_pointmap():
-    data = draw_map()
+    data = draw_pointmap()
     response_data = {
         'longitude': data['longitude'],
         'latitude': data['latitude'],
@@ -43,13 +43,14 @@ def display_pointmap():
 
 @app.route('/heatmap', methods=['GET'])
 def display_heatmap():
-    data = draw_map()
+    data = draw_heatmap()
     response_data = {
         'longitude': data['longitude'],
         'latitude': data['latitude'],
         'compound': data['Compound']
     }
     return jsonify(response_data)
+
 
 @app.route('/dataset', methods=['POST'])
 def upload_file():
