@@ -2,7 +2,10 @@ import os
 import json
 from pymongo import MongoClient
 import pandas as pd
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, send_file, Response
+import folium
+from folium.plugins import HeatMap
+import base64
 
 
 
@@ -25,19 +28,17 @@ def load_data():
     return map_data
 
 
-
-def draw_map():
+def draw_heatmap():
     map_data = load_data()
 
-    lon = map_data['longitude'].tolist()  # Convierte a lista
-    lat = map_data['latitude'].tolist()  # Convierte a lista
-    comp = map_data['Compound'].tolist()  # Convierte a lista
+    lon = map_data['longitude'].tolist()
+    lat = map_data['latitude'].tolist()
+    comp = map_data['Compound'].tolist()
 
     data = {
         'longitude': lon,
         'latitude': lat,
-        'Compound': comp  # Utiliza 'Compound' en lugar de 'compound'
+        'Compound': comp
     }
-    #print(data)
 
     return data
