@@ -19,7 +19,7 @@ function Pointmap() {
           }));
           setHeatmapData(heatmapPoints);
         }
-        console.log(data.compound);
+        console.log(data);
       })
       .catch(error => {
         console.error('Error fetching heatmap data:', error);
@@ -41,7 +41,7 @@ function Pointmap() {
 
   return (
     <div className="heatmap-wrapper">
-      <div className="heatmap-title">Mapa de calor en base a los tweets cargados</div>
+      <div className="heatmap-title">Pointmap en base a los tweets cargados</div>
       <div className="heatmap-container">
         <MapContainer center={calculateCenter()} zoom={5} className="heatmap-map">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
