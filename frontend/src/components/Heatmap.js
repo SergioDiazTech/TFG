@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import React, { useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat/dist/leaflet-heat.js';
@@ -8,7 +7,6 @@ const API = process.env.REACT_APP_API;
 let mapInstance = null; // Variable para almacenar la instancia del mapa
 
 function Heatmap() {
-  const [heatmapData, setHeatmapData] = useState([]);
 
   useEffect(() => {
     // Limpiar la instancia del mapa anterior si existe
@@ -27,7 +25,7 @@ function Heatmap() {
             value: data.compound[index],
           }));
 
-          // Crear una nueva instancia del mapa
+          // Creamos una nueva instancia del mapa
           mapInstance = L.map('heatmap-map').setView([0, 0], 5);
 
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -41,14 +39,14 @@ function Heatmap() {
             0.8: 'yellow',
             0.9: 'orange',
             1.0: 'red',
-          }; // Ajusta los colores y los valores aquí
+          };
 
           L.heatLayer(heatMapData, {
-            radius: 15, // Ajusta el radio según tus necesidades
-            gradient,   // Aplica el gradiente de colores
-            blur: 10,   // Ajusta el desenfoque
-            maxZoom: 25, // Ajusta el zoom máximo
-            minOpacity: 0.4, // Ajusta la opacidad mínima
+            radius: 15,
+            gradient,
+            blur: 10,
+            maxZoom: 25,
+            minOpacity: 0.4,
           }).addTo(mapInstance);
 
           mapInstance.fitBounds(L.latLngBounds(heatMapData.map(point => [point.lat, point.lng])));
@@ -61,7 +59,12 @@ function Heatmap() {
       });
   }, []);
 
-  return <div id="heatmap-map" className="heatmap-map"></div>;
+  return (
+    <div className="heatmap-wrapper">
+      <div className='heatmap-title'>Heatmap en base a los tweets cargados</div>
+      <div id="heatmap-map" className="heatmap-map"></div>
+    </div>
+  );
 }
 
 export default Heatmap;
