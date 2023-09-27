@@ -12,12 +12,12 @@ function Pointmap() {
       .then(response => response.json())
       .then(data => {
         if (data.longitude && data.latitude && data.compound) {
-          const heatmapPoints = data.longitude.map((lng, index) => ({
+          const pointmapPoints = data.longitude.map((lng, index) => ({
             lng,
             lat: data.latitude[index],
             value: data.compound[index]
           }));
-          setHeatmapData(heatmapPoints);
+          setHeatmapData(pointmapPoints);
         }
         console.log(data);
       })
@@ -26,7 +26,7 @@ function Pointmap() {
       });
   }, []);
 
-  const calculateCenter = () => {
+  const calcularCentro = () => {
     if (heatmapData.length === 0) {
       return [0, 0]; // Valor predeterminado en caso de que no haya datos
     }
@@ -43,7 +43,7 @@ function Pointmap() {
     <div className="heatmap-wrapper">
       <div className="heatmap-title">Pointmap en base a los tweets cargados</div>
       <div className="heatmap-container">
-        <MapContainer center={calculateCenter()} zoom={5} className="heatmap-map">
+        <MapContainer center={calcularCentro()} zoom={5} className="heatmap-map">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <LayerGroup>
             {heatmapData.map((point, index) => {
