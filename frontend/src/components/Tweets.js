@@ -47,21 +47,23 @@ function Tweets() {
 
   return (
     <div>
-      <h1 className="title">INFORMACIÓN SOBRE EL CONJUNTO DE DATOS: XXXXX</h1>
+      <h1 className="title">INFORMACIÓN SOBRE EL CONJUNTO DE DATOS: COLOMBIA</h1>
       <table className="tweet-table">
         <thead>
           <tr>
             <th>#</th>
-            <th>Username</th>
-            <th>Description</th>
+            <th>Sentiment positive</th>
+            <th>Sentiment negative</th>
+            <th>Text</th>
           </tr>
         </thead>
         <tbody>
           {tweets.map((tweet, index) => (
             <tr key={tweet.id}>
               <td>{index + 1}</td>
-              <td>{tweet.username}</td>
-              <td>{tweet.description}</td>
+              <td>{tweet.sentiment.positive}</td>
+              <td>{tweet.sentiment.negative}</td>
+              <td>{tweet.text}</td>
             </tr>
           ))}
         </tbody>
