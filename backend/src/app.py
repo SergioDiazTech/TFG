@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from flask_pymongo import PyMongo, ObjectId
-from flask_cors import CORS, cross_origin
+from flask_pymongo import PyMongo
+from flask_cors import CORS
 from components.twitter import get_tweets, load_tweets
 from components.pointmap import draw_pointmap
 from components.heatmap import draw_heatmap
@@ -16,12 +16,12 @@ app.config['MONGO_URI'] = 'mongodb://127.0.0.1/twitterdb'
 mongo = PyMongo(app)
 db = mongo.db.tweets
 
-#@cross_origin
 @app.route('/tweets', methods=['GET'])
 def get_tweets_route():
-    tweets = load_tweets()
-    print(tweets)
-    return jsonify(tweets)
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 10))
+    result = load_tweets(page, per_page)
+    return jsonify(result)
 
 @app.route('/twitterapi', methods=['POST'])
 def search_tweets_route():
