@@ -19,8 +19,8 @@ def load_tweets():
     # Conexión a MongoDB
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    db = client['TFG-DATASETS']
-    twitter_collection = db["data_01.json"]
+    db = client['COLOMBIA']
+    twitter_collection = db["tweets_colombia21.json"]
 
     tweets = list(twitter_collection.find({}))
 
@@ -67,7 +67,7 @@ def get_tweets(keyword, numeroDeTweets):
     # Conexión a MongoDB
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    db = client['TFG-DATASETS-TWITTER']
+    db = client['TWITTER']
     twitter_collection = db[keyword]
 
     
