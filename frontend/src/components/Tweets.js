@@ -5,14 +5,16 @@ const API = process.env.REACT_APP_API;
 const TWEETS_PER_PAGE = 10;
 
 function Tweets() {
+  // Estado para almacenar los tweets, la página actual y si se están cargando más tweets
   const [tweets, setTweets] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Función para obtener los tweets
-  const getTweets = async () => {
+
+  // Función para obtener tweets de la API
+  const getTweets = async (page, per_page) => {
     try {
-      const response = await fetch(`${API}/tweets`);
+      const response = await fetch(`${API}/tweets?page=${page}&per_page=${per_page}`);
       const data = await response.json();
       setTweets(data);
       setIsLoading(false);
@@ -22,17 +24,16 @@ function Tweets() {
     }
   };
 
-  // Función para cargar más tweets
   const loadMoreTweets = async () => {
     setIsLoading(true);
     setPage(page + 1);
-    const startIndex = (page + 1) * TWEETS_PER_PAGE;
-    const endIndex = startIndex + TWEETS_PER_PAGE;
 
     try {
-      const response = await fetch(`${API}/tweets`);
+      const response = await fetch(`${API}/tweets?page=${page}&per_page=${TWEETS_PER_PAGE}`);
       const data = await response.json();
-      setTweets((prevTweets) => [...prevTweets, ...data].slice(0, endIndex));
+      
+      // Agregamos los nuevos tweets a los ya existentes y limitamos el número
+      setTweets((prevTweets) => [...prevTweets, ...data]);
       setIsLoading(false);
     } catch (error) {
       console.error('Error al cargar más tweets:', error);
@@ -40,37 +41,37 @@ function Tweets() {
   };
 
   useEffect(() => {
-    // Cargar los tweets al cargar el componente
-    getTweets();
+    getTweets(page, TWEETS_PER_PAGE);
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div>
-      <h1 className="title">Tweets cargados actualmente</h1>
+      <h1 className="title">INFORMACIÓN SOBRE EL CONJUNTO DE DATOS: XXXXX</h1>
       <table className="tweet-table">
         <thead>
           <tr>
             <th>#</th>
-            <th>Sentiment Rate</th>
-            <th>Location</th>
+            <th>Username</th>
+            <th>Description</th>
           </tr>
         </thead>
         <tbody>
-          {tweets.slice(0, page * TWEETS_PER_PAGE).map((tweet, index) => (
+          {tweets.map((tweet, index) => (
             <tr key={tweet.id}>
               <td>{index + 1}</td>
-              <td>{tweet.Compound}</td>
-              <td>{tweet.location}</td>
+              <td>{tweet.username}</td>
+              <td>{tweet.description}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      {tweets.length > page * TWEETS_PER_PAGE && (
+      {tweets.length >= page * TWEETS_PER_PAGE && (
         <div className="button-container">
-            <button onClick={loadMoreTweets} disabled={isLoading}>
-                {isLoading ? 'Cargando...' : 'Cargar más'}
-            </button>
-      </div>
+          <button onClick={loadMoreTweets} disabled={isLoading}>
+            {isLoading ? 'Cargando...' : 'Cargar más'}
+          </button>
+        </div>
       )}
     </div>
   );

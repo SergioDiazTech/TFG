@@ -14,23 +14,23 @@ from Files.keysTwitter import consumerKey, consumerSecret, accessToken, accessTo
 
 tweets_json = []
 
-def load_tweets():
-
+def load_tweets(page, per_page):
     # Conexión a MongoDB
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    db = client['COLOMBIA']
-    twitter_collection = db["tweets_colombia21.json"]
+    twitter_collection = client['COLOMBIA']['users_colombia21.json']
 
-    tweets = list(twitter_collection.find({}))
+    # Campos que queremos obtener del dataset
+    projection = {
+        "description": True,
+        "username": True
+    }
 
-    # Convierte los ObjectId en strings, ya que si no lo convertimos _id es de tipo ObjectId que no es serializable en formato JSON y daria error
-    for tweet in tweets:
-        tweet["_id"] = str(tweet["_id"])
+    skip = (page - 1) * per_page
+    tweets = list(twitter_collection.find({}, projection).skip(skip).limit(per_page))
 
-    tweets_json = [tweet for tweet in tweets]
-    
-    return tweets_json
+    return tweets
+
 
 
 def wait_until_reset(api):
