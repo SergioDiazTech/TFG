@@ -26,7 +26,7 @@ def save_json_to_mongodb(filename):
         
         if filename == "tweets_colombia21.json" or filename == "users_colombia21.json":
             
-            db = client['TFG-DATASETS-COLOMBIA']
+            db = client['COLOMBIA']
             collection_name = filename
             dataset_collection = db[collection_name]
 
@@ -43,7 +43,7 @@ def save_json_to_mongodb(filename):
                     print(new_count)
         else:
 
-            db = client['TFG-DATASETS']
+            db = client['EXTERNAL-SOURCES']
             collection_name = filename
             dataset_collection = db[collection_name]
 
