@@ -18,18 +18,13 @@ def load_tweets(page, per_page):
     # Conexión a MongoDB
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    twitter_collection = client['COLOMBIA']['users_colombia21.json']
-
-    # Campos que queremos obtener del dataset
-    projection = {
-        "description": True,
-        "username": True
-    }
+    twitter_collection = client['COLOMBIA']['tweets_colombia21.json']
 
     skip = (page - 1) * per_page
-    tweets = list(twitter_collection.find({}, projection).skip(skip).limit(per_page))
+    tweets = list(twitter_collection.find({}).skip(skip).limit(per_page))
 
     return tweets
+
 
 
 
