@@ -38,7 +38,8 @@ function Tweets() {
 
   useEffect(() => {
     getTweets(page, TWEETS_PER_PAGE);
-  }, [page]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div>
