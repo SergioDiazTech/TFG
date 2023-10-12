@@ -5,13 +5,10 @@ const API = process.env.REACT_APP_API;
 const TWEETS_PER_PAGE = 10;
 
 function Tweets() {
-  // Estado para almacenar los tweets, la página actual y si se están cargando más tweets
   const [tweets, setTweets] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-
-  // Función para obtener tweets de la API
   const getTweets = async (page, per_page) => {
     try {
       const response = await fetch(`${API}/tweets?page=${page}&per_page=${per_page}`);
@@ -31,8 +28,7 @@ function Tweets() {
     try {
       const response = await fetch(`${API}/tweets?page=${page}&per_page=${TWEETS_PER_PAGE}`);
       const data = await response.json();
-      
-      // Agregamos los nuevos tweets a los ya existentes y limitamos el número
+
       setTweets((prevTweets) => [...prevTweets, ...data]);
       setIsLoading(false);
     } catch (error) {
@@ -42,8 +38,7 @@ function Tweets() {
 
   useEffect(() => {
     getTweets(page, TWEETS_PER_PAGE);
-    // eslint-disable-next-line
-  }, []);
+  }, [page]);
 
   return (
     <div>
@@ -52,8 +47,7 @@ function Tweets() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Sentiment positive</th>
-            <th>Sentiment negative</th>
+            <th>Sentiment</th>
             <th>Text</th>
           </tr>
         </thead>
@@ -61,8 +55,14 @@ function Tweets() {
           {tweets.map((tweet, index) => (
             <tr key={tweet.id}>
               <td>{index + 1}</td>
-              <td>{tweet.sentiment.positive}</td>
-              <td>{tweet.sentiment.negative}</td>
+              <td>
+                {tweet.sentiment >= 0 ? (
+                  <span className="green-circle"></span>
+                ) : (
+                  <span className="red-circle"></span>
+                )}
+                <span>{tweet.sentiment}</span>
+              </td>
               <td>{tweet.text}</td>
             </tr>
           ))}

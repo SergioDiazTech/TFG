@@ -386,3 +386,23 @@ h1 {
   border-radius: 5px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
+
+/* Estilo del círculo verde (positivo) */
+.green-circle {
+  width: 10px;
+  height: 10px;
+  background-color: rgb(41, 206, 41);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 15%;
+}
+
+/* Estilo del círculo rojo (negativo) */
+.red-circle {
+  width: 10px;
+  height: 10px;
+  background-color: rgb(213, 53, 53);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 7%;
+}
