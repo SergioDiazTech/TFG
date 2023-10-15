@@ -36,7 +36,7 @@
 .title {
   text-align: center;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   color: #333;
   margin-bottom: 20px;
@@ -406,4 +406,32 @@ h1 {
   border-radius: 50%;
   display: inline-block;
   margin-right: 7%;
+}
+
+
+.selector-users {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.selector-users:focus {
+  border-color: #007BFF;
+}
+
+
+.selector-users option {
+  background-color: #f4f4f4;
+  color: #333;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
