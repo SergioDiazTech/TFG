@@ -43,7 +43,7 @@ function Tweets() {
 
   return (
     <div>
-      <h1 className="title">INFORMACIÓN SOBRE EL CONJUNTO DE DATOS: COLOMBIA</h1>
+      <h1 className="title">SENTIMENT RATE EN BASE AL TEXTO DE LOS TWEETS DEL CONJUNTO DE DATOS: COLOMBIA</h1>
       <table className="tweet-table">
         <thead>
           <tr>
