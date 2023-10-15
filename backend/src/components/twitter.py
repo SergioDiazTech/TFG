@@ -3,9 +3,6 @@ from pymongo import MongoClient
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderUnavailable
-import os
-import auth
-import json
 import time
 
 # Importamos las claves de Twitter desde el archivo keysTwitter que se encuentra en el directorio Files
