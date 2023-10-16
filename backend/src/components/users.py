@@ -13,16 +13,12 @@ def load_users(option, page, per_page):
     if option == 'all':
         users = list(users_collection.find({}).skip(skip).limit(per_page))
     elif option == 'mostRelevant':
-    
         pass
     elif option == 'mostFollowers':
-
-        pass
+        users = list(users_collection.find({}).sort("public_metrics.followers_count", -1).skip(skip).limit(per_page))
     elif option == 'positiveReputation':
-        
         pass
     elif option == 'negativeReputation':
-        
         pass
 
     return users

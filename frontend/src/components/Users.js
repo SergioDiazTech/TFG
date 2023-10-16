@@ -21,7 +21,11 @@ function Users() {
 
   const getUsers = async (page, per_page) => {
     try {
-      const response = await fetch(`${API}/users?option=${selectedOption}&page=${page}&per_page=${per_page}`);
+      let option = selectedOption;
+      if (selectedOption === 'mostFollowers') {
+        option = 'mostFollowers';
+      }
+      const response = await fetch(`${API}/users?option=${option}&page=${page}&per_page=${per_page}`);
       const data = await response.json();
 
       const newUsers = data.filter((user) => !loadedUsers.current.includes(user.id));
@@ -57,11 +61,30 @@ function Users() {
         <option value="positiveReputation">Usuarios con mayor repercusión positiva</option>
         <option value="negativeReputation">Usuarios con mayor repercusión negativa</option>
       </select>
-      <ul className="user-list">
-        {users.slice(0, USERS_PER_PAGE * page).map((user, index) => (
-          <li key={user.id}>{user.username}</li>
-        ))}
-      </ul>
+      {selectedOption === "mostFollowers" ? (
+        <table className="user-table">
+          <thead>
+            <tr>
+              <th>Nombre de Usuario</th>
+              <th>Número de Seguidores</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.slice(0, USERS_PER_PAGE * page).map((user, index) => (
+              <tr key={user.id}>
+                <td>{user.username}</td>
+                <td>{user.public_metrics.followers_count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <ul className="user-list">
+          {users.slice(0, USERS_PER_PAGE * page).map((user, index) => (
+            <li key={user.id}>{user.username}</li>
+          ))}
+        </ul>
+      )}
       {users.length > USERS_PER_PAGE * (page - 1) && (
         <div className="button-container">
           <button onClick={loadMoreUsers} disabled={isLoading}>
