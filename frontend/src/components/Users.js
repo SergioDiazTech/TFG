@@ -9,14 +9,14 @@ function Users() {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  const loadedUsers = useRef([]);
+  const loadedUsernames = useRef(new Set());
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     setUsers([]);
     setPage(1);
     setIsLoading(true);
-    loadedUsers.current = [];
+    loadedUsernames.current.clear();
   };
 
   const getUsers = async (page, per_page) => {
@@ -28,8 +28,9 @@ function Users() {
       const response = await fetch(`${API}/users?option=${option}&page=${page}&per_page=${per_page}`);
       const data = await response.json();
 
-      const newUsers = data.filter((user) => !loadedUsers.current.includes(user.id));
-      loadedUsers.current = [...loadedUsers.current, ...newUsers];
+      const currentUsersSet = new Set(users.map(user => user.username));
+
+      const newUsers = data.filter((user) => !currentUsersSet.has(user.username));
 
       setUsers((prevUsers) => [...prevUsers, ...newUsers]);
       setIsLoading(false);
