@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 
 const API = process.env.REACT_APP_API;
-const TWEETS_PER_PAGE = 10;
+const TWEETS_PER_PAGE = 5;
 
 function Tweets() {
   const [tweets, setTweets] = useState([]);
