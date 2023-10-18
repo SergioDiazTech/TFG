@@ -1,19 +1,12 @@
-import os
-import json
 from pymongo import MongoClient
 import pandas as pd
-from flask import Flask, jsonify, render_template, send_file, Response
-import folium
-from folium.plugins import HeatMap
-import base64
-
 
 
 def load_data():
     
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    db = client['TFG-DATASETS']
+    db = client['EXTERNAL-SOURCES']
     twitter_collection = db["data_01.json"]
 
     data = list(twitter_collection.find({}))
