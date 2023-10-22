@@ -51,7 +51,7 @@ def upload_file():
 @app.route('/tweets', methods=['GET'])
 def get_tweets_route():
     page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 10))
+    per_page = int(request.args.get('per_page', 5))
     result = load_tweets(page, per_page)
     return jsonify(result)
 
@@ -60,7 +60,7 @@ def get_tweets_route():
 def get_users_route():
     option = request.args.get('option', 'all')
     page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 10))
+    per_page = int(request.args.get('per_page', 5))
     result = load_users(option, page, per_page)
     return jsonify(result)
 
