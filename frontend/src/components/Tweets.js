@@ -21,20 +21,29 @@ function Tweets() {
     }
   };
 
+  const [totalTweetsLoaded, setTotalTweetsLoaded] = useState(0);
+
   const loadMoreTweets = async () => {
-    setIsLoading(true);
-    setPage(page + 1);
+  setIsLoading(true);
+  const newPage = page + 1;
 
-    try {
-      const response = await fetch(`${API}/tweets?page=${page}&per_page=${TWEETS_PER_PAGE}`);
-      const data = await response.json();
+  try {
+    const response = await fetch(`${API}/tweets?page=${newPage}&per_page=${TWEETS_PER_PAGE}`);
+    const data = await response.json();
 
-      setTweets((prevTweets) => [...prevTweets, ...data]);
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error al cargar más tweets:', error);
-    }
-  };
+    // Calcula el número total de tweets que has cargado
+    const newTotalTweetsLoaded = totalTweetsLoaded + data.length;
+
+    setTweets((prevTweets) => [...prevTweets, ...data]);
+    setPage(newPage);
+    setTotalTweetsLoaded(newTotalTweetsLoaded);
+    setIsLoading(false);
+  } catch (error) {
+    console.error('Error al cargar más tweets:', error);
+  }
+};
+
+  
 
   useEffect(() => {
     getTweets(page, TWEETS_PER_PAGE);

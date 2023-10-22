@@ -18,7 +18,8 @@ def load_tweets(page, per_page):
     twitter_collection = client['COLOMBIA']['tweets_colombia21.json']
 
     skip = (page - 1) * per_page
-    tweets = list(twitter_collection.find({}).skip(skip).limit(per_page))
+    tweets = list(twitter_collection.find({"referenced_tweets": {"$exists": False}}).skip(skip).limit(per_page))
+
 
     # Combina los campos de sentimiento en un solo campo llamado 'sentiment'
     for tweet in tweets:

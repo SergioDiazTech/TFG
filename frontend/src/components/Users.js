@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const API = process.env.REACT_APP_API;
-const USERS_PER_PAGE = 10;
+const USERS_PER_PAGE = 5;
 
 function Users() {
   const [selectedOption, setSelectedOption] = useState("");
