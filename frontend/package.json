@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:edge": "open -a 'Microsoft Edge' http://localhost:3000",
+    "start:edge": "open -a 'Microsoft Edge' http://127.0.0.1:3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
