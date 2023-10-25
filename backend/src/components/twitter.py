@@ -15,7 +15,7 @@ def load_tweets(page, per_page):
     # Conexión a MongoDB
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    twitter_collection = client['COLOMBIA']['tweets_colombia21.json']
+    twitter_collection = client['DB_External_Data_Ingestion']['tweets_colombia21.json']
 
     skip = (page - 1) * per_page
     tweets = list(twitter_collection.find({"referenced_tweets": {"$exists": False}}).skip(skip).limit(per_page))
@@ -69,7 +69,7 @@ def get_tweets(keyword, numeroDeTweets):
     # Conexión a MongoDB
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    db = client['TWITTER']
+    db = client['DB_TwitterAPI_Data_Ingestion']
     twitter_collection = db[keyword]
 
     

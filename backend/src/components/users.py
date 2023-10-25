@@ -6,7 +6,7 @@ def load_users(option, page, per_page):
     # Conexión a MongoDB
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    users_collection = client['COLOMBIA']['users_colombia21.json']
+    users_collection = client['DB_External_Data_Ingestion']['users_colombia21.json']
 
     skip = (page - 1) * per_page
 

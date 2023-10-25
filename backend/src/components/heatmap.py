@@ -6,8 +6,8 @@ def load_data():
     
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
-    db = client['EXTERNAL-SOURCES']
-    twitter_collection = db["data_01.json"]
+    db = client['DB_External_Data_Ingestion']
+    twitter_collection = db["donald_trump.json"]
 
     data = list(twitter_collection.find({}))
 

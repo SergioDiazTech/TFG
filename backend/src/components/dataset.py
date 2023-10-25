@@ -26,7 +26,7 @@ def save_json_to_mongodb(filename):
         
         if filename == "tweets_colombia21.json" or filename == "users_colombia21.json":
             
-            db = client['COLOMBIA']
+            db = client['DB_External_Data_Ingestion']
             collection_name = filename
             dataset_collection = db[collection_name]
 
@@ -43,7 +43,7 @@ def save_json_to_mongodb(filename):
                     print(new_count)
         else:
 
-            db = client['EXTERNAL-SOURCES']
+            db = client['DB_External_Data_Ingestion']
             collection_name = filename
             dataset_collection = db[collection_name]
 
@@ -54,18 +54,19 @@ def save_json_to_mongodb(filename):
                     print(new_count)
             
 
-        registro_collection = db["REGISTRO"]
+
+        registro_collection = db["Ingestion_Registry"]
 
         documento_registro = {
-            'Nombre': filename,
-            'Fecha': datetime.now().strftime('%Y-%m-%d'),
-            'Hora': datetime.now().strftime('%H:%M:%S'),
-            'Documentos': dataset_collection.count_documents({})
+            'Name': filename,
+            'Date': datetime.now().strftime('%Y-%m-%d'),
+            'Time': datetime.now().strftime('%H:%M:%S'),
+            'Documents': dataset_collection.count_documents({}),
         }
 
         registro_collection.insert_one(documento_registro)
 
-        print(documento_registro)
 
-        print(f"Total de documentos: {dataset_collection.count_documents({})}")
-        print(f"Nuevos documentos añadidos: {new_count}")
+        print(documento_registro)
+        print(f"Total documents: {dataset_collection.count_documents({})}")
+        print(f"New documents added: {new_count}")
