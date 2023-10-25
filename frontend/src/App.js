@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
 import Navbar from "./components/Navbar"
-import TwitterAPI from "./components/TwitterAPI"
+import TwitterAPI from "./components/Twitter_API"
 import Dataset from "./components/Dataset"
-import Tweets from "./components/Tweets";
+import Data from "./components/Data";
 import Users from "./components/Users";
 import Heatmap from "./components/Heatmap"
 import Pointmap from "./components/Pointmap"
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/twitterapi" element={<TwitterAPI/>}/>
           <Route path="/dataset" element={<Dataset/>}/>
-          <Route path="/tweets" element={<Tweets/>}/>
+          <Route path="/tweets" element={<Data/>}/>
           <Route path="/users" element={<Users/>}/>
           <Route path="/heatmap" element={<Heatmap/>}/>
           <Route path="/pointmap" element={<Pointmap/>}/>
