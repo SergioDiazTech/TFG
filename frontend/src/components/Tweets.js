@@ -52,7 +52,7 @@ function Tweets() {
 
   return (
     <div>
-      <h1 className="title">SENTIMENT RATE EN BASE AL TEXTO DE LOS TWEETS DEL CONJUNTO DE DATOS: COLOMBIA</h1>
+      <h1 className="title">Sentiment Rate for Text in Dataset: COLOMBIA</h1>
       <table className="tweet-table">
         <thead>
           <tr>
@@ -81,7 +81,7 @@ function Tweets() {
       {tweets.length >= page * TWEETS_PER_PAGE && (
         <div className="button-container">
           <button onClick={loadMoreTweets} disabled={isLoading}>
-            {isLoading ? 'Cargando...' : 'Cargar más'}
+            {isLoading ? 'Loading...' : 'Load more'}
           </button>
         </div>
       )}

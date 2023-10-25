@@ -41,7 +41,7 @@ function Pointmap() {
 
   return (
     <div className="heatmap-wrapper">
-      <div className="heatmap-title">Pointmap en base a los tweets cargados</div>
+      <div className="heatmap-title">Pointmap based on tweets from the dataset: COLOMBIA</div>
       <div className="heatmap-container">
         <MapContainer center={calcularCentro()} zoom={5} className="heatmap-map">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

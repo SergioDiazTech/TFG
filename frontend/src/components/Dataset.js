@@ -67,19 +67,19 @@ function Dataset() {
         onDrop={handleDrop}
       >
         {selectedFile ? (
-          <p className="file-info">Archivo seleccionado: {selectedFile.name}</p>
+          <p className="file-info">Selected file: {selectedFile.name}</p>
         ) : (
           <div className="upload-area">
-            <p className="upload-text">Arrastra y suelta el archivo aquí o</p>
+            <p className="upload-text">Drag and drop the file here</p>
             <label htmlFor="file-upload" className="custom-file-upload">
-              Selecciona un archivo
+              Select a file
             </label>
             <input id="file-upload" type="file" onChange={handleFileChange} />
           </div>
         )}
       </div>
       <button className="upload-button" onClick={handleFileUpload}>
-        Enviar
+        Upload
       </button>
       {message && <p className="upload-message">{message}</p>} {/* Muestra el mensaje si existe */}
     </div>

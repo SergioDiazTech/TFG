@@ -24,13 +24,13 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <Link className="nav-link" to="/twitterapi">
-                            Ingesta twitter
+                            Twitter Ingestion
                         </Link>
                         <Link className="nav-link" to="/dataset">
-                            Importar dataset
+                            Dataset Ingestion
                         </Link>
                         <Link className="nav-link" to="/tweets">
-                            Datos
+                            Data
                         </Link>
                         <Link className="nav-link" to="/users">
                             Users

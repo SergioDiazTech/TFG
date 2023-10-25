@@ -39,11 +39,11 @@ function TwitterAPI() {
 
   return (
     <div className="containerApiTwitter">
-      <h1>Obtener Tweets de la API de Twitter</h1>
+      <h1>Fetch Tweets from the Twitter API</h1>
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label htmlFor="keyword" className="label">
-            Palabra clave:
+            Keyword
           </label>
           <input
             type="text"
@@ -55,7 +55,7 @@ function TwitterAPI() {
         </div>
         <div className="form-group">
           <label htmlFor="numeroDeTweets" className="label">
-            Número de tweets:
+            Number of tweets to retrieve
           </label>
           <input
             type="number"
@@ -66,7 +66,7 @@ function TwitterAPI() {
           />
         </div>
         <button type="submit" className="btnApiTwitter">
-          Obtener tweets
+          Fetch tweets
         </button>
       </form>
       {message && <p className="messageApiTwitter">{message}</p>}

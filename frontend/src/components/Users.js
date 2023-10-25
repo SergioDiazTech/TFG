@@ -53,21 +53,21 @@ function Users() {
 
   return (
     <div>
-      <h1 className="title">INFORMACIÓN ACERCA DE LOS USUARIOS</h1>
-      <select className="selector-users" value={selectedOption} onChange={handleOptionChange}>
-        <option value="">Selecciona la opción que desees</option>
-        <option value="all">Todos los usuarios</option>
-        <option value="mostRelevant">Usuarios con mayor repercusión</option>
-        <option value="mostFollowers">Usuarios con mayor número de seguidores</option>
-        <option value="positiveReputation">Usuarios con mayor repercusión positiva</option>
-        <option value="negativeReputation">Usuarios con mayor repercusión negativa</option>
+      <h1 className="title">USER INFORMATION</h1>
+      <select className="user-selector" value={selectedOption} onChange={handleOptionChange}>
+        <option value="">Select an option</option>
+        <option value="all">All Users</option>
+        <option value="mostRelevant">Most Influential Users</option>
+        <option value="mostFollowers">Users with Most Followers</option>
+        <option value="positiveReputation">Users with Positive Reputation</option>
+        <option value="negativeReputation">Users with Negative Reputation</option>
       </select>
       {selectedOption === "mostFollowers" ? (
         <table className="user-table">
           <thead>
             <tr>
-              <th>Nombre de Usuario</th>
-              <th>Número de Seguidores</th>
+              <th>Username</th>
+              <th>Number of Followers</th>
             </tr>
           </thead>
           <tbody>
@@ -89,7 +89,7 @@ function Users() {
       {users.length > USERS_PER_PAGE * (page - 1) && (
         <div className="button-container">
           <button onClick={loadMoreUsers} disabled={isLoading}>
-            {isLoading ? 'Cargando...' : 'Cargar más'}
+            {isLoading ? 'Loading...' : 'Load more'}
           </button>
         </div>
       )}
