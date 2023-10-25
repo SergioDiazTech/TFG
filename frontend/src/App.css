@@ -144,8 +144,8 @@ h1 {
 .about-container {
   max-width: 800px;
   margin: 0 auto;
-  margin-top: 20%;
-  padding: 20px;
+  margin-top: 15%;
+  padding: 15px;
   background-color: #f1f1f1;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
@@ -409,7 +409,7 @@ h1 {
 }
 
 
-.selector-users {
+.user-selector {
   display: block;
   width: 100%;
   max-width: 350px;
@@ -423,12 +423,12 @@ h1 {
   transition: border-color 0.3s;
 }
 
-.selector-users:focus {
+.user-selector:focus {
   border-color: #007BFF;
 }
 
 
-.selector-users option {
+.user-selector option {
   background-color: #f4f4f4;
   color: #333;
   font-size: 16px;
