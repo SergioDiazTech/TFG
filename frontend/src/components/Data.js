@@ -59,6 +59,7 @@ function Data() {
             <th>#</th>
             <th>Sentiment</th>
             <th>Text</th>
+            <th>Retweets</th>
           </tr>
         </thead>
         <tbody>
@@ -73,7 +74,8 @@ function Data() {
                 )}
                 <span>{tweet.sentiment}</span>
               </td>
-              <td>{tweet.text}</td>
+              <td style={{ textAlign: 'left' }}>{tweet.text}</td>
+              <td>{tweet.public_metrics.retweet_count}</td>
             </tr>
           ))}
         </tbody>
