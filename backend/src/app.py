@@ -68,13 +68,17 @@ def get_users_route():
 
 @app.route('/heatmap', methods=['GET'])
 def display_heatmap():
-    data = draw_heatmap()
-    response_data = {
-        'longitude': data['longitude'],
-        'latitude': data['latitude'],
-        'compound': data['Compound']
-    }
-    return jsonify(response_data)
+    try:
+        data = draw_heatmap()
+        response_data = {
+            'longitude': data['longitude'],
+            'latitude': data['latitude'],
+            'compound': data['Compound']
+        }
+        return jsonify(response_data)
+    except Exception as e:
+        print(f'Error: {e}')
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/pointmap', methods=['GET'])
