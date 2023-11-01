@@ -9,7 +9,7 @@ def load_data():
     db = client['DB_External_Data_Ingestion']
     twitter_collection = db["users_colombia21.json"]
 
-    data = list(twitter_collection.find({}))[:100]
+    data = list(twitter_collection.find({}))[:5]
 
     map_data = pd.DataFrame(data)
 

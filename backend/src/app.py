@@ -83,13 +83,18 @@ def display_heatmap():
 
 @app.route('/pointmap', methods=['GET'])
 def display_pointmap():
-    data = draw_pointmap()
-    response_data = {
-        'longitude': data['longitude'],
-        'latitude': data['latitude'],
-        'compound': data['Compound']
-    }
-    return jsonify(response_data)
+    try:
+        data = draw_pointmap()
+        response_data = {
+            'longitude': data['longitude'],
+            'latitude': data['latitude'],
+            'compound': data['Compound']
+        }
+        return jsonify(response_data)
+    except Exception as e:
+        print(f'Error: {e}')
+        return jsonify({'error': str(e)}), 500
+
 
 
 
