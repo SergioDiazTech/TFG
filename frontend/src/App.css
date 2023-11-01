@@ -510,3 +510,13 @@ h1 {
 .user-table tbody tr:hover {
   background-color: #d9d9d9;
 }
+
+.nav-link:hover {
+  font-weight: bold;
+  font-size: 105%;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  font-size: 105%;
+}

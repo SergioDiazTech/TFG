@@ -1,13 +1,14 @@
-import React from "react";
-import {Link} from 'react-router-dom'
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-
 const Navbar = () => {
+    const location = useLocation();
+
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/">
+                <Link className={`navbar-brand ${location.pathname === "/" ? "active" : ""}`} to="/">
                     Analytics sentiment
                 </Link>
                 <button
@@ -18,30 +19,30 @@ const Navbar = () => {
                     aria-controls="navbarNavAltMarkup"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
-                    >
+                >
                     <span className="navbar-toggler-icon" />
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link" to="/twitterapi">
+                        <Link className={`nav-link ${location.pathname === "/twitterapi" ? "active" : ""}`} to="/twitterapi">
                             Twitter Ingestion
                         </Link>
-                        <Link className="nav-link" to="/dataset">
+                        <Link className={`nav-link ${location.pathname === "/dataset" ? "active" : ""}`} to="/dataset">
                             Dataset Ingestion
                         </Link>
-                        <Link className="nav-link" to="/tweets">
+                        <Link className={`nav-link ${location.pathname === "/tweets" ? "active" : ""}`} to="/tweets">
                             Data
                         </Link>
-                        <Link className="nav-link" to="/users">
+                        <Link className={`nav-link ${location.pathname === "/users" ? "active" : ""}`} to="/users">
                             Users
                         </Link>
-                        <Link className="nav-link" to="/heatmap">
+                        <Link className={`nav-link ${location.pathname === "/heatmap" ? "active" : ""}`} to="/heatmap">
                             Heatmap
                         </Link>
-                        <Link className="nav-link" to="/pointmap">
+                        <Link className={`nav-link ${location.pathname === "/pointmap" ? "active" : ""}`} to="/pointmap">
                             Pointmap
                         </Link>
-                        <Link className="nav-link" to="/about">
+                        <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">
                             About
                         </Link>
                     </div>
