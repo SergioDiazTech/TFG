@@ -3,7 +3,7 @@ from flask_pymongo import PyMongo
 from flask_cors import CORS
 from components.twitter_API import get_tweets
 from components.dataset import save_json_to_mongodb
-from components.data import load_data
+from components.data import load_data, get_collection_names
 from components.users import load_users
 from components.heatmap import draw_heatmap
 from components.pointmap import draw_pointmap
@@ -17,6 +17,7 @@ CORS(app)
 app.config['MONGO_URI'] = 'mongodb://127.0.0.1/twitterdb'
 mongo = PyMongo(app)
 db = mongo.db.tweets
+
 
 @app.route('/twitterapi', methods=['POST'])
 def search_tweets_route():
@@ -50,10 +51,17 @@ def upload_file():
 
 
 @app.route('/tweets', methods=['GET'])
-def get_data_route():
+def get_collections_route():
+    collection_names = get_collection_names()
+    return jsonify(collection_names)
+
+
+@app.route('/tweets/<collection_name>', methods=['GET'])
+def get_data_route(collection_name):
+    print(collection_name)
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 5))
-    result = load_data(page, per_page)
+    result = load_data(collection_name, page, per_page)
     return jsonify(result)
 
 
