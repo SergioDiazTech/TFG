@@ -39,7 +39,8 @@
   font-size: 18px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 
@@ -519,4 +520,72 @@ h1 {
 .nav-link.active {
   font-weight: bold;
   font-size: 105%;
+}
+
+
+
+/* Definimos algunas variables css para los colores y los tamaños */
+:root {
+  --primary-color: #00060f1b;
+  --secondary-color: #f8f9fa;
+  --text-color: #202124;
+  --card-width: 250px;
+  --card-height: 50px;
+  --card-gap: 20px;
+}
+
+/* Usamos flexbox para centrar el título y la lista de colecciones */
+.collections-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Usamos grid para crear una cuadrícula de colecciones con espacios entre ellas */
+.collections-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
+  grid-gap: var(--card-gap);
+  list-style: none;
+  padding: 0;
+}
+
+/* Estilizamos cada elemento de la lista como una tarjeta con un borde, un fondo y un efecto de sombra */
+.collection-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: var(--card-width);
+  height: var(--card-height);
+  border: 2px solid var(--primary-color);
+  border-radius: 10px;
+  background-color: var(--secondary-color);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Estilizamos el icono o la imagen de cada colección con un tamaño y un margen */
+.collection-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10%;
+}
+
+/* Estilizamos el nombre de cada colección con un color y una fuente */
+.collection-name {
+  color: var(--text-color);
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+/* Añadimos un efecto de transición al pasar el cursor sobre cada tarjeta */
+.collection-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Añadimos un efecto de enfoque al hacer clic sobre cada tarjeta */
+.collection-card:focus {
+  outline: none;
+  box-shadow: inset 0 0 15xpx var(--primary-color);
 }

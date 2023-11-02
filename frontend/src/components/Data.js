@@ -83,15 +83,19 @@ function Data() {
   };
 
 
+
   return (
     <div>
       {!selectedCollection ? (
-        <div>
+        <div className="collections-container">
           <h1 className="title">Select a Collection</h1>
-          <ul>
+          <ul className="collections-list">
             {collections.map((collection) => (
               <li key={collection} onClick={() => { setSelectedCollection(collection); getTweets(page, TWEETS_PER_PAGE); }}>
-                {collection}
+                <div className="collection-card">
+                  <div className="collection-icon">{}</div>
+                  <div className="collection-name">{collection}</div>
+                </div>
               </li>
             ))}
           </ul>
