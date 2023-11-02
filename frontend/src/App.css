@@ -403,6 +403,16 @@ h1 {
   margin-right: 15%;
 }
 
+/* Estilo del círculo amarillo (neutral) */
+.yellow-circle {
+  width: 10px;
+  height: 10px;
+  background-color: rgb(228, 238, 83);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 7%;
+}
+
 /* Estilo del círculo rojo (negativo) */
 .red-circle {
   width: 10px;

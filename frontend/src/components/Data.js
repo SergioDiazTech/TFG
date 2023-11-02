@@ -122,13 +122,16 @@ function Data() {
                 <tr key={tweet.id}>
                   <td>{index + 1}</td>
                   <td>
-                    {tweet.sentiment >= 0 ? (
+                    {tweet.sentiment >= -0.51 && tweet.sentiment <= 0.51 ? (
+                      <span className="yellow-circle"></span>
+                    ) : tweet.sentiment > 0.51 ? (
                       <span className="green-circle"></span>
                     ) : (
                       <span className="red-circle"></span>
                     )}
                     <span>{tweet.sentiment}</span>
                   </td>
+
                   <td style={{ textAlign: "left" }}>{tweet.text}</td>
                   <td>{tweet.public_metrics ? tweet.public_metrics.retweet_count : "N/A"}</td>
                 </tr>
