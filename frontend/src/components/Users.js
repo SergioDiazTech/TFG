@@ -66,6 +66,7 @@ function Users() {
         <table className="user-table">
           <thead>
             <tr>
+              <th>#</th>
               <th>Username</th>
               <th>Number of Followers</th>
             </tr>
@@ -73,6 +74,7 @@ function Users() {
           <tbody>
             {users.slice(0, USERS_PER_PAGE * page).map((user, index) => (
               <tr key={user.id}>
+                <td>{index+1}</td>
                 <td>{user.username}</td>
                 <td>{user.public_metrics.followers_count}</td>
               </tr>
@@ -88,7 +90,7 @@ function Users() {
       )}
       {users.length > USERS_PER_PAGE * (page - 1) && (
         <div className="button-container">
-          <button onClick={loadMoreUsers} disabled={isLoading}>
+          <button className="button-load-more" onClick={loadMoreUsers} disabled={isLoading}>
             {isLoading ? 'Loading...' : 'Load more'}
           </button>
         </div>
