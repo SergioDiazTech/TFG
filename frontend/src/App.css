@@ -24,14 +24,18 @@
   border-bottom: 1px solid #ddd;
 }
 
+
 .tweet-table th {
   background-color: #f2f2f2;
   font-weight: bold;
+  font-size: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tweet-table tbody tr:hover {
   background-color: #f9f9f9;
 }
+
 
 .title {
   text-align: center;
@@ -588,4 +592,8 @@ h1 {
 .collection-card:focus {
   outline: none;
   box-shadow: inset 0 0 15xpx var(--primary-color);
+}
+
+.button-load-more{
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
