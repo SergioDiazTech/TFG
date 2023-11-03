@@ -3,14 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { HeatMapDataProvider } from './components/Heatmap.js';
 
 /*import 'bootstrap/dist/css/bootstrap.css'*/
 import 'bootswatch/dist/lux/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// Usamos HeatMapDataProvider para envolver el componente App, esto hará que los datos del mapa de calor estén disponibles para todos los componentes hijos de App
 root.render(
   <React.StrictMode>
-    <App />
+    <HeatMapDataProvider>
+      <App />
+    </HeatMapDataProvider>
   </React.StrictMode>
 );
 
