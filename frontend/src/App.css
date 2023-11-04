@@ -595,13 +595,14 @@ h1 {
 /* Añadimos un efecto de transición al pasar el cursor sobre cada tarjeta */
 .collection-card:hover {
   transform: scale(1.05);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.278);
 }
 
 /* Añadimos un efecto de enfoque al hacer clic sobre cada tarjeta */
 .collection-card:focus {
   outline: none;
-  box-shadow: inset 0 0 15xpx var(--primary-color);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .button-load-more{
