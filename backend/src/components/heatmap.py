@@ -1,57 +1,35 @@
 from pymongo import MongoClient
 import pandas as pd
-from geopy.geocoders import ArcGIS
 import random
 
-def load_data():
+def draw_heatmap():
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
     db = client['DB_External_Data_Ingestion']
-    twitter_collection = db["users_colombia21.json"]
+    twitter_collection = db["test_33.json"]
 
-    data = list(twitter_collection.find({}))[:20]
+    # Obtenemos todos los documentos de la collection
+    data = list(twitter_collection.find({}, {'latitude': 1, 'longitude': 1, '_id': 0}))
 
+    # Creamos un dataframe a partir de los datos que hemos obtenido
     map_data = pd.DataFrame(data)
 
-    # Creamos un objeto de geolocalización
-    geolocator = ArcGIS()
+    # Eliminamos las filas que tienen NaN en 'latitude' o 'longitude'
+    map_data.dropna(subset=['latitude', 'longitude'], inplace=True)
 
-    # Convertimos la ubicación en latitud y longitud
-    def geolocate(location, index, total):
-        try:
-            location = geolocator.geocode(location)
-            if location is not None:
-                print(f'Latitud: {location.latitude}, Longitud: {location.longitude}, Coordenada {index+1}/{total} procesada')
-                return location.latitude, location.longitude
-        except Exception as e:
-            print(f'Error: {e}')
-        return None, None  # Devuelve None en caso de error
+    map_data['compound'] = [random.uniform(-1, 1) for _ in range(len(map_data))]
 
-    total = len(map_data)
-    map_data['latitude'], map_data['longitude'] = zip(*[geolocate(loc, index, total) for index, loc in enumerate(map_data['location'])])
-
-    # Eliminamos los valores NaN de las filas en latitude y longitude
-    map_data = map_data.dropna(subset=['latitude', 'longitude'])
-
-    map_data['Compound'] = [random.uniform(-1, 1) for _ in range(len(map_data))]
-
+    data_formatted = []
     for index, row in map_data.iterrows():
-        print(f'Latitud: {row["latitude"]}, Longitud: {row["longitude"]}, Compound: {row["Compound"]}')
+        # Creamos un diccionario para cada fila con los valores de 'latitude', 'longitude', y 'compound'
+        row_data = {
+            'latitude': row['latitude'],
+            'longitude': row['longitude'],
+            'compound': row['compound']
+        }
+        # Añadimos este diccionario a la lista de datos formateados
+        data_formatted.append(row_data)
 
-    return map_data
 
+    return data_formatted
 
-def draw_heatmap():
-    map_data = load_data()
-
-    lon = map_data['longitude'].tolist()
-    lat = map_data['latitude'].tolist()
-    comp = map_data['Compound'].tolist()
-
-    data = {
-        'longitude': lon,
-        'latitude': lat,
-        'Compound': comp
-    }
-
-    return data

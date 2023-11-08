@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { HeatMapDataProvider } from './components/Heatmap.js';
 import { PointMapDataProvider } from './components/Pointmap.js';
 
 /*import 'bootstrap/dist/css/bootstrap.css'*/
@@ -13,11 +12,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <HeatMapDataProvider>
-      <PointMapDataProvider>
-        <App />
-      </PointMapDataProvider>
-    </HeatMapDataProvider>
+    <PointMapDataProvider>
+      <App />
+    </PointMapDataProvider>
   </React.StrictMode>
 );
 
