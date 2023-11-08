@@ -3,6 +3,9 @@ import json
 import os
 from datetime import datetime
 
+import pandas as pd
+from geopy.geocoders import ArcGIS
+
 DATA_FOLDER = ('/Users/sergio/Desktop/TFG/backend/')
 
 MONGO_URI = 'mongodb://127.0.0.1'#Direccion donde esta el servidor de MongoDB , 
@@ -24,7 +27,7 @@ def save_json_to_mongodb(filename):
         #Una vez se conecte, nos devolverá un objeto llamado client
         client = MongoClient(MONGO_URI)
         
-        if filename == "tweets_colombia21.json" or filename == "users_colombia21.json":
+        if filename == "tweets_colombia21.json" or filename == "users_colombia21.json" or filename == "test_33.json":
             
             db = client['DB_External_Data_Ingestion']
             collection_name = filename
@@ -32,15 +35,24 @@ def save_json_to_mongodb(filename):
 
             for tweet in data:
                 tweet['_id'] = tweet['_id']['$oid']
-                #Convertimos los valores '_id' en las colecciones de usuarios y tweets de diccionarios a cadenas. 
-                # En los archivos JSON, el valor de '_id' es un diccionario que contiene una clave '$oid' 
-                # que apunta al identificador del objeto. La cadena de identificación se guarda en lugar del diccionario.
-            
-            for tweet in data:
-                if dataset_collection.find_one({'_id': tweet['_id']}) is None: # Insertar documentos(tweets) en la collection si no existen
+
+                latitude, longitude = None, None
+                
+                address = tweet.get('location')
+
+                if address:
+                    latitude, longitude = geolocate(address)
+                    tweet['latitude'] = latitude
+                    tweet['longitude'] = longitude
+                else:
+                    tweet['latitude'] = None
+                    tweet['longitude'] = None
+
+                # Ahora verifica si el tweet ya existe y si no, insértalo en la base de datos
+                if dataset_collection.find_one({'_id': tweet['_id']}) is None:
                     dataset_collection.insert_one(tweet)
-                    new_count  += 1
-                    print(new_count)
+                    new_count += 1
+                    print(f"Tweet ID: {tweet['_id']} - Nuevo tweet añadido con latitud: {latitude} y longitud: {longitude}")
         else:
 
             db = client['DB_External_Data_Ingestion']
@@ -70,3 +82,16 @@ def save_json_to_mongodb(filename):
         print(documento_registro)
         print(f"Total documents: {dataset_collection.count_documents({})}")
         print(f"New documents added: {new_count}")
+        
+
+geolocator = ArcGIS()
+
+
+def geolocate(location):
+        try:
+            location = geolocator.geocode(location)
+            if location is not None:
+                return location.latitude, location.longitude
+        except Exception as e:
+            print(f'Error: {e}')
+        return None, None
