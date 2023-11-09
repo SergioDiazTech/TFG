@@ -1,41 +1,39 @@
 import React, { useState } from 'react';
-// Instalamos Font Awesome en nuestro proyecto React: npm install --save @fortawesome/fontawesome-free
-import '@fortawesome/fontawesome-free/css/all.css'; // Para poder cargar los iconos de nuestra aplicacion en este componente
-
+import '@fortawesome/fontawesome-free/css/all.css';
 
 const API = process.env.REACT_APP_API;
 
 function Dataset() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [customName, setCustomName] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [message, setMessage] = useState('');
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    // setCustomName(file.name);
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append('file', selectedFile);
+      formData.append('customName', customName);
 
-      // Envía el archivo al backend
-      fetch(`${API}/dataset`, {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Maneja la respuesta del backend
-          console.log(data);
-          setMessage(data.message); // Guarda el mensaje en el estado
-        })
-        .catch(error => {
-          // Maneja cualquier error de la solicitud
-          console.error('Error:', error);
-          //setMessage('Error al cargar el archivo.'); // Guarda el mensaje de error en el estado
-          setMessage("El archivo no se ha cargado correctamente");
+      try {
+        const response = await fetch(`${API}/dataset`, {
+          method: 'POST',
+          body: formData,
         });
+        const data = await response.json();
+        setMessage(data.message);
+      } catch (error) {
+        console.error('Error:', error);
+        setMessage("El archivo no se ha cargado correctamente");
+      }
+    } else {
+      setMessage("Por favor, seleccione un archivo para cargar.");
     }
   };
 
@@ -52,9 +50,9 @@ function Dataset() {
   const handleDrop = (event) => {
     event.preventDefault();
     setIsDragging(false);
-
     const file = event.dataTransfer.files[0];
     setSelectedFile(file);
+    // setCustomName(file.name);
   };
 
   return (
@@ -67,21 +65,32 @@ function Dataset() {
         onDrop={handleDrop}
       >
         {selectedFile ? (
-          <p className="file-info">Selected file: {selectedFile.name}</p>
+          <>
+            <p className="file-info">Selected file: {selectedFile.name}</p>
+            <input 
+              className="custom-input"
+              type="text"
+              placeholder="Enter a name for this dataset"
+              value={customName}
+              onChange={(e) => setCustomName(e.target.value)}
+            />
+          </>
         ) : (
           <div className="upload-area">
-            <p className="upload-text">Drag and drop the file here</p>
+            <p className="upload-text">Drag and drop the file here, or select one</p>
             <label htmlFor="file-upload" className="custom-file-upload">
-              Select a file
+              <i className="fas fa-upload"></i> Select file
             </label>
             <input id="file-upload" type="file" onChange={handleFileChange} />
           </div>
         )}
       </div>
-      <button className="upload-button" onClick={handleFileUpload}>
-        Upload
-      </button>
-      {message && <p className="upload-message">{message}</p>} {/* Muestra el mensaje si existe */}
+      {selectedFile && (
+        <button className="upload-button" onClick={handleFileUpload}>
+          Upload file
+        </button>
+      )}
+      {message && <p className="upload-message">{message}</p>}
     </div>
   );
 }

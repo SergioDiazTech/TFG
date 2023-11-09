@@ -608,3 +608,17 @@ h1 {
 .button-load-more{
   box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
+
+
+.custom-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-top: 1rem;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #5C7AEA;
+}

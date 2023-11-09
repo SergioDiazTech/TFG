@@ -36,6 +36,7 @@ def upload_file():
         return jsonify({'error': 'No se ha seleccionado ningún archivo.'}), 400
 
     file = request.files['file']
+    custom_name = request.form.get('customName')
 
     if file.filename == '':
         return jsonify({'error': 'No se ha seleccionado ningún archivo.'}), 400
@@ -45,7 +46,7 @@ def upload_file():
         file.save(file.filename)
 
         # Llamar a la función de guardado en MongoDB desde dataset.py
-        save_json_to_mongodb(file.filename)
+        save_json_to_mongodb(file.filename,custom_name)
 
         return jsonify({'message': 'Archivo cargado correctamente.'}), 200
 

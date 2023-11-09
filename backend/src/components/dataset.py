@@ -42,7 +42,7 @@ def calculate_sentiment(tweets):
         sentiment_value = round(positive_sentiment - negative_sentiment, 2)
         tweet['sentiment'] = sentiment_value
 
-def save_json_to_mongodb(filename):
+def save_json_to_mongodb(filename,custom_name):
     DATA_FILEPATH = os.path.join(DATA_FOLDER, filename)
     with open(DATA_FILEPATH, 'r', encoding='utf-8') as file:
         data = json.load(file)
@@ -56,7 +56,7 @@ def save_json_to_mongodb(filename):
         collection_name = filename.replace('.json', '')
         dataset_collection = db[collection_name]
 
-        if filename == "Colombia.json":
+        if filename == "users_colombia.json":
             for tweet in data:
                 tweet = procesamiento_geoparsing(tweet)
                 tweet['_id'] = tweet['_id']['$oid']
@@ -65,7 +65,7 @@ def save_json_to_mongodb(filename):
                     new_count += 1
                     print(f"Tweet ID: {tweet['_id']} - Nuevo tweet añadido con latitud: {tweet['latitude']} y longitud: {tweet['longitude']}")
 
-        elif filename == "tweets_prueba.json":
+        elif filename == "tweets_colombia.json":
             calculate_sentiment(data)
             for tweet in data:
                 tweet['_id'] = tweet['_id']['$oid']
@@ -84,7 +84,8 @@ def save_json_to_mongodb(filename):
         # Registro de la ingesta
         registro_collection = db["Ingestion_Registry"]
         documento_registro = {
-            'Name': collection_name,
+            'Name': custom_name,
+            'CollectionName': collection_name,
             'Filename': filename,
             'Date': datetime.now().strftime('%Y-%m-%d'),
             'Time': datetime.now().strftime('%H:%M:%S'),
