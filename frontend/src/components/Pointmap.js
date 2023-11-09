@@ -6,6 +6,7 @@ const API = process.env.REACT_APP_API;
 
 function Pointmap() {
   const [pointMapData, setPointMapData] = useState([]);
+  const [mapLoaded, setMapLoaded] = useState(false); // Estado para el control de la carga del mapa
   const mapContainer = useRef(null);
 
   // Función para obtener el color de relleno basado en el valor
@@ -17,6 +18,7 @@ function Pointmap() {
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
   };
 
+  // Efecto para cargar los datos de la API
   useEffect(() => {
     fetch(`${API}/pointmap`)
       .then(response => response.json())
@@ -37,13 +39,13 @@ function Pointmap() {
       });
   }, []);
 
+  // Efecto para inicializar el mapa y añadir marcadores
   useEffect(() => {
     if (!mapContainer.current || pointMapData.length === 0) {
       return;
     }
 
     const mapInstance = L.map(mapContainer.current).setView([0, 0], 5);
-
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
     const layerGroup = L.layerGroup().addTo(mapInstance);
@@ -55,14 +57,12 @@ function Pointmap() {
         return;
       }
 
-      const circleMarker = new L.CircleMarker([lat, lng], {
+      L.circleMarker([lat, lng], {
         radius: 6,
         fillOpacity: 0.5,
         fillColor: getFillColor(value),
         className: 'heatmap-marker',
-      });
-
-      circleMarker.addTo(layerGroup);
+      }).addTo(layerGroup);
     });
 
     if (pointMapData.some(point => point.lat && point.lng)) {
@@ -72,14 +72,22 @@ function Pointmap() {
       console.error('No valid data available to fit bounds on map');
     }
 
+    // Cuando el mapa está listo, actualizamos el estado
+    mapInstance.whenReady(() => {
+      setMapLoaded(true);
+    });
+
+    // Limpieza al desmontar el componente
     return () => {
       mapInstance.off();
       mapInstance.remove();
+      setMapLoaded(false);
     };
   }, [pointMapData]);
 
   return (
     <div className="heatmap-wrapper">
+      { !mapLoaded && <div>Mapping...</div> }
       <div className='heatmap-title'>Pointmap based on tweets from the dataset: COLOMBIA</div>
       <div ref={mapContainer} id="heatmap-map" className="heatmap-map"></div>
     </div>
