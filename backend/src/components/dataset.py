@@ -32,6 +32,16 @@ def geolocate(location):
         print(f'Error: {e}')
     return None, None
 
+def calculate_sentiment(tweets):
+    # Combina los campos de sentimiento en un solo campo llamado 'sentiment'
+    for tweet in tweets:
+        positive_sentiment = tweet.get('sentiment', {}).get('positive', 0)
+        negative_sentiment = tweet.get('sentiment', {}).get('negative', 0)
+
+        # Calcula el valor de 'sentiment' como la diferencia entre 'positive_sentiment' y 'negative_sentiment'
+        sentiment_value = round(positive_sentiment - negative_sentiment, 2)
+        tweet['sentiment'] = sentiment_value
+
 def save_json_to_mongodb(filename):
     DATA_FILEPATH = os.path.join(DATA_FOLDER, filename)
     with open(DATA_FILEPATH, 'r', encoding='utf-8') as file:
@@ -43,18 +53,27 @@ def save_json_to_mongodb(filename):
         new_count = 0
         client = MongoClient(MONGO_URI)
         db = client['DB_External_Data_Ingestion']
-        collection_name = filename.replace('.json', '')  # Removed extension for collection name
+        collection_name = filename.replace('.json', '')
         dataset_collection = db[collection_name]
 
         if filename == "Colombia.json":
             for tweet in data:
-                tweet = procesamiento_geoparsing(tweet)  # Call the new function
+                tweet = procesamiento_geoparsing(tweet)
                 tweet['_id'] = tweet['_id']['$oid']
-                # Insert tweet if it doesn't exist
                 if dataset_collection.find_one({'_id': tweet['_id']}) is None:
                     dataset_collection.insert_one(tweet)
                     new_count += 1
                     print(f"Tweet ID: {tweet['_id']} - Nuevo tweet añadido con latitud: {tweet['latitude']} y longitud: {tweet['longitude']}")
+
+        elif filename == "tweets_prueba.json":
+            calculate_sentiment(data)
+            for tweet in data:
+                tweet['_id'] = tweet['_id']['$oid']
+                if dataset_collection.find_one({'_id': tweet['_id']}) is None:
+                    dataset_collection.insert_one(tweet)
+                    new_count += 1
+                    print(f"Tweet ID: {tweet['_id']} - Nuevo tweet añadido con sentimiento: {tweet['sentiment']}")
+
         else:
             for tweet in data:
                 if dataset_collection.find_one({'id': tweet['id']}) is None:
