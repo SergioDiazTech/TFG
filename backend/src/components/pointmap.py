@@ -6,7 +6,7 @@ def draw_pointmap():
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
     db = client['DB_External_Data_Ingestion']
-    twitter_collection = db["test_33.json"]
+    twitter_collection = db["Colombia"]
 
     data = list(twitter_collection.find({}, {'latitude': 1, 'longitude': 1, '_id': 0}))
 
