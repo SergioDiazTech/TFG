@@ -1,31 +1,35 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-
 const API = process.env.REACT_APP_API;
 
-// Creamos un contexto para almacenar los datos del mapa de puntos
-const PointMapDataContext = createContext();
+function Pointmap() {
+  const [pointMapData, setPointMapData] = useState([]);
+  const mapContainer = useRef(null);
 
-// Este es nuestro componente proveedor que envolverá nuestra aplicación
-export function PointMapDataProvider({ children }) {
-  const [pointMapData, setPointMapData] = useState(null);
+  // Función para obtener el color de relleno basado en el valor
+  const getFillColor = (value) => {
+    const red = Math.floor((1 - value) * 255);
+    const green = Math.floor((value + 1) * 255) / 2;
+    const blue = 0;
+    const opacity = 0.7;
+    return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+  };
 
-  // Aquí es donde buscaríamos los datos del mapa de puntos
   useEffect(() => {
     fetch(`${API}/pointmap`)
       .then(response => response.json())
       .then(data => {
-        if (data.longitude && data.latitude && data.compound) {
-          const pointmapPoints = data.longitude.map((lng, index) => ({
-            lng,
-            lat: data.latitude[index],
-            value: data.compound[index]
+        if (Array.isArray(data) && data.length > 0) {
+          const newPointMapData = data.map(item => ({
+            lat: item.latitude,
+            lng: item.longitude,
+            value: item.compound,
           }));
-          setPointMapData(pointmapPoints); // Guardamos los datos en el estado
+          setPointMapData(newPointMapData);
         } else {
-          console.error('Data is missing required properties (longitude, latitude, compound):', data);
+          console.error('Data is missing required properties (latitude, longitude, compound):', data);
         }
       })
       .catch(error => {
@@ -33,62 +37,46 @@ export function PointMapDataProvider({ children }) {
       });
   }, []);
 
-  return (
-    <PointMapDataContext.Provider value={pointMapData}>
-      {children}
-    </PointMapDataContext.Provider>
-  );
-}
-
-function Pointmap() {
-  const mapContainer = useRef(null); // Referencia al contenedor del mapa
-  const pointMapData = useContext(PointMapDataContext); // Obtenemos los datos del mapa de puntos del contexto
-
   useEffect(() => {
-    if (!mapContainer.current || !pointMapData) {
-      // El contenedor del mapa no está disponible o los datos aún no se han cargado
+    if (!mapContainer.current || pointMapData.length === 0) {
       return;
     }
 
-    let mapInstance = L.map(mapContainer.current).setView([0, 0], 5); // Inicializamos el mapa aquí
+    const mapInstance = L.map(mapContainer.current).setView([0, 0], 5);
 
-    mapInstance.whenReady(() => {
-      renderPointmap(pointMapData);
-    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
-    function renderPointmap(data) {
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
+    const layerGroup = L.layerGroup().addTo(mapInstance);
 
-      const layerGroup = L.layerGroup().addTo(mapInstance);
+    pointMapData.forEach(point => {
+      const { lat, lng, value } = point;
+      if (typeof lat !== 'number' || typeof lng !== 'number' || typeof value !== 'number') {
+        console.error('Invalid data:', point);
+        return;
+      }
 
-      data.forEach(point => {
-        const { lat, lng, value } = point;
-        if (typeof lat !== 'number' || typeof lng !== 'number' || typeof value !== 'number') {
-          console.error('Invalid data:', point);
-          return;
-        }
-
-        const circleMarker = new L.CircleMarker([lat, lng], {
-          radius: 6,
-          fillOpacity: 0.5,
-          fillColor: getFillColor(value),
-          className: 'heatmap-marker',
-        });
-
-        circleMarker.addTo(layerGroup);
+      const circleMarker = new L.CircleMarker([lat, lng], {
+        radius: 6,
+        fillOpacity: 0.5,
+        fillColor: getFillColor(value),
+        className: 'heatmap-marker',
       });
 
-      mapInstance.fitBounds(L.latLngBounds(data.map(point => [point.lat, point.lng])));
+      circleMarker.addTo(layerGroup);
+    });
+
+    if (pointMapData.some(point => point.lat && point.lng)) {
+      const bounds = L.latLngBounds(pointMapData.map(point => [point.lat, point.lng]));
+      mapInstance.fitBounds(bounds);
+    } else {
+      console.error('No valid data available to fit bounds on map');
     }
 
-    // Limpiamos en el retorno de la función useEffect
     return () => {
-      if (mapInstance) {
-        mapInstance.off();
-        mapInstance.remove();
-      }
+      mapInstance.off();
+      mapInstance.remove();
     };
-  }, [pointMapData]); // Pasamos pointMapData como dependencia
+  }, [pointMapData]);
 
   return (
     <div className="heatmap-wrapper">
@@ -96,15 +84,6 @@ function Pointmap() {
       <div ref={mapContainer} id="heatmap-map" className="heatmap-map"></div>
     </div>
   );
-}
-
-function getFillColor(value) {
-  const red = Math.floor((1 - value) * 255);
-  const green = Math.floor((value + 1) * 255) / 2;
-  const blue = 0;
-  const opacity = 0.7;
-
-  return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
 }
 
 export default Pointmap;

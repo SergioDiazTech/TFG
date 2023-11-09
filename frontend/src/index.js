@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { PointMapDataProvider } from './components/Pointmap.js';
 
 /*import 'bootstrap/dist/css/bootstrap.css'*/
 import 'bootswatch/dist/lux/bootstrap.min.css';
@@ -12,9 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <PointMapDataProvider>
-      <App />
-    </PointMapDataProvider>
+    <App />
   </React.StrictMode>
 );
 

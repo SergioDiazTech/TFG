@@ -11,7 +11,9 @@ from components.pointmap import draw_pointmap
 
 app = Flask(__name__)
 
+
 CORS(app)
+
 
 #Conexion con mongodb
 app.config['MONGO_URI'] = 'mongodb://127.0.0.1/twitterdb'
@@ -84,22 +86,14 @@ def display_heatmap():
         return jsonify({'error': str(e)}), 500
 
 
-
 @app.route('/pointmap', methods=['GET'])
 def display_pointmap():
     try:
         data = draw_pointmap()
-        response_data = {
-            'longitude': data['longitude'],
-            'latitude': data['latitude'],
-            'compound': data['Compound']
-        }
-        return jsonify(response_data)
+        return jsonify(data)
     except Exception as e:
         print(f'Error: {e}')
         return jsonify({'error': str(e)}), 500
-
-
 
 
 if __name__ == "__main__":
