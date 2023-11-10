@@ -17,7 +17,7 @@ function Heatmap() {
           const newHeatMapData = data.map(item => ({
             lat: item.latitude,
             lng: item.longitude,
-            value: item.compound,
+            value: item.sentiment,
           }));
           setHeatMapData(newHeatMapData);
         } else {

@@ -27,7 +27,7 @@ function Pointmap() {
           const newPointMapData = data.map(item => ({
             lat: item.latitude,
             lng: item.longitude,
-            value: item.compound,
+            value: item.sentiment,
           }));
           setPointMapData(newPointMapData);
         } else {
