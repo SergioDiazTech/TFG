@@ -8,15 +8,16 @@ function Dataset() {
   const [customName, setCustomName] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [message, setMessage] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-    // setCustomName(file.name);
   };
 
   const handleFileUpload = async () => {
     if (selectedFile) {
+      setIsUploading(true);
       const formData = new FormData();
       formData.append('file', selectedFile);
       formData.append('customName', customName);
@@ -31,6 +32,8 @@ function Dataset() {
       } catch (error) {
         console.error('Error:', error);
         setMessage("El archivo no se ha cargado correctamente");
+      } finally {
+        setIsUploading(false);
       }
     } else {
       setMessage("Por favor, seleccione un archivo para cargar.");
@@ -52,7 +55,6 @@ function Dataset() {
     setIsDragging(false);
     const file = event.dataTransfer.files[0];
     setSelectedFile(file);
-    // setCustomName(file.name);
   };
 
   return (
@@ -85,10 +87,15 @@ function Dataset() {
           </div>
         )}
       </div>
-      {selectedFile && (
+      {!isUploading && selectedFile && (
         <button className="upload-button" onClick={handleFileUpload}>
           Upload file
         </button>
+      )}
+      {isUploading && (
+        <div className="processing-container">
+          <i className="fas fa-spinner fa-spin"></i> Processing...
+        </div>
       )}
       {message && <p className="upload-message">{message}</p>}
     </div>

@@ -622,3 +622,20 @@ h1 {
   outline: none;
   border-color: #5C7AEA;
 }
+
+.processing-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px; /* Ajusta según sea necesario */
+}
+
+.fa-spinner {
+  margin-right: 10px;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
