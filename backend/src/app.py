@@ -26,8 +26,10 @@ def search_tweets_route():
     data = request.json
     keyword = data['keyword']
     numeroDeTweets = int(data['numeroDeTweets'])
-    get_tweets(keyword, numeroDeTweets)
+    custom_name = data.get('customName', keyword)
+    get_tweets(keyword, numeroDeTweets, custom_name)
     return jsonify({'message': 'Tweets cargados correctamente'})
+
 
 
 @app.route('/dataset', methods=['POST'])

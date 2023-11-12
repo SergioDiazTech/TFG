@@ -5,12 +5,12 @@ const API = process.env.REACT_APP_API;
 function Twitter_API() {
   const [keyword, setKeyword] = useState('');
   const [numeroDeTweets, setNumeroDeTweets] = useState('');
+  const [customName, setCustomName] = useState('');
   const [message, setMessage] = useState('');
-
-
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
     // Realizar la solicitud a la API de Twitter
     fetch(`${API}/twitterapi`, {
       method: 'POST',
@@ -20,22 +20,24 @@ function Twitter_API() {
       body: JSON.stringify({
         keyword,
         numeroDeTweets,
+        customName,
       }),
     })
     .then((response) => response.json())
     .then((data) => {
       if (data.message) {
-        // Actualizar el mensaje en el estado
+        
         setMessage(data.message);
       } else {
-        // Actualizar los tweets en el estado
-        setMessage("Los tweets no se han cargado correctamente");
+        
+        setMessage("The tweets have not been loaded correctly.");
       }
     })
     .catch((error) => {
-      console.error('Error al obtener los tweets:', error);
+      console.error('Error while fetching the tweets:', error);
+      setMessage("Error loading the tweets.");
     });
-};
+  };
 
   return (
     <div className="containerApiTwitter">
@@ -48,6 +50,7 @@ function Twitter_API() {
           <input
             type="text"
             id="keyword"
+            placeholder="Please enter the keyword to search for tweets"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             className="input"
@@ -60,8 +63,20 @@ function Twitter_API() {
           <input
             type="number"
             id="numeroDeTweets"
+            placeholder="Please enter the number of tweets you wish to retrieve"
             value={numeroDeTweets}
             onChange={(e) => setNumeroDeTweets(e.target.value)}
+            className="input"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="customName" className="label">Custom Name for Ingestion</label>
+          <input
+            type="text"
+            id="customName"
+            placeholder="Enter a custom name for this ingestion"
+            value={customName}
+            onChange={(e) => setCustomName(e.target.value)}
             className="input"
           />
         </div>
@@ -72,7 +87,6 @@ function Twitter_API() {
       {message && <p className="messageApiTwitter">{message}</p>}
     </div>
   );
-
 }
 
 export default Twitter_API;

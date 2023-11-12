@@ -4,6 +4,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderUnavailable
 import time
+from datetime import datetime
 
 # Importamos las claves de Twitter desde el archivo keysTwitter que se encuentra en el directorio Files
 from Files.keysTwitter import consumerKey, consumerSecret, accessToken, accessTokenSecret
@@ -19,7 +20,7 @@ def wait_until_reset(api):
     time.sleep(sleep_time)
 
 
-def get_tweets(keyword, numeroDeTweets):
+def get_tweets(keyword, numeroDeTweets, custom_name):
 
     import nltk
 
@@ -33,6 +34,7 @@ def get_tweets(keyword, numeroDeTweets):
 
     user = api.verify_credentials()
     print("Autenticación exitosa. Bienvenido, @" + user.screen_name)
+    print(custom_name)
     print(keyword)
     print(numeroDeTweets)
 
@@ -44,7 +46,7 @@ def get_tweets(keyword, numeroDeTweets):
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
     db = client['DB_TwitterAPI_Data_Ingestion']
-    twitter_collection = db[keyword]
+    twitter_collection = db[custom_name]
 
     
     # Realizar la búsqueda de tweets
@@ -79,13 +81,13 @@ def get_tweets(keyword, numeroDeTweets):
                                 break
                             else:
                                 print("Error: ", e)
-                                print("Esperando 60 segundos antes de volver a intentarlo...")
+                                print("Waiting 60 seconds before trying again...")
                                 time.sleep(60)
                                 attempt += 1
                         except AttributeError as e:
                             # Si se produce una excepción de atributo erroneo, pasa al siguiente intento
                             print("Error: ", e)
-                            print("Pasando al siguiente intento...")
+                            print("Moving on to the next attempt...")
                             time.sleep(60)
                             attempt += 1
 
@@ -122,7 +124,23 @@ def get_tweets(keyword, numeroDeTweets):
             wait_until_reset(api)
         except Exception as e:
             print("Error: ", e)
-            print("Pasando al siguiente intento...")
+            print("Moving on to the next attempt...")
             time.sleep(60)
     
-    print("Los tweets han sido guardados en la base de datos.")
+    register_ingestion(twitter_collection, custom_name, len(tweet_ids))
+    
+    print("The tweets have been saved in the database.")
+
+def register_ingestion(collection, custom_name, count):
+
+    registro_collection = collection.database['Ingestion_Registry']
+    documento_registro = {
+        'Name': custom_name,
+        'CollectionName': collection.name,
+        'Date': datetime.now().strftime('%Y-%m-%d'),
+        'Time': datetime.now().strftime('%H:%M:%S'),
+        'Documents': count
+    }
+
+    registro_collection.insert_one(documento_registro)
+    print(documento_registro)
