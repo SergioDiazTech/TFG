@@ -64,6 +64,9 @@ def save_json_to_mongodb(filename, custom_name):
                 dataset_collection.insert_one(user)
                 print(f"User ID: {user['_id']} - Nuevo usuario añadido con latitud: {user['latitude']} y longitud: {user['longitude']}")
 
+            '''
+            
+            
             # Actualiza las coordenadas en los tweets correspondientes
             tweets_to_update = tweets_collection.find({
                 'author_id': user['id'], 
@@ -79,7 +82,8 @@ def save_json_to_mongodb(filename, custom_name):
                 if result.modified_count > 0:
                     updated_tweet = tweets_collection.find_one({'_id': tweet['_id']})
                     print(updated_tweet)
-
+                    
+            '''
     os.remove(DATA_FILEPATH)  # Elimina el archivo después de procesarlo
 
     # Registro de la ingesta
