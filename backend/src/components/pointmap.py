@@ -6,7 +6,10 @@ def draw_pointmap():
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
     db = client['DB_External_Data_Ingestion']
-    twitter_collection = db["tweets_colombia"]
+
+    # Nombre de la colección de Twitter
+    twitter_collection_name = "tweets_colombia"
+    twitter_collection = db[twitter_collection_name]
 
     # Obtenemos todos los documentos de la colección que tienen 'latitude', 'longitude' y 'sentiment'
     data = list(twitter_collection.find(
@@ -29,4 +32,8 @@ def draw_pointmap():
         }
         data_formatted.append(row_data)
 
-    return data_formatted
+    # Consulta a la colección Ingestion_Registry para obtener el nombre
+    registry_document = db['Ingestion_Registry'].find_one({"CollectionName": twitter_collection_name})
+    collection_display_name = registry_document['Name'] if registry_document else 'Default Name'
+
+    return {'data': data_formatted, 'collectionName': collection_display_name}

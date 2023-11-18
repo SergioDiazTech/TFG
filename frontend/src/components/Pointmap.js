@@ -6,10 +6,10 @@ const API = process.env.REACT_APP_API;
 
 function Pointmap() {
   const [pointMapData, setPointMapData] = useState([]);
-  const [mapLoaded, setMapLoaded] = useState(false); // Estado para el control de la carga del mapa
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [collectionName, setCollectionName] = useState('');
   const mapContainer = useRef(null);
 
-  // Función para obtener el color de relleno basado en el valor
   const getFillColor = (value) => {
     const red = Math.floor((1 - value) * 255);
     const green = Math.floor((value + 1) * 255) / 2;
@@ -18,20 +18,20 @@ function Pointmap() {
     return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
   };
 
-  // Efecto para cargar los datos de la API
   useEffect(() => {
     fetch(`${API}/pointmap`)
       .then(response => response.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          const newPointMapData = data.map(item => ({
+      .then(response => {
+        if (response.data && response.data.length > 0) {
+          const newPointMapData = response.data.map(item => ({
             lat: item.latitude,
             lng: item.longitude,
             value: item.sentiment,
           }));
           setPointMapData(newPointMapData);
+          setCollectionName(response.collectionName);
         } else {
-          console.error('Data is missing required properties (latitude, longitude, compound):', data);
+          console.error('Data is missing required properties:', response);
         }
       })
       .catch(error => {
@@ -39,7 +39,6 @@ function Pointmap() {
       });
   }, []);
 
-  // Efecto para inicializar el mapa y añadir marcadores
   useEffect(() => {
     if (!mapContainer.current || pointMapData.length === 0) {
       return;
@@ -72,12 +71,10 @@ function Pointmap() {
       console.error('No valid data available to fit bounds on map');
     }
 
-    // Cuando el mapa está listo, actualizamos el estado
     mapInstance.whenReady(() => {
       setMapLoaded(true);
     });
 
-    // Limpieza al desmontar el componente
     return () => {
       mapInstance.off();
       mapInstance.remove();
@@ -88,7 +85,7 @@ function Pointmap() {
   return (
     <div className="map-wrapper">
       { !mapLoaded && <div>Mapping...</div> }
-      <div className='map-title'>Pointmap based on tweets from the dataset: COLOMBIA</div>
+      <div className='map-title'>Pointmap based on tweets from the dataset: {collectionName}</div>
       <div ref={mapContainer} id="map-map" className="map-map"></div>
     </div>
   );

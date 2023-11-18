@@ -100,6 +100,7 @@ def display_pointmap():
         return jsonify(data)
     except Exception as e:
         print(f'Error: {e}')
+        traceback.print_exc()  # Traceback completo
         return jsonify({'error': str(e)}), 500
 
 
