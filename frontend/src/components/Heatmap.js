@@ -7,21 +7,23 @@ const API = process.env.REACT_APP_API;
 
 function Heatmap() {
   const [heatMapData, setHeatMapData] = useState([]);
+  const [collectionName, setCollectionName] = useState('');
   const mapContainer = useRef(null);
 
   useEffect(() => {
     fetch(`${API}/heatmap`)
       .then(response => response.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          const newHeatMapData = data.map(item => ({
+      .then(response => {
+        if (response.data && response.data.length > 0) {
+          const newHeatMapData = response.data.map(item => ({
             lat: item.latitude,
             lng: item.longitude,
             value: item.sentiment,
           }));
           setHeatMapData(newHeatMapData);
+          setCollectionName(response.collectionName);
         } else {
-          console.error('Data is missing required properties (latitude, longitude, compound):', data);
+          console.error('Data is missing required properties:', response);
         }
       })
       .catch(error => {
@@ -70,7 +72,7 @@ function Heatmap() {
 
   return (
     <div className="map-wrapper">
-      <div className='map-title'>Heatmap based on tweets from the dataset: COLOMBIA</div>
+      <div className='map-title'>Heatmap based on tweets from the dataset: {collectionName}</div>
       <div ref={mapContainer} id="map-map" className="map-map"></div>
     </div>
   );

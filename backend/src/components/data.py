@@ -1,7 +1,5 @@
 from pymongo import MongoClient
 
-from pymongo import MongoClient
-
 
 def get_collection_names():
     MONGO_URI = 'mongodb://127.0.0.1'

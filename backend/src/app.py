@@ -8,6 +8,7 @@ from components.users import load_users
 from components.heatmap import draw_heatmap
 from components.pointmap import draw_pointmap
 
+import traceback
 
 app = Flask(__name__)
 
@@ -79,6 +80,7 @@ def get_users_route():
     return jsonify(result)
 
 
+
 @app.route('/heatmap', methods=['GET'])
 def display_heatmap():
     try:
@@ -86,7 +88,9 @@ def display_heatmap():
         return jsonify(data)
     except Exception as e:
         print(f'Error: {e}')
+        traceback.print_exc()  # Traceback completo
         return jsonify({'error': str(e)}), 500
+
 
 
 @app.route('/pointmap', methods=['GET'])
