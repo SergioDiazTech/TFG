@@ -61,7 +61,7 @@ function Pointmap() {
         radius: 6,
         fillOpacity: 0.5,
         fillColor: getFillColor(value),
-        className: 'heatmap-marker',
+        className: 'pointmap-marker',
       }).addTo(layerGroup);
     });
 
@@ -86,10 +86,10 @@ function Pointmap() {
   }, [pointMapData]);
 
   return (
-    <div className="heatmap-wrapper">
+    <div className="map-wrapper">
       { !mapLoaded && <div>Mapping...</div> }
-      <div className='heatmap-title'>Pointmap based on tweets from the dataset: COLOMBIA</div>
-      <div ref={mapContainer} id="heatmap-map" className="heatmap-map"></div>
+      <div className='map-title'>Pointmap based on tweets from the dataset: COLOMBIA</div>
+      <div ref={mapContainer} id="map-map" className="map-map"></div>
     </div>
   );
 }

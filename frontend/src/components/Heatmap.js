@@ -69,9 +69,9 @@ function Heatmap() {
   }, [heatMapData]);
 
   return (
-    <div className="heatmap-wrapper">
-      <div className='heatmap-title'>Heatmap based on tweets from the dataset: COLOMBIA</div>
-      <div ref={mapContainer} id="heatmap-map" className="heatmap-map"></div>
+    <div className="map-wrapper">
+      <div className='map-title'>Heatmap based on tweets from the dataset: COLOMBIA</div>
+      <div ref={mapContainer} id="map-map" className="map-map"></div>
     </div>
   );
 }
