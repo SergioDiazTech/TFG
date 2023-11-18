@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/twitterapi" element={<TwitterAPI/>}/>
           <Route path="/dataset" element={<Dataset/>}/>
-          <Route path="/tweets" element={<Data/>}/>
+          <Route path="/tweetsData" element={<Data/>}/>
           <Route path="/users" element={<Users/>}/>
           <Route path="/heatmap" element={<Heatmap/>}/>
           <Route path="/pointmap" element={<Pointmap/>}/>

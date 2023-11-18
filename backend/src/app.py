@@ -55,13 +55,13 @@ def upload_file():
     return jsonify({'error': 'Error al cargar el archivo.'}), 500
 
 
-@app.route('/tweets', methods=['GET'])
+@app.route('/tweetsData', methods=['GET'])
 def get_collections_route():
     collection_names = get_collection_names()
     return jsonify(collection_names)
 
 
-@app.route('/tweets/<collection_name>', methods=['GET'])
+@app.route('/tweetsData/<collection_name>', methods=['GET'])
 def get_data_route(collection_name):
     print(collection_name)
     page = int(request.args.get('page', 1))

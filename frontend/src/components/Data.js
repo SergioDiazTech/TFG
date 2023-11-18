@@ -16,12 +16,12 @@ function Data() {
   const getTweets = useCallback(async (page, per_page) => {
     try {
       if (!selectedCollection) {
-        const response = await fetch(`${API}/tweets`);
+        const response = await fetch(`${API}/tweetsData`);
         const data = await response.json();
         setCollections(data);
         setIsLoading(false);
       } else {
-        const response = await fetch(`${API}/tweets/${selectedCollection}?page=${page}&per_page=${per_page}`);
+        const response = await fetch(`${API}/tweetsData/${selectedCollection}?page=${page}&per_page=${per_page}`);
         const data = await response.json();
         if (data.length > 0) {
           setTweets((prevTweets) => [...prevTweets, ...data]);
@@ -63,7 +63,7 @@ function Data() {
     const newPage = page + 1;
 
     try {
-      const response = await fetch(`${API}/tweets/${selectedCollection}?page=${newPage}&per_page=${TWEETS_PER_PAGE}`);
+      const response = await fetch(`${API}/tweetsData/${selectedCollection}?page=${newPage}&per_page=${TWEETS_PER_PAGE}`);
       const data = await response.json();
       if (data.length > 0) {
         setTweets((prevTweets) => [...prevTweets, ...data]);
