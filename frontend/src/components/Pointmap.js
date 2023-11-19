@@ -58,12 +58,14 @@ function Pointmap() {
         return;
       }
 
-      L.circleMarker([lat, lng], {
+      const marker = L.circleMarker([lat, lng], {
         radius: 6,
         fillOpacity: 0.5,
         fillColor: getFillColor(value),
         className: 'pointmap-marker',
-      }).addTo(layerGroup);
+      });
+
+      marker.bindPopup(`Sentiment value: ${value}`).addTo(layerGroup);
     });
 
     if (pointMapData.some(point => point.lat && point.lng)) {
