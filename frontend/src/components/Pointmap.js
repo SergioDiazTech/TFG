@@ -6,9 +6,9 @@ const API = process.env.REACT_APP_API;
 
 function Pointmap() {
   const [pointMapData, setPointMapData] = useState([]);
-  const [mapLoaded, setMapLoaded] = useState(false);
   const [collectionName, setCollectionName] = useState('');
   const mapContainer = useRef(null);
+  const mapInstance = useRef(null);
 
   const getFillColor = (value) => {
     const red = Math.floor((1 - value) * 255);
@@ -40,14 +40,16 @@ function Pointmap() {
   }, []);
 
   useEffect(() => {
-    if (!mapContainer.current || pointMapData.length === 0) {
+    if (pointMapData.length === 0) {
       return;
     }
 
-    const mapInstance = L.map(mapContainer.current).setView([0, 0], 5);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
+    if (!mapInstance.current) {
+      mapInstance.current = L.map(mapContainer.current).setView([0, 0], 5);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance.current);
+    }
 
-    const layerGroup = L.layerGroup().addTo(mapInstance);
+    const layerGroup = L.layerGroup().addTo(mapInstance.current);
 
     pointMapData.forEach(point => {
       const { lat, lng, value } = point;
@@ -66,25 +68,27 @@ function Pointmap() {
 
     if (pointMapData.some(point => point.lat && point.lng)) {
       const bounds = L.latLngBounds(pointMapData.map(point => [point.lat, point.lng]));
-      mapInstance.fitBounds(bounds);
+      mapInstance.current.fitBounds(bounds);
     } else {
       console.error('No valid data available to fit bounds on map');
     }
 
-    mapInstance.whenReady(() => {
-      setMapLoaded(true);
-    });
-
     return () => {
-      mapInstance.off();
-      mapInstance.remove();
-      setMapLoaded(false);
+      layerGroup.clearLayers();
     };
   }, [pointMapData]);
 
+  useEffect(() => {
+    return () => {
+      if (mapInstance.current) {
+        mapInstance.current.remove();
+        mapInstance.current = null;
+      }
+    };
+  }, []);
+
   return (
     <div className="map-wrapper">
-      { !mapLoaded && <div>Mapping...</div> }
       <div className='map-title'>Pointmap based on tweets from the dataset: {collectionName}</div>
       <div ref={mapContainer} id="map-map" className="map-map"></div>
     </div>
