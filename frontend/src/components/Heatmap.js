@@ -33,7 +33,6 @@ function Heatmap() {
 
   const normalizeSentiment = value => (value + 1) / 2; 
 
-
   useEffect(() => {
     if (!mapContainer.current || heatMapData.length === 0) {
       return;
@@ -51,13 +50,28 @@ function Heatmap() {
       0.5: 'green',
     };
 
-    L.heatLayer(heatMapData.map(({ lat, lng, value }) => [lat, lng, normalizeSentiment(value)]), {
-      radius: 15,
-      gradient,
-      blur: 10,
-      maxZoom: 25,
-      minOpacity: 0.4,
-    }).addTo(mapInstance);
+    L.heatLayer(
+      heatMapData.map(({ lat, lng, value }) => [lat, lng, normalizeSentiment(value)]),
+      {
+        radius: 15,
+        gradient,
+        blur: 10,
+        maxZoom: 25,
+        minOpacity: 0.4,
+      }
+    ).addTo(mapInstance);
+
+    
+    heatMapData.forEach(point => {
+      const { lat, lng, value } = point;
+      const marker = L.circleMarker([lat, lng], { radius: 1, color: 'transparent' }).addTo(mapInstance);
+      marker.on('mouseover', () => {
+        L.popup()
+          .setLatLng([lat, lng])
+          .setContent(`Sentiment: ${value}`)
+          .openOn(mapInstance);
+      });
+    });
 
     if (heatMapData.some(point => point.lat && point.lng)) {
       const bounds = L.latLngBounds(heatMapData.map(point => [point.lat, point.lng]));
