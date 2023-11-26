@@ -31,6 +31,9 @@ function Heatmap() {
       });
   }, []);
 
+  const normalizeSentiment = value => (value + 1) / 2; 
+
+
   useEffect(() => {
     if (!mapContainer.current || heatMapData.length === 0) {
       return;
@@ -41,15 +44,14 @@ function Heatmap() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
     const gradient = {
-      0.5: 'blue',
-      0.6: 'cyan',
-      0.7: 'lime',
-      0.8: 'yellow',
-      0.9: 'orange',
-      1.0: 'red',
+      0.0: 'red',
+      0.1: 'orange',
+      0.2: 'lime',
+      0.3: 'yellow',
+      0.5: 'green',
     };
 
-    L.heatLayer(heatMapData.map(({ lat, lng, value }) => [lat, lng, value]), {
+    L.heatLayer(heatMapData.map(({ lat, lng, value }) => [lat, lng, normalizeSentiment(value)]), {
       radius: 15,
       gradient,
       blur: 10,

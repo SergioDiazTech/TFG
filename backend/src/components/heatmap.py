@@ -6,30 +6,30 @@ def draw_heatmap():
     client = MongoClient(MONGO_URI)
     db = client['DB_External_Data_Ingestion']
 
-    # Nombre de la colección de Twitter
     twitter_collection_name = "tweets_colombia"
     twitter_collection = db[twitter_collection_name]
 
-    # Consulta para obtener los datos de Twitter
     data = list(twitter_collection.find(
         {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}},
         {'latitude': 1, 'longitude': 1, 'sentiment': 1, '_id': 0}
     ))
 
-    # Crear DataFrame
     map_data = pd.DataFrame(data)
     map_data.dropna(subset=['latitude', 'longitude', 'sentiment'], inplace=True)
 
-    data_formatted = []
-    for index, row in map_data.iterrows():
-        row_data = {
-            'latitude': row['latitude'],
-            'longitude': row['longitude'],
-            'sentiment': row['sentiment']
-        }
-        data_formatted.append(row_data)
+    grouped_data = map_data.groupby(['latitude', 'longitude'])
 
-    # Consulta a la colección Ingestion_Registry para obtener el nombre
+    average_sentiment = grouped_data['sentiment'].mean()
+
+    # Restablecemos el índice para convertir los datos agrupados en un DataFrame
+    average_sentiment = average_sentiment.reset_index()
+
+    print(average_sentiment)
+
+    # Convertimos el DataFrame a una lista de diccionarios para el frontend
+    data_formatted = average_sentiment.to_dict('records')
+
+
     registry_document = db['Ingestion_Registry'].find_one({"CollectionName": twitter_collection_name})
     collection_display_name = registry_document['Name'] if registry_document else 'Default Name'
 
