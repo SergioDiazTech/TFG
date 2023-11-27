@@ -88,7 +88,7 @@ function Heatmap() {
 
   return (
     <div className="map-wrapper">
-      <div className='map-title'>Heatmap based on tweets from the dataset: {collectionName}</div>
+      <div className='map-title'>Global sentiment overview: Data from '{collectionName}'</div>
       <div ref={mapContainer} id="map-map" className="map-map"></div>
     </div>
   );
