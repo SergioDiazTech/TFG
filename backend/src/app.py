@@ -27,6 +27,10 @@ def search_tweets_route():
     data = request.json
     keyword = data['keyword']
     numeroDeTweets = int(data['numeroDeTweets'])
+
+    if numeroDeTweets <= 0:
+        return jsonify({'message': 'El número de tweets debe ser mayor que cero'}), 400
+
     custom_name = data.get('customName', keyword)
     get_tweets(keyword, numeroDeTweets, custom_name)
     return jsonify({'message': 'Tweets cargados correctamente'})

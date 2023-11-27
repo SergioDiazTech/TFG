@@ -10,8 +10,14 @@ function Twitter_API() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    // Realizar la solicitud a la API de Twitter
+  
+    if (parseInt(numeroDeTweets) <= 0) {
+      setMessage("Please enter a number of tweets greater than zero.");
+      return;
+    }
+  
+    setMessage("Processing your request...");
+  
     fetch(`${API}/twitterapi`, {
       method: 'POST',
       headers: {
@@ -25,13 +31,7 @@ function Twitter_API() {
     })
     .then((response) => response.json())
     .then((data) => {
-      if (data.message) {
-        
-        setMessage(data.message);
-      } else {
-        
-        setMessage("The tweets have not been loaded correctly.");
-      }
+      setMessage(data.message);
     })
     .catch((error) => {
       console.error('Error while fetching the tweets:', error);
