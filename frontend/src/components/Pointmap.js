@@ -91,7 +91,7 @@ function Pointmap() {
 
   return (
     <div className="map-wrapper">
-      <div className='map-title'>Pointmap based on tweets from the dataset: {collectionName}</div>
+      <div className='map-title'>Emotional reflection: Visualizing individual tweet sentiments from '{collectionName}' data</div>
       <div ref={mapContainer} id="map-map" className="map-map"></div>
     </div>
   );
