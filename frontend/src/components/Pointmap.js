@@ -7,6 +7,8 @@ const API = process.env.REACT_APP_API;
 function Pointmap() {
   const [pointMapData, setPointMapData] = useState([]);
   const [collectionName, setCollectionName] = useState('');
+  const [totalPoints, setTotalPoints] = useState(0); // Estado para el contador de puntos
+  const [totalTweets, setTotalTweets] = useState(0); // Estado para el total de tweets
   const mapContainer = useRef(null);
   const mapInstance = useRef(null);
 
@@ -30,6 +32,7 @@ function Pointmap() {
           }));
           setPointMapData(newPointMapData);
           setCollectionName(response.collectionName);
+          setTotalTweets(response.totalTweets); // Establece el total de tweets
         } else {
           console.error('Data is missing required properties:', response);
         }
@@ -43,6 +46,9 @@ function Pointmap() {
     if (pointMapData.length === 0) {
       return;
     }
+
+    // Actualiza el contador de puntos
+    setTotalPoints(pointMapData.length);
 
     if (!mapInstance.current) {
       mapInstance.current = L.map(mapContainer.current).setView([0, 0], 5);
@@ -92,6 +98,9 @@ function Pointmap() {
   return (
     <div className="map-wrapper">
       <div className='map-title'>Emotional reflection: Visualizing individual tweet sentiments from '{collectionName}' data</div>
+      <div className="total-points">
+        Tweet Summary: {totalPoints} out of {totalTweets} Tweets Analyzed
+      </div>
       <div ref={mapContainer} id="map-map" className="map-map"></div>
     </div>
   );

@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 import pandas as pd
-import random
 
 def draw_pointmap():
     MONGO_URI = 'mongodb://127.0.0.1'
@@ -16,6 +15,8 @@ def draw_pointmap():
         {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}},
         {'latitude': 1, 'longitude': 1, 'sentiment': 1, '_id': 0}
     ))
+
+    total_tweets = twitter_collection.count_documents({})
 
     # Creamos un DataFrame a partir de los datos que hemos obtenido
     map_data = pd.DataFrame(data)
@@ -36,4 +37,4 @@ def draw_pointmap():
     registry_document = db['Ingestion_Registry'].find_one({"CollectionName": twitter_collection_name})
     collection_display_name = registry_document['Name'] if registry_document else 'Default Name'
 
-    return {'data': data_formatted, 'collectionName': collection_display_name}
+    return {'data': data_formatted, 'collectionName': collection_display_name, 'totalTweets': total_tweets}
