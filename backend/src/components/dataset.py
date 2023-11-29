@@ -37,6 +37,21 @@ def calculate_sentiment(tweets):
         sentiment_value = round(positive_sentiment - negative_sentiment, 2)
         tweet['sentiment'] = sentiment_value
 
+def calculate_hate_speech_score(tweets):
+    for tweet in tweets:
+        hate_speech_data = tweet.get('hate_speech', {})
+        hate = hate_speech_data.get('hate', 0)
+        non_hate = hate_speech_data.get('non_hate', 0) * -1
+
+        tweet['hate_speech'] = hate + non_hate
+
+def normalize_source(tweets):
+    for tweet in tweets:
+        source = tweet.get('source', '')
+        if source not in ['Twitter for Android', 'Twitter for iPhone']:
+            tweet['source'] = 'Other Source'
+
+
 def save_json_to_mongodb(filename, custom_name):
     DATA_FILEPATH = os.path.join(DATA_FOLDER, filename)
     with open(DATA_FILEPATH, 'r', encoding='utf-8') as file:
@@ -48,7 +63,17 @@ def save_json_to_mongodb(filename, custom_name):
     if filename == "tweets_colombia21.json":
         dataset_collection = db['tweets_colombia']
         calculate_sentiment(data)
+        calculate_hate_speech_score(data)
+        normalize_source(data)
         for tweet in data:
+
+            tweet.pop('election', None)
+            tweet.pop('attachments', None)
+            tweet.pop('lang', None)
+            tweet.pop('reply_settings', None)
+            tweet.pop('context_annotations', None)
+
+
             tweet['_id'] = tweet['_id']['$oid']
             if dataset_collection.find_one({'_id': tweet['_id']}) is None:
                 dataset_collection.insert_one(tweet)
@@ -59,13 +84,16 @@ def save_json_to_mongodb(filename, custom_name):
         tweets_collection = db['tweets_colombia']
         for user in data:
             user = procesamiento_geoparsing(user)
+
+            user.pop('profile_image_url', None)
+            user.pop('url', None)
+            user.pop('protected', None)
+
             user['_id'] = user['_id']['$oid']
             if dataset_collection.find_one({'_id': user['_id']}) is None:
                 dataset_collection.insert_one(user)
                 print(f"User ID: {user['_id']} - Nuevo usuario añadido con latitud: {user['latitude']} y longitud: {user['longitude']}")
 
-            '''
-            
             
             # Actualiza las coordenadas en los tweets correspondientes
             tweets_to_update = tweets_collection.find({
@@ -83,7 +111,7 @@ def save_json_to_mongodb(filename, custom_name):
                     updated_tweet = tweets_collection.find_one({'_id': tweet['_id']})
                     print(updated_tweet)
                     
-            '''
+            
     os.remove(DATA_FILEPATH)  # Elimina el archivo después de procesarlo
 
     # Registro de la ingesta
