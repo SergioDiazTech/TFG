@@ -7,6 +7,7 @@ from components.data import load_data, get_collection_names
 from components.users import load_users
 from components.heatmap import draw_heatmap
 from components.pointmap import draw_pointmap
+from components.overview import load_information
 
 import traceback
 
@@ -73,6 +74,21 @@ def get_data_route(collection_name):
     per_page = int(request.args.get('per_page', 5))
     result = load_data(collection_name, page, per_page)
     return jsonify(result)
+
+
+@app.route('/sentiment_count', methods=['GET'])
+def sentiment_count_route():
+    try:
+        total_tweets, positive_tweets, negative_tweets = load_information()
+        return jsonify({
+            'total_tweets': total_tweets,
+            'positive_tweets': positive_tweets,
+            'negative_tweets': negative_tweets
+        })
+    except Exception as e:
+        print(f'Error: {e}')
+        traceback.print_exc()  # Traceback completo
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/users', methods=['GET'])
