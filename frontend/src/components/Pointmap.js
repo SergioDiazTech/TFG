@@ -70,7 +70,22 @@ function Pointmap() {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance.current);
     }
 
-    const markers = L.markerClusterGroup();
+    const markers = L.markerClusterGroup({
+      iconCreateFunction: function(cluster) {
+        var childCount = cluster.getChildCount();
+        var c = ' marker-cluster-';
+        if (childCount < 50) {
+          c += 'small';
+        } else if (childCount < 1000) {
+          c += 'medium';
+        } else {
+          c += 'large';
+        }
+
+        return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+      }
+    });
+
     pointMapData.forEach(point => {
       const { lat, lng, value } = point;
       const marker = L.circleMarker([lat, lng], {
@@ -100,11 +115,11 @@ function Pointmap() {
     legend.current = L.control({ position: 'bottomright' });
     legend.current.onAdd = function (map) {
       const div = L.DomUtil.create('div', 'info legend');
-      const grades = ["[-1, -0.52]", "[-0.51, 0.51]", "[0.52, 1]"];
+      const grades = ["< 50 tweets", "50 - 1000 tweets", "1000+ tweets"];
       const labels = [];
       const colors = ['red', 'yellow', 'green'];
 
-      div.innerHTML = '<h6>Sentiment Scale</h6>';
+      div.innerHTML = '<h6>Tweet cluster size</h6>';
 
       for (let i = 0; i < grades.length; i++) {
         labels.push(
@@ -128,7 +143,7 @@ function Pointmap() {
 
   return (
     <div className="map-wrapper">
-      <div className='map-title'>Emotional reflection: Visualizing individual tweet sentiments from '{collectionName}' data</div>
+      <div className='map-title'>Tweet distribution: Visualizing clusters by volume in '{collectionName}'</div>
       <div className="total-points">
         Tweet Summary: {totalPoints} out of {totalTweets} Tweets Analyzed
       </div>
