@@ -14,6 +14,7 @@ function Pointmap() {
   const [totalTweets, setTotalTweets] = useState(0);
   const mapContainer = useRef(null);
   const mapInstance = useRef(null);
+  const legend = useRef(null);
 
   const getFillColor = (value) => {
     if (value > 0.51) {
@@ -92,12 +93,14 @@ function Pointmap() {
       console.error('No valid data available to fit bounds on map');
     }
 
-    // Añadir leyenda al mapa
-    const legend = L.control({ position: 'bottomright' });
+    if (legend.current) {
+      mapInstance.current.removeControl(legend.current);
+    }
 
-    legend.onAdd = function (map) {
+    legend.current = L.control({ position: 'bottomright' });
+    legend.current.onAdd = function (map) {
       const div = L.DomUtil.create('div', 'info legend');
-      const grades = [-1, -0.51, 0.51]; // Puntos de corte para los colores
+      const grades = [-1, -0.51, 0.51];
       const labels = [];
       const colors = ['red', 'yellow', 'green'];
 
@@ -110,11 +113,14 @@ function Pointmap() {
       div.innerHTML = labels.join('<br>');
       return div;
     };
-
-    legend.addTo(mapInstance.current);
+    legend.current.addTo(mapInstance.current);
 
     return () => {
       markers.clearLayers();
+      if (legend.current) {
+        mapInstance.current.removeControl(legend.current);
+        legend.current = null;
+      }
     };
   }, [pointMapData]);
 
