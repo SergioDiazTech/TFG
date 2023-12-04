@@ -714,3 +714,49 @@ h1 {
   color: #555;
   font-size: 18px;
 }
+
+
+.custom-zoom-control .leaflet-control-zoom-in, 
+.custom-zoom-control .leaflet-control-zoom-out {
+  background-color: white;
+  color: black;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  font-size: 18px;
+}
+
+.custom-zoom-control .leaflet-control-zoom-in {
+  margin-bottom: 8px;
+}
+
+.custom-zoom-control .leaflet-control-zoom-in:hover, 
+.custom-zoom-control .leaflet-control-zoom-out:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.custom-zoom-control .leaflet-bar a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+
+.legend {
+  padding: 6px 8px;
+  font-size: 14px;
+  line-height: 24px;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}

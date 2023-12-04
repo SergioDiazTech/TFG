@@ -38,7 +38,17 @@ function Heatmap() {
       return;
     }
 
-    const mapInstance = L.map(mapContainer.current).setView([0, 0], 2);
+    const mapInstance = L.map(mapContainer.current, {
+      center: [0, 0],
+      zoom: 2,
+      zoomControl: false
+    });
+
+
+    L.control.zoom({
+      position: 'topright',
+      className: 'custom-zoom-control'
+    }).addTo(mapInstance);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
@@ -61,7 +71,6 @@ function Heatmap() {
       }
     ).addTo(mapInstance);
 
-    
     heatMapData.forEach(point => {
       const { lat, lng, value } = point;
       const marker = L.circleMarker([lat, lng], { radius: 1, color: 'transparent' }).addTo(mapInstance);
