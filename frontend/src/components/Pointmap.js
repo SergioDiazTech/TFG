@@ -1,23 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import 'leaflet.markercluster/dist/leaflet.markercluster.js';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 const API = process.env.REACT_APP_API;
 
 function Pointmap() {
   const [pointMapData, setPointMapData] = useState([]);
   const [collectionName, setCollectionName] = useState('');
-  const [totalPoints, setTotalPoints] = useState(0); // Estado para el contador de puntos
-  const [totalTweets, setTotalTweets] = useState(0); // Estado para el total de tweets
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [totalTweets, setTotalTweets] = useState(0);
   const mapContainer = useRef(null);
   const mapInstance = useRef(null);
 
   const getFillColor = (value) => {
-    const red = Math.floor((1 - value) * 255);
-    const green = Math.floor((value + 1) * 255) / 2;
-    const blue = 0;
-    const opacity = 0.7;
-    return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+    if (value > 0.51) {
+      return 'green';
+    } else if (value < -0.51) {
+      return 'red';
+    } else {
+      return 'yellow';
+    }
   };
 
   useEffect(() => {
@@ -32,7 +37,7 @@ function Pointmap() {
           }));
           setPointMapData(newPointMapData);
           setCollectionName(response.collectionName);
-          setTotalTweets(response.totalTweets); // Establece el total de tweets
+          setTotalTweets(response.totalTweets);
         } else {
           console.error('Data is missing required properties:', response);
         }
@@ -47,32 +52,38 @@ function Pointmap() {
       return;
     }
 
-    // Actualiza el contador de puntos
     setTotalPoints(pointMapData.length);
 
     if (!mapInstance.current) {
-      mapInstance.current = L.map(mapContainer.current).setView([0, 0], 5);
+      mapInstance.current = L.map(mapContainer.current, {
+        center: [0, 0],
+        zoom: 5,
+        zoomControl: false
+      });
+
+      L.control.zoom({
+        position: 'topright',
+        className: 'custom-zoom-control'
+      }).addTo(mapInstance.current);
+
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance.current);
     }
 
-    const layerGroup = L.layerGroup().addTo(mapInstance.current);
-
+    const markers = L.markerClusterGroup();
     pointMapData.forEach(point => {
       const { lat, lng, value } = point;
-      if (typeof lat !== 'number' || typeof lng !== 'number' || typeof value !== 'number') {
-        console.error('Invalid data:', point);
-        return;
-      }
-
       const marker = L.circleMarker([lat, lng], {
-        radius: 6,
-        fillOpacity: 0.5,
+        radius: 7,
+        fillOpacity: 0.8,
         fillColor: getFillColor(value),
         className: 'pointmap-marker',
       });
 
-      marker.bindPopup(`Sentiment value: ${value}`).addTo(layerGroup);
+      marker.bindPopup(`Sentiment value: ${value}`);
+      markers.addLayer(marker);
     });
+
+    mapInstance.current.addLayer(markers);
 
     if (pointMapData.some(point => point.lat && point.lng)) {
       const bounds = L.latLngBounds(pointMapData.map(point => [point.lat, point.lng]));
@@ -81,19 +92,31 @@ function Pointmap() {
       console.error('No valid data available to fit bounds on map');
     }
 
+    // Añadir leyenda al mapa
+    const legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function (map) {
+      const div = L.DomUtil.create('div', 'info legend');
+      const grades = [-1, -0.51, 0.51]; // Puntos de corte para los colores
+      const labels = [];
+      const colors = ['red', 'yellow', 'green'];
+
+      for (let i = 0; i < grades.length; i++) {
+        labels.push(
+          '<i style="background:' + colors[i] + '"></i> ' +
+          (grades[i] ? grades[i] : '+0.51'));
+      }
+
+      div.innerHTML = labels.join('<br>');
+      return div;
+    };
+
+    legend.addTo(mapInstance.current);
+
     return () => {
-      layerGroup.clearLayers();
+      markers.clearLayers();
     };
   }, [pointMapData]);
-
-  useEffect(() => {
-    return () => {
-      if (mapInstance.current) {
-        mapInstance.current.remove();
-        mapInstance.current = null;
-      }
-    };
-  }, []);
 
   return (
     <div className="map-wrapper">
