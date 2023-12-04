@@ -100,9 +100,11 @@ function Pointmap() {
     legend.current = L.control({ position: 'bottomright' });
     legend.current.onAdd = function (map) {
       const div = L.DomUtil.create('div', 'info legend');
-      const grades = [-1, -0.51, 0.51];
+      const grades = ["[-1, -0.52]", "[-0.51, 0.51]", "[0.52, 1]"];
       const labels = [];
       const colors = ['red', 'yellow', 'green'];
+
+      div.innerHTML = '<h6>Sentiment Scale</h6>';
 
       for (let i = 0; i < grades.length; i++) {
         labels.push(
@@ -110,7 +112,7 @@ function Pointmap() {
           (grades[i] ? grades[i] : '+0.51'));
       }
 
-      div.innerHTML = labels.join('<br>');
+      div.innerHTML += labels.join('<br>');
       return div;
     };
     legend.current.addTo(mapInstance.current);
