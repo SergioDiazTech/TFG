@@ -13,7 +13,7 @@ def draw_pointmap():
     # Obtenemos todos los documentos de la colección que tienen 'latitude', 'longitude' y 'sentiment'
     data = list(twitter_collection.find(
         {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}},
-        {'latitude': 1, 'longitude': 1, 'sentiment': 1, '_id': 0}
+        {'latitude': 1, 'longitude': 1, 'sentiment': 1, 'text': 1, '_id': 0}
     ))
 
     total_tweets = twitter_collection.count_documents({})
@@ -29,7 +29,8 @@ def draw_pointmap():
         row_data = {
             'latitude': row['latitude'],
             'longitude': row['longitude'],
-            'sentiment': row['sentiment']
+            'sentiment': row['sentiment'],
+            'text': row['text']
         }
         data_formatted.append(row_data)
 

@@ -35,6 +35,7 @@ function Pointmap() {
             lat: item.latitude,
             lng: item.longitude,
             value: item.sentiment,
+            text: item.text,
           }));
           setPointMapData(newPointMapData);
           setCollectionName(response.collectionName);
@@ -87,17 +88,26 @@ function Pointmap() {
     });
 
     pointMapData.forEach(point => {
-      const { lat, lng, value } = point;
+      const { lat, lng, value, text } = point;
       const marker = L.circleMarker([lat, lng], {
         radius: 7,
         fillOpacity: 0.8,
         fillColor: getFillColor(value),
         className: 'pointmap-marker',
       });
+    
+      const popupContent = `
+        <div class="custom-popup">
+          <h5 style="text-align: center;">Sentiment Value: ${value}</h5>
+          <p style="text-align: justify;">${text}</p>
+        </div>
+      `;
 
-      marker.bindPopup(`Sentiment value: ${value}`);
+    
+      marker.bindPopup(popupContent);
       markers.addLayer(marker);
     });
+    
 
     mapInstance.current.addLayer(markers);
 
@@ -163,6 +173,7 @@ function Pointmap() {
                       
                       <p>- Data 3</p>
                     </div>
+
                 </div>
             </div>
         </div>
