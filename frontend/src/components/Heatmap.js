@@ -123,6 +123,9 @@ function Heatmap() {
                   <div className="average-sentiment-summary-heatmap">
                     <p>Average Sentiment: {calculateAverageSentiment()}</p>
                   </div>
+                  <div className="explanation-sentiment-summary-heatmap">
+                    <p>Explanation: <span>The interface displays an interactive heatmap, based on Twitter data from Colombia, that visualizes the average geolocated sentiment. You can see the distribution of sentiments in different areas and obtain a summary of the processed data.</span></p>
+                  </div>
                 </div>
 
             </div>

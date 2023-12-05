@@ -935,6 +935,23 @@ h1 {
   color: #000000;
 }
 
+.explanation-sentiment-summary-heatmap {
+
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+
+.explanation-sentiment-summary-heatmap span {
+  font-size: 90%;
+  color: #4c4c4c;
+}
+
+
 @media (max-width: 768px) {
   .main-content-heatmap {
       flex-direction: column;
