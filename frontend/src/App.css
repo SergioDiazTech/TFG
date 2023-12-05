@@ -814,6 +814,55 @@ h1 {
   max-height: 250px;
 }
 
+.total-tweets-summary-pointmap {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+
+.total-tweets-summary-pointmap p {
+  margin: 0;
+  color: #333;
+  font-weight: bold;
+}
+
+
+.Highest-Sentiment-tweets-summary-pointmap span,
+.Lowest-Sentiment-tweets-summary-pointmap span {
+  font-size: 90%;
+  color: #4c4c4c;
+}
+
+
+.Highest-Sentiment-tweets-summary-pointmap {
+  background-color: #28a7463f;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+  color: #000000;
+  
+}
+
+.Lowest-Sentiment-tweets-summary-pointmap {
+  background-color: #df001645;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+
+.map-section-pointmap {
+  flex-basis: auto;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+
 
 @media (max-width: 768px) {
   .main-content-pointmap {

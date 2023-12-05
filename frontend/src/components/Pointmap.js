@@ -26,6 +26,13 @@ function Pointmap() {
     }
   };
 
+
+  const findExtremeTweet = (type) => {
+    if (pointMapData.length === 0) return 'N/A';
+    const sortedData = [...pointMapData].sort((a, b) => a.value - b.value);
+    return type === 'high' ? sortedData[sortedData.length - 1].text : sortedData[0].text;
+  };
+
   useEffect(() => {
     fetch(`${API}/pointmap`)
       .then(response => response.json())
@@ -157,21 +164,25 @@ function Pointmap() {
             <div className="map-and-data-pointmap">
                 <div className="map-section-pointmap">
                     <div className="map-header-pointmap">
-                        <h5 className="map-title-pointmap">Tweet distribution: Visualizing clusters by volume in '{collectionName}'</h5>
+                        <h5 style={{ textAlign: 'center' }}>Tweet distribution: Visualizing clusters by volume in '{collectionName}'</h5>
                     </div>
                     <div ref={mapContainer} className="map-map"></div>
                 </div>
 
                 <div className="data-summary-section-pointmap">
                     <div className="data-summary-header-pointmap">
-                        <h5 className="map-title-pointmap">Tweet summary</h5>
+                        <h5 className="map-title-pointmap">Tweets summary</h5>
                     </div>
-                    <div className="data-summary-pointmap">
-                      <p>- {totalPoints} out of {totalTweets} Tweets Analyzed</p>
-                      
-                      <p>- Data 2</p>
-                      
-                      <p>- Data 3</p>
+                    <div className="total-tweets-summary-pointmap">
+                      <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
+                    </div>
+                    
+                    <div className="Highest-Sentiment-tweets-summary-pointmap">
+                      <p>Highest Sentiment Tweet: <span>"{findExtremeTweet('high')}"</span></p>
+                    </div>
+
+                    <div className="Lowest-Sentiment-tweets-summary-pointmap">
+                        <p>Lowest Sentiment Tweet: <span>"{findExtremeTweet('low')}"</span></p>
                     </div>
 
                 </div>
