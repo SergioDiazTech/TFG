@@ -772,3 +772,60 @@ h1 {
 .marker-cluster-large {
   background-color: #ff3333; /* Color para clusters grandes */
 }
+
+.dashboard-container-pointmap {
+  display: flex;
+  height: 80vh;
+}
+
+.main-content-pointmap {
+  flex-grow: 1;
+  display: flex;
+  padding: 20px;
+}
+
+.map-and-data-pointmap {
+  display: flex;
+  flex-grow: 1;
+}
+
+.map-section-pointmap {
+  flex-grow: 4;
+  margin-right: 40px;
+}
+
+.data-summary-section-pointmap {
+  flex-grow: 4;
+  margin-right: 40px;
+}
+
+.data-summary-header-pointmap {
+  text-align: center;
+  font-size: 110%;
+  font: bold;
+}
+
+.data-summary-pointmap {
+  flex-grow: 4;
+  background-color: #6b6b6b16;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  max-height: 250px;
+}
+
+
+@media (max-width: 768px) {
+  .main-content-pointmap {
+      flex-direction: column;
+      padding: 10px;
+  }
+
+  .map-and-data-pointmap {
+      flex-direction: column;
+  }
+
+  .map-section-pointmap {
+      margin-right: 0;
+  }
+}

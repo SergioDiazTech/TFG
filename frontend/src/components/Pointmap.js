@@ -142,12 +142,30 @@ function Pointmap() {
   }, [pointMapData]);
 
   return (
-    <div className="map-wrapper">
-      <div className='map-title'>Tweet distribution: Visualizing clusters by volume in '{collectionName}'</div>
-      <div className="total-points">
-        Tweet Summary: {totalPoints} out of {totalTweets} Tweets Analyzed
-      </div>
-      <div ref={mapContainer} id="map-map" className="map-map"></div>
+    <div className="dashboard-container-pointmap">
+        <div className="main-content-pointmap">
+            <div className="map-and-data-pointmap">
+                <div className="map-section-pointmap">
+                    <div className="map-header-pointmap">
+                        <h5 className="map-title-pointmap">Tweet distribution: Visualizing clusters by volume in '{collectionName}'</h5>
+                    </div>
+                    <div ref={mapContainer} className="map-map"></div>
+                </div>
+
+                <div className="data-summary-section-pointmap">
+                    <div className="data-summary-header-pointmap">
+                        <h5 className="map-title-pointmap">Tweet summary</h5>
+                    </div>
+                    <div className="data-summary-pointmap">
+                      <p>- {totalPoints} out of {totalTweets} Tweets Analyzed</p>
+                      
+                      <p>- Data 2</p>
+                      
+                      <p>- Data 3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   );
 }
