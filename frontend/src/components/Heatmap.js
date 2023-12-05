@@ -33,6 +33,13 @@ function Heatmap() {
 
   const normalizeSentiment = value => (value + 1) / 2; 
 
+  
+  const calculateAverageSentiment = () => {
+    const totalSentiment = heatMapData.reduce((acc, val) => acc + val.value, 0);
+    return (totalSentiment / heatMapData.length).toFixed(2);
+  };
+
+
   useEffect(() => {
     if (!mapContainer.current || heatMapData.length === 0) {
       return;
@@ -96,9 +103,30 @@ function Heatmap() {
   }, [heatMapData]);
 
   return (
-    <div className="map-wrapper">
-      <div className='map-title'>Global sentiment overview: Data from '{collectionName}'</div>
-      <div ref={mapContainer} id="map-map" className="map-map"></div>
+    <div className="dashboard-container-heatmap">
+        <div className="main-content-heatmap">
+            <div className="map-and-data-heatmap">
+                <div className="map-section-heatmap">
+                    <div className="map-header-heatmap">
+                      <h5 style={{ textAlign: 'center' }}>Global sentiment overview: Data from '{collectionName}'</h5>
+                    </div>
+                    <div ref={mapContainer} className="map-map"></div>
+                </div>
+
+                <div className="data-summary-section-heatmap">
+                  <div className="data-summary-header-heatmap">
+                    <h5 className="map-title-heatmap">Data Summary</h5>
+                  </div>
+                  <div className="total-tweets-summary-heatmap">
+                    <p>Coordinate Groups: {heatMapData.length}</p>
+                  </div>
+                  <div className="average-sentiment-summary-heatmap">
+                    <p>Average Sentiment: {calculateAverageSentiment()}</p>
+                  </div>
+                </div>
+
+            </div>
+        </div>
     </div>
   );
 }
