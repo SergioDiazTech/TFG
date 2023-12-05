@@ -968,3 +968,56 @@ h1 {
       flex-grow: 1;
   }
 }
+
+.dashboard-container {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.doughnut-chart-container {
+  flex: 1;
+  max-width: 20%; 
+}
+
+.top-tweets-table-container {
+  flex: 1;
+  max-width: 40%;
+}
+
+.top-tweets-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.top-tweets-table-container th, .top-tweets-table-container td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
+
+.top-tweets-table-container th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.top-tweets-table-container tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.top-tweets-table-container tr:hover {
+  background-color: #ddd;
+}
+
+.sentiment-over-time-chart {
+  max-height: 400px;
+  margin-top: 10px;
+  padding: 10px;
+}
