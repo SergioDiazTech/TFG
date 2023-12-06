@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 import { Doughnut, Line } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
 
@@ -53,11 +54,14 @@ function TotalTweets() {
     <div className="dashboard-container">
       <h1 className="title">Twitter Sentiment Analysis and Statistics Dashboard</h1>
       {isLoading ? (
-        <p>Cargando...</p>
+        <div className="processing-container">
+          <i className="fas fa-spinner fa-spin"></i> Loading...
+        </div>
       ) : (
         <>
           <div className="top-section">
             <div className="doughnut-chart-container">
+            <h4>Positive vs Negative tweet analysis</h4>
               <Doughnut data={sentimentData} options={{
                 maintainAspectRatio: false,
                 cutout: '70%',
@@ -76,12 +80,12 @@ function TotalTweets() {
               }} />
             </div>
             <div className="top-tweets-table-container">
-              <h2>Tweets con más RTs</h2>
+              <h4>Tweets with Most Retweets</h4>
               <table>
                 <thead>
                   <tr>
-                    <th>Texto del Tweet</th>
-                    <th>RTs</th>
+                    <th>Tweet text</th>
+                    <th>RT's</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -96,7 +100,7 @@ function TotalTweets() {
             </div>
           </div>
           <div className="sentiment-over-time-chart">
-            <h2>Variación de Sentimiento a lo Largo del Tiempo</h2>
+            <h4>Variation of sentiment over time</h4>
             <Line data={sentimentOverTimeData} options={{
               scales: {
                 y: {
