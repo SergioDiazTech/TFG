@@ -24,12 +24,22 @@ const Navbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className={`nav-link ${location.pathname === "/twitterapi" ? "active" : ""}`} to="/twitterapi">
-                            Twitter Ingestion
-                        </Link>
-                        <Link className={`nav-link ${location.pathname === "/dataset" ? "active" : ""}`} to="/dataset">
-                            Dataset Ingestion
-                        </Link>
+                        <div className="nav-item dropdown">
+                            <Link 
+                                className={`nav-link dropdown-toggle ${location.pathname === "/twitterapi" || location.pathname === "/dataset" ? "active" : ""}`} 
+                                to="#" 
+                                id="navbarDropdownMenuLink" 
+                                role="button" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false"
+                            >
+                                Ingestion
+                            </Link>
+                            <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><Link className="dropdown-item" to="/twitterapi">Twitter Ingestion</Link></li>
+                                <li><Link className="dropdown-item" to="/dataset">Dataset Ingestion</Link></li>
+                            </ul>
+                        </div>
                         <Link className={`nav-link ${location.pathname === "/overview" ? "active" : ""}`} to="/overview">
                             Overview
                         </Link>

@@ -560,6 +560,20 @@ h1 {
   font-size: 102%;
 }
 
+
+.nav-item.dropdown .nav-link.dropdown-toggle:hover,
+.nav-item.dropdown .nav-link.dropdown-toggle:focus {
+  font-size: inherit;
+  background-color: inherit;
+  color: inherit;
+}
+
+
+.nav-item.dropdown .nav-link.dropdown-toggle::after {
+  display: none;
+}
+
+
 .navbar-brand:hover, .navbar-brand.active {
   font-weight: bold;
 }
@@ -588,6 +602,41 @@ h1 {
   }
 }
 
+
+
+.navbar-nav .nav-link,
+.navbar-nav .nav-item.dropdown {
+    margin-right: 3px;
+}
+
+.navbar-nav .nav-link:last-child,
+.navbar-nav .nav-item.dropdown:last-child {
+    margin-right: 0;
+}
+
+@media (max-width: 992px) {
+  .navbar-nav .nav-link,
+  .navbar-nav .nav-item.dropdown {
+    margin-right: 0;
+    padding: 8px 15px;
+  }
+}
+
+
+.nav-link:hover,
+.nav-link.active {
+  color: #000000;
+  font-weight: bold;
+}
+
+
+.nav-item.dropdown .nav-link.dropdown-toggle:hover,
+.nav-item.dropdown .nav-link.dropdown-toggle:focus {
+  color: #000000;
+  font-weight: bold;
+  background-color: inherit;
+  font-size: 102%;
+}
 
 
 
@@ -1024,3 +1073,5 @@ h1 {
   margin-right: auto;
   width: 60%;
 }
+
+
