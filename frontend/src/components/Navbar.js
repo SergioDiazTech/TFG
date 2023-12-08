@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Navbar = () => {
     const location = useLocation();
+    const [isIngestionOpen, setIsIngestionOpen] = useState(false);
+
+    const toggleIngestion = () => {
+        setIsIngestionOpen(!isIngestionOpen);
+    };
+
+    const handleIngestionOptionClick = () => {
+        setIsIngestionOpen(false);
+    };
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -25,19 +35,21 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <div className="nav-item dropdown">
-                            <Link 
-                                className={`nav-link dropdown-toggle ${location.pathname === "/twitterapi" || location.pathname === "/dataset" ? "active" : ""}`} 
-                                to="#" 
-                                id="navbarDropdownMenuLink" 
-                                role="button" 
-                                data-bs-toggle="dropdown" 
-                                aria-expanded="false"
-                            >
-                                Ingestion
-                            </Link>
-                            <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><Link className="dropdown-item" to="/twitterapi">Twitter Ingestion</Link></li>
-                                <li><Link className="dropdown-item" to="/dataset">Dataset Ingestion</Link></li>
+                        <Link 
+                            className={`nav-link dropdown-toggle ${location.pathname.includes("/ingestion") ? "active" : ""}`} 
+                            to="#" 
+                            id="navbarDropdownMenuLink" 
+                            role="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded={isIngestionOpen}
+                            onClick={toggleIngestion}
+                            style={{ display: 'flex', alignItems: 'center' }}
+                        >
+                            Ingestion {isIngestionOpen ? <FaCaretUp /> : <FaCaretDown />}
+                        </Link>
+                            <ul className={`dropdown-menu ${isIngestionOpen ? "show" : ""}`} aria-labelledby="navbarDropdownMenuLink">
+                                <li><Link className="dropdown-item" to="/twitterapi" onClick={handleIngestionOptionClick}>Twitter Ingestion</Link></li>
+                                <li><Link className="dropdown-item" to="/dataset" onClick={handleIngestionOptionClick}>Dataset Ingestion</Link></li>
                             </ul>
                         </div>
                         <Link className={`nav-link ${location.pathname === "/overview" ? "active" : ""}`} to="/overview">

@@ -531,6 +531,8 @@ h1 {
   padding-bottom: 0.5rem;
   transition: color 0.3s ease-in-out;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .nav-link::after {
@@ -636,6 +638,13 @@ h1 {
   font-weight: bold;
   background-color: inherit;
   font-size: 102%;
+}
+
+.ingestion-link::after {
+  content: "▼";
+  font-size: 0.7em;
+  margin-left: 5px;
+  vertical-align: middle;
 }
 
 
