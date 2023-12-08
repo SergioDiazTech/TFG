@@ -551,6 +551,25 @@ h1 {
   width: 50%;
 }
 
+.ingestion-link-content::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1d3b5b49;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link.dropdown-toggle:hover .ingestion-link-content::after, 
+.nav-link.dropdown-toggle.active .ingestion-link-content::after {
+  width: 50%;
+}
+
+
+
 .navbar {
   background-color: #000000dd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.125);

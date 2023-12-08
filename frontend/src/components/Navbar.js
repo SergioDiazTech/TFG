@@ -45,8 +45,9 @@ const Navbar = () => {
                             onClick={toggleIngestion}
                             style={{ display: 'flex', alignItems: 'center' }}
                         >
-                            Ingestion {isIngestionOpen ? <FaCaretUp /> : <FaCaretDown />}
+                            <span className="ingestion-link-content">Ingestion {isIngestionOpen ? <FaCaretUp /> : <FaCaretDown />}</span>
                         </Link>
+
                             <ul className={`dropdown-menu ${isIngestionOpen ? "show" : ""}`} aria-labelledby="navbarDropdownMenuLink">
                                 <li><Link className="dropdown-item" to="/twitterapi" onClick={handleIngestionOptionClick}>Twitter Ingestion</Link></li>
                                 <li><Link className="dropdown-item" to="/dataset" onClick={handleIngestionOptionClick}>Dataset Ingestion</Link></li>
