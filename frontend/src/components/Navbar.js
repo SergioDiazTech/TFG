@@ -30,20 +30,20 @@ const Navbar = () => {
                         <Link className={`nav-link ${location.pathname === "/dataset" ? "active" : ""}`} to="/dataset">
                             Dataset Ingestion
                         </Link>
-                        <Link className={`nav-link ${location.pathname === "/tweetsData" ? "active" : ""}`} to="/tweetsData">
-                            Data
-                        </Link>
                         <Link className={`nav-link ${location.pathname === "/overview" ? "active" : ""}`} to="/overview">
                             Overview
-                        </Link>
-                        <Link className={`nav-link ${location.pathname === "/users" ? "active" : ""}`} to="/users">
-                            Users
                         </Link>
                         <Link className={`nav-link ${location.pathname === "/heatmap" ? "active" : ""}`} to="/heatmap">
                             Heatmap
                         </Link>
                         <Link className={`nav-link ${location.pathname === "/pointmap" ? "active" : ""}`} to="/pointmap">
                             Pointmap
+                        </Link>
+                        <Link className={`nav-link ${location.pathname === "/tweetsData" ? "active" : ""}`} to="/tweetsData">
+                            Data
+                        </Link>
+                        <Link className={`nav-link ${location.pathname === "/users" ? "active" : ""}`} to="/users">
+                            Users
                         </Link>
                         <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">
                             About
