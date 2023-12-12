@@ -14,12 +14,20 @@ def procesamiento_geoparsing(tweet):
     address = tweet.get('location')
     if address:
         latitude, longitude = geolocate(address)
-        tweet['latitude'] = latitude
-        tweet['longitude'] = longitude
+        if latitude is not None and longitude is not None:
+            tweet['latitude'] = latitude
+            tweet['longitude'] = longitude
+            tweet['location'] = address  # Guardar la ubicación original solo si se obtienen coordenadas
+        else:
+            tweet['latitude'] = None
+            tweet['longitude'] = None
+            tweet.pop('location', None)  # Eliminar la ubicación si no se pueden obtener coordenadas
     else:
         tweet['latitude'] = None
         tweet['longitude'] = None
+        tweet.pop('location', None)
     return tweet
+
 
 def geolocate(location):
     try:
@@ -102,14 +110,22 @@ def save_json_to_mongodb(filename, custom_name):
             })
 
             for tweet in tweets_to_update:
+                update_fields = {
+                    'latitude': user['latitude'], 
+                    'longitude': user['longitude']
+                }
+                if 'location' in user:
+                    update_fields['location'] = user['location']
+
                 result = tweets_collection.update_one(
                     {'_id': tweet['_id']},
-                    {'$set': {'latitude': user['latitude'], 'longitude': user['longitude']}}
+                    {'$set': update_fields}
                 )
-                # Si se realizó la actualización, imprimir el documento actualizado
+
                 if result.modified_count > 0:
                     updated_tweet = tweets_collection.find_one({'_id': tweet['_id']})
                     print(updated_tweet)
+
                     
             
     os.remove(DATA_FILEPATH)  # Elimina el archivo después de procesarlo
