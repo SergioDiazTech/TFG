@@ -1042,19 +1042,28 @@ h1 {
 
 .top-section {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-.doughnut-chart-container {
-  flex: 1;
-  max-width: 20%; 
-}
-
+.doughnut-chart-container,
 .top-tweets-table-container {
-  flex: 1;
-  max-width: 40%;
+  flex: 1 1 30%;
+  max-width: calc(50% - 20px);
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .doughnut-chart-container,
+  .top-tweets-table-container {
+    max-width: 100%;
+  }
+
+  .top-section {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .top-tweets-table-container table {
@@ -1063,7 +1072,8 @@ h1 {
   font-size: 12px;
 }
 
-.top-tweets-table-container th, .top-tweets-table-container td {
+.top-tweets-table-container th,
+.top-tweets-table-container td {
   border: 1px solid #ddd;
   padding: 5px;
   text-align: left;
@@ -1083,12 +1093,19 @@ h1 {
 }
 
 .sentiment-over-time-chart {
-  max-height: 400px;
-  margin-top: 10px;
+  margin-top: 50px;
   padding: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 60%;
+  box-sizing: border-box;
+  text-align: center;
 }
 
+.sentiment-over-time-chart .chart-container {
+  margin: 0 auto;
+  max-width: 50%;
+}
+
+
+.doughnut-chart-container {
+  min-width: 250px;
+}
 

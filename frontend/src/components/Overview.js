@@ -61,7 +61,7 @@ function TotalTweets() {
         <>
           <div className="top-section">
             <div className="doughnut-chart-container">
-            <h4>Positive vs Negative tweet analysis</h4>
+            <h4 style={{ textAlign: 'center' }}>Positive vs Negative tweet analysis</h4>
               <Doughnut data={sentimentData} options={{
                 maintainAspectRatio: false,
                 cutout: '70%',
@@ -80,7 +80,7 @@ function TotalTweets() {
               }} />
             </div>
             <div className="top-tweets-table-container">
-              <h4>Tweets with Most Retweets</h4>
+            <h4 style={{ textAlign: 'center' }}>Tweets with Most Retweets</h4>
               <table>
                 <thead>
                   <tr>
