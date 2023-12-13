@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.2",
     "bootswatch": "^5.3.1",
     "chart.js": "^4.4.0",
+    "chroma-js": "^2.4.2",
     "leaflet": "^1.9.4",
     "leaflet-heatmap": "^1.0.0",
     "leaflet.heat": "^0.2.0",

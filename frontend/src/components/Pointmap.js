@@ -4,6 +4,7 @@ import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import "../App.css";
 
 const API = process.env.REACT_APP_API;
 
@@ -81,18 +82,29 @@ function Pointmap() {
     const markers = L.markerClusterGroup({
       iconCreateFunction: function(cluster) {
         var childCount = cluster.getChildCount();
-        var c = ' marker-cluster-';
+        var className = 'marker-cluster';
+        var gradientStyle = '';
+    
         if (childCount < 50) {
-          c += 'small';
+          gradientStyle = 'background-image: linear-gradient(135deg, rgba(18, 83, 225, 0.3) 0%, rgba(18, 83, 225, 0.5) 70%);';
         } else if (childCount < 1000) {
-          c += 'medium';
+          gradientStyle = 'background-image: linear-gradient(135deg, rgba(18, 83, 225, 0.7) 0%, rgba(18, 83, 225, 0.8) 70%);';
         } else {
-          c += 'large';
+          gradientStyle = 'background-image: linear-gradient(135deg, rgba(18, 83, 225, 1) 0%, rgba(15, 60, 181, 1) 70%);';
         }
-
-        return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+    
+        return new L.DivIcon({ 
+          html: '<div style="' + gradientStyle + '"><span style="color: white;">' + childCount + '</span></div>',
+          className: className,
+          iconSize: new L.Point(40, 40)
+        });
       }
     });
+    
+    
+    
+    
+    
 
     pointMapData.forEach(point => {
       const { lat, lng, value, text } = point;
@@ -134,20 +146,26 @@ function Pointmap() {
       const div = L.DomUtil.create('div', 'info legend');
       const grades = ["< 50 tweets", "50 - 1000 tweets", "1000+ tweets"];
       const labels = [];
-      const colors = ['red', 'yellow', 'green'];
+
+      const colors = [
+        'rgba(18, 83, 225, 0.4)',
+        'rgba(18, 83, 225, 0.75)',
+        'rgba(18, 83, 225, 1)'
+      ];
 
       div.innerHTML = '<h6>Tweet cluster size</h6>';
 
       for (let i = 0; i < grades.length; i++) {
         labels.push(
           '<i style="background:' + colors[i] + '"></i> ' +
-          (grades[i] ? grades[i] : '+0.51'));
+          grades[i]);
       }
 
       div.innerHTML += labels.join('<br>');
       return div;
     };
     legend.current.addTo(mapInstance.current);
+
 
     return () => {
       markers.clearLayers();

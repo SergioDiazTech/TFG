@@ -838,17 +838,6 @@ h1 {
   opacity: 0.7;
 }
 
-.marker-cluster-small {
-  background-color: #ff9999; /* Color para clusters pequeños */
-}
-
-.marker-cluster-medium {
-  background-color: #ff6666; /* Color para clusters medianos */
-}
-
-.marker-cluster-large {
-  background-color: #ff3333; /* Color para clusters grandes */
-}
 
 .dashboard-container-pointmap {
   display: flex;
