@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-import pandas as pd
+import numpy as np
 
 def draw_heatmap():
     MONGO_URI = 'mongodb://127.0.0.1'
@@ -9,28 +9,53 @@ def draw_heatmap():
     twitter_collection_name = "tweets_colombia"
     twitter_collection = db[twitter_collection_name]
 
-    data = list(twitter_collection.find(
-        {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}},
-        {'latitude': 1, 'longitude': 1, 'sentiment': 1, '_id': 0}
-    ))
+    pipeline = [
+        {
+            "$match": {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}}
+        },
+        {
+            "$group": {
+                "_id": {"latitude": "$latitude", "longitude": "$longitude"},
+                "sentiment": {"$avg": "$sentiment"}
+            }
+        },
+        {
+            "$project": {
+                "latitude": "$_id.latitude", 
+                "longitude": "$_id.longitude", 
+                "_id": 0,
+                "sentiment": 1
+            }
+        }
+    ]
 
-    map_data = pd.DataFrame(data)
-    map_data.dropna(subset=['latitude', 'longitude', 'sentiment'], inplace=True)
+    data = list(twitter_collection.aggregate(pipeline))
 
-    grouped_data = map_data.groupby(['latitude', 'longitude'])
+    
+    global_sentiment_mean = round(np.mean([item['sentiment'] for item in data]), 2)
 
-    average_sentiment = grouped_data['sentiment'].mean()
+    
+    for item in data:
+        
+        item['sentiment'] = (item['sentiment'] + 1) / 2
 
-    # Restablecemos el índice para convertir los datos agrupados en un DataFrame
-    average_sentiment = average_sentiment.reset_index()
-
-    print(average_sentiment)
-
-    # Convertimos el DataFrame a una lista de diccionarios para el frontend
-    data_formatted = average_sentiment.to_dict('records')
-
+    min_sentiment = min(item['sentiment'] for item in data)
+    max_sentiment = max(item['sentiment'] for item in data)
+    percentiles = np.percentile([item['sentiment'] for item in data], [25, 50, 75])
 
     registry_document = db['Ingestion_Registry'].find_one({"CollectionName": twitter_collection_name})
     collection_display_name = registry_document['Name'] if registry_document else 'Default Name'
 
-    return {'data': data_formatted, 'collectionName': collection_display_name}
+
+    response = {
+        'data': data,
+        'minSentiment': min_sentiment,
+        'maxSentiment': max_sentiment,
+        'percentiles': percentiles.tolist(),
+        'collectionName': collection_display_name,
+        'globalSentiment': global_sentiment_mean
+    }
+
+    print(response)
+
+    return response

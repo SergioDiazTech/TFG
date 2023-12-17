@@ -7,7 +7,9 @@ const API = process.env.REACT_APP_API;
 
 function Heatmap() {
   const [heatMapData, setHeatMapData] = useState([]);
+  const [gradient, setGradient] = useState({});
   const [collectionName, setCollectionName] = useState('');
+  const [globalSentiment, setglobalSentiment] = useState(0);
   const mapContainer = useRef(null);
 
   useEffect(() => {
@@ -15,13 +17,25 @@ function Heatmap() {
       .then(response => response.json())
       .then(response => {
         if (response.data && response.data.length > 0) {
-          const newHeatMapData = response.data.map(item => ({
+          setHeatMapData(response.data.map(item => ({
             lat: item.latitude,
             lng: item.longitude,
             value: item.sentiment,
-          }));
-          setHeatMapData(newHeatMapData);
+          })));
           setCollectionName(response.collectionName);
+          setglobalSentiment(response.globalSentiment);
+
+          
+          
+          const [p25, p50, p75] = response.percentiles;
+          setGradient({
+            0: "red",
+            [p25]: "orange",
+            [p50]: "yellow",
+            [p75]: "lime",
+            1: "green"
+        });
+        
         } else {
           console.error('Data is missing required properties:', response);
         }
@@ -30,15 +44,6 @@ function Heatmap() {
         console.error('Error fetching heatmap data:', error);
       });
   }, []);
-
-  const normalizeSentiment = value => (value + 1) / 2; 
-
-  
-  const calculateAverageSentiment = () => {
-    const totalSentiment = heatMapData.reduce((acc, val) => acc + val.value, 0);
-    return (totalSentiment / heatMapData.length).toFixed(2);
-  };
-
 
   useEffect(() => {
     if (!mapContainer.current || heatMapData.length === 0) {
@@ -51,7 +56,6 @@ function Heatmap() {
       zoomControl: false
     });
 
-
     L.control.zoom({
       position: 'topright',
       className: 'custom-zoom-control'
@@ -59,17 +63,14 @@ function Heatmap() {
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
-    const gradient = {
-      0.0: 'red',
-      0.1: 'orange',
-      0.2: 'lime',
-      0.3: 'yellow',
-      0.5: 'green',
-    };
-
+    console.log("Gradiente actual:", gradient);
     L.heatLayer(
-      heatMapData.map(({ lat, lng, value }) => [lat, lng, normalizeSentiment(value)]),
-      {
+      heatMapData.map(({ lat, lng, value }) => {
+        const point = [lat, lng, value];
+        console.log(`Punto de calor: lat: ${lat}, lng: ${lng}, valor: ${value}`);
+        return point;
+      }),
+        {
         radius: 15,
         gradient,
         blur: 10,
@@ -84,7 +85,7 @@ function Heatmap() {
       marker.on('mouseover', () => {
         L.popup()
           .setLatLng([lat, lng])
-          .setContent(`Sentiment: ${value}`)
+          .setContent(`Sentiment: ${value * 2 - 1}`) // Convierte de nuevo a rango -1 a 1 para mostrar
           .openOn(mapInstance);
       });
     });
@@ -100,36 +101,34 @@ function Heatmap() {
       mapInstance.off();
       mapInstance.remove();
     };
-  }, [heatMapData]);
+  }, [heatMapData, gradient]);
 
   return (
     <div className="dashboard-container-heatmap">
-        <div className="main-content-heatmap">
-            <div className="map-and-data-heatmap">
-                <div className="map-section-heatmap">
-                    <div className="map-header-heatmap">
-                      <h5 style={{ textAlign: 'center' }}>Global sentiment overview: Data from '{collectionName}'</h5>
-                    </div>
-                    <div ref={mapContainer} className="map-map"></div>
-                </div>
-
-                <div className="data-summary-section-heatmap">
-                  <div className="data-summary-header-heatmap">
-                    <h5 className="map-title-heatmap">Data Summary</h5>
-                  </div>
-                  <div className="total-tweets-summary-heatmap">
-                    <p>Coordinate Groups: {heatMapData.length}</p>
-                  </div>
-                  <div className="average-sentiment-summary-heatmap">
-                    <p>Average Sentiment: {calculateAverageSentiment()}</p>
-                  </div>
-                  <div className="explanation-sentiment-summary-heatmap">
-                    <p>Explanation: <span>The interface displays an interactive heatmap, based on Twitter data from Colombia, that visualizes the average geolocated sentiment. You can see the distribution of sentiments in different areas and obtain a summary of the processed data.</span></p>
-                  </div>
-                </div>
-
+      <div className="main-content-heatmap">
+        <div className="map-and-data-heatmap">
+          <div className="map-section-heatmap">
+            <div className="map-header-heatmap">
+              <h5 style={{ textAlign: 'center' }}>Global sentiment overview: Data from '{collectionName}'</h5>
             </div>
+            <div ref={mapContainer} className="map-map"></div>
+          </div>
+          <div className="data-summary-section-heatmap">
+            <div className="data-summary-header-heatmap">
+              <h5 className="map-title-heatmap">Data Summary</h5>
+            </div>
+            <div className="total-tweets-summary-heatmap">
+              <p>Coordinate Groups: {heatMapData.length}</p>
+            </div>
+            <div className="average-sentiment-summary-heatmap">
+              <p>Average Sentiment: {globalSentiment}</p>
+            </div>
+            <div className="explanation-sentiment-summary-heatmap">
+              <p>Explanation: <span>The interface displays an interactive heatmap, based on Twitter data from Colombia, that visualizes the average geolocated sentiment. You can see the distribution of sentiments in different areas and obtain a summary of the processed data.</span></p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
   );
 }
