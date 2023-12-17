@@ -9,8 +9,20 @@ function Heatmap() {
   const [heatMapData, setHeatMapData] = useState([]);
   const [gradient, setGradient] = useState({});
   const [collectionName, setCollectionName] = useState('');
-  const [globalSentiment, setglobalSentiment] = useState(0);
+  const [globalSentiment, setGlobalSentiment] = useState(0);
   const mapContainer = useRef(null);
+
+  // Función para actualizar el sentimiento global basado en los límites del mapa
+  const updateGlobalSentiment = (bounds) => {
+    fetch(`${API}/heatmap?min_lat=${bounds.getSouth()}&max_lat=${bounds.getNorth()}&min_lng=${bounds.getWest()}&max_lng=${bounds.getEast()}`)
+      .then(response => response.json())
+      .then(response => {
+        setGlobalSentiment(response.globalSentiment);
+      })
+      .catch(error => {
+        console.error('Error fetching dynamic sentiment:', error);
+      });
+  };
 
   useEffect(() => {
     fetch(`${API}/heatmap`)
@@ -23,10 +35,8 @@ function Heatmap() {
             value: item.sentiment,
           })));
           setCollectionName(response.collectionName);
-          setglobalSentiment(response.globalSentiment);
+          setGlobalSentiment(response.globalSentiment);
 
-          
-          
           const [p25, p50, p75] = response.percentiles;
           setGradient({
             0: "red",
@@ -34,8 +44,7 @@ function Heatmap() {
             [p50]: "yellow",
             [p75]: "lime",
             1: "green"
-        });
-        
+          });
         } else {
           console.error('Data is missing required properties:', response);
         }
@@ -63,39 +72,31 @@ function Heatmap() {
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
-    console.log("Gradiente actual:", gradient);
-    L.heatLayer(
-      heatMapData.map(({ lat, lng, value }) => {
-        const point = [lat, lng, value];
-        console.log(`Punto de calor: lat: ${lat}, lng: ${lng}, valor: ${value}`);
-        return point;
-      }),
-        {
-        radius: 15,
-        gradient,
-        blur: 10,
-        maxZoom: 25,
-        minOpacity: 0.4,
-      }
-    ).addTo(mapInstance);
+    L.heatLayer(heatMapData.map(({ lat, lng, value }) => [lat, lng, value]), {
+      radius: 15,
+      gradient,
+      blur: 10,
+      maxZoom: 25,
+      minOpacity: 0.4,
+    }).addTo(mapInstance);
 
     heatMapData.forEach(point => {
       const { lat, lng, value } = point;
-      const marker = L.circleMarker([lat, lng], { radius: 1, color: 'transparent' }).addTo(mapInstance);
-      marker.on('mouseover', () => {
-        L.popup()
-          .setLatLng([lat, lng])
-          .setContent(`Sentiment: ${value * 2 - 1}`) // Convierte de nuevo a rango -1 a 1 para mostrar
-          .openOn(mapInstance);
-      });
+      L.circleMarker([lat, lng], { radius: 1, color: 'transparent' })
+        .on('mouseover', () => {
+          L.popup()
+            .setLatLng([lat, lng])
+            .setContent(`Sentiment: ${value * 2 - 1}`) // Convierte de nuevo a rango -1 a 1 para mostrar
+            .openOn(mapInstance);
+        })
+        .addTo(mapInstance);
     });
 
-    if (heatMapData.some(point => point.lat && point.lng)) {
-      const bounds = L.latLngBounds(heatMapData.map(point => [point.lat, point.lng]));
-      mapInstance.fitBounds(bounds);
-    } else {
-      console.error('No valid data available to fit bounds on map');
-    }
+    // Evento que se dispara cuando se cambia el zoom o se desplaza el mapa
+    mapInstance.on('moveend', () => {
+      const bounds = mapInstance.getBounds();
+      updateGlobalSentiment(bounds);
+    });
 
     return () => {
       mapInstance.off();

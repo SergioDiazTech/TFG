@@ -106,13 +106,19 @@ def get_users_route():
 
 @app.route('/heatmap', methods=['GET'])
 def display_heatmap():
+    min_lat = request.args.get('min_lat', default=None, type=float)
+    max_lat = request.args.get('max_lat', default=None, type=float)
+    min_lng = request.args.get('min_lng', default=None, type=float)
+    max_lng = request.args.get('max_lng', default=None, type=float)
+
     try:
-        data = draw_heatmap()
+        data = draw_heatmap(min_lat, max_lat, min_lng, max_lng)
         return jsonify(data)
     except Exception as e:
         print(f'Error: {e}')
-        traceback.print_exc()  # Traceback completo
+        traceback.print_exc()
         return jsonify({'error': str(e)}), 500
+
 
 
 
@@ -123,7 +129,7 @@ def display_pointmap():
         return jsonify(data)
     except Exception as e:
         print(f'Error: {e}')
-        traceback.print_exc()  # Traceback completo
+        traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
 
