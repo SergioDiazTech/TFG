@@ -10,6 +10,7 @@ function Heatmap() {
   const [gradient, setGradient] = useState({});
   const [collectionName, setCollectionName] = useState('');
   const [globalSentiment, setGlobalSentiment] = useState(0);
+  const [coordinateGroups, setCoordinateGroups] = useState(0);
   const mapContainer = useRef(null);
 
   // Función para actualizar el sentimiento global basado en los límites del mapa
@@ -18,6 +19,7 @@ function Heatmap() {
       .then(response => response.json())
       .then(response => {
         setGlobalSentiment(response.globalSentiment);
+        setCoordinateGroups(response.coordinateGroups);
       })
       .catch(error => {
         console.error('Error fetching dynamic sentiment:', error);
@@ -36,6 +38,7 @@ function Heatmap() {
           })));
           setCollectionName(response.collectionName);
           setGlobalSentiment(response.globalSentiment);
+          setCoordinateGroups(response.coordinateGroups);
 
           const [p25, p50, p75] = response.percentiles;
           setGradient({
@@ -119,7 +122,7 @@ function Heatmap() {
               <h5 className="map-title-heatmap">Data Summary</h5>
             </div>
             <div className="total-tweets-summary-heatmap">
-              <p>Coordinate Groups: {heatMapData.length}</p>
+              <p>Coordinate Groups: {coordinateGroups}</p>
             </div>
             <div className="average-sentiment-summary-heatmap">
               <p>Average Sentiment: {globalSentiment}</p>

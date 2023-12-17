@@ -37,6 +37,8 @@ def draw_heatmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
 
     data = list(twitter_collection.aggregate(pipeline))
 
+    coordinate_groups = len(data)
+
 
     global_sentiment_mean = round(np.mean([item['sentiment'] for item in data]), 2) if data else 0
 
@@ -55,6 +57,7 @@ def draw_heatmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
 
     response = {
         'data': data,
+        'coordinateGroups': coordinate_groups,
         'minSentiment': min_sentiment,
         'maxSentiment': max_sentiment,
         'percentiles': percentiles.tolist(),
