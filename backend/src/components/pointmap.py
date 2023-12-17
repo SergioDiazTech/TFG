@@ -1,41 +1,45 @@
 from pymongo import MongoClient
 import pandas as pd
 
-def draw_pointmap():
+def draw_pointmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
     db = client['DB_External_Data_Ingestion']
 
-    # Nombre de la colección de Twitter
     twitter_collection_name = "tweets_colombia"
     twitter_collection = db[twitter_collection_name]
 
-    # Obtenemos todos los documentos de la colección que tienen 'latitude', 'longitude' y 'sentiment'
+    query = {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}}
+    if min_lat is not None and max_lat is not None and min_lng is not None and max_lng is not None:
+        query['latitude'] = {"$gte": min_lat, "$lte": max_lat}
+        query['longitude'] = {"$gte": min_lng, "$lte": max_lng}
+
     data = list(twitter_collection.find(
-        {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}},
+        query,
         {'latitude': 1, 'longitude': 1, 'sentiment': 1, 'text': 1, '_id': 0}
     ))
 
     total_tweets = twitter_collection.count_documents({})
 
-    # Creamos un DataFrame a partir de los datos que hemos obtenido
     map_data = pd.DataFrame(data)
 
-    # Eliminamos las filas que tienen NaN en 'latitude', 'longitude' o 'sentiment'
-    map_data.dropna(subset=['latitude', 'longitude', 'sentiment'], inplace=True)
+    # Asegúrate de que todas las columnas necesarias existen
+    if 'latitude' in map_data.columns and 'longitude' in map_data.columns and 'sentiment' in map_data.columns:
+        map_data.dropna(subset=['latitude', 'longitude', 'sentiment'], inplace=True)
 
-    data_formatted = []
-    for index, row in map_data.iterrows():
-        row_data = {
-            'latitude': row['latitude'],
-            'longitude': row['longitude'],
-            'sentiment': row['sentiment'],
-            'text': row['text']
-        }
-        data_formatted.append(row_data)
+        highest_sentiment_tweet = map_data.sort_values(by='sentiment', ascending=False).iloc[0]['text'] if not map_data.empty else 'N/A'
 
-    # Consulta a la colección Ingestion_Registry para obtener el nombre
+        data_formatted = map_data.to_dict('records')
+    else:
+        highest_sentiment_tweet = 'N/A'
+        data_formatted = []
+
     registry_document = db['Ingestion_Registry'].find_one({"CollectionName": twitter_collection_name})
     collection_display_name = registry_document['Name'] if registry_document else 'Default Name'
 
-    return {'data': data_formatted, 'collectionName': collection_display_name, 'totalTweets': total_tweets}
+    return {
+        'data': data_formatted, 
+        'collectionName': collection_display_name, 
+        'totalTweets': total_tweets,
+        'highestSentimentTweet': highest_sentiment_tweet
+    }

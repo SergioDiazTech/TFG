@@ -13,6 +13,7 @@ function Pointmap() {
   const [collectionName, setCollectionName] = useState('');
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalTweets, setTotalTweets] = useState(0);
+  
   const mapContainer = useRef(null);
   const mapInstance = useRef(null);
   const legend = useRef(null);
@@ -27,11 +28,21 @@ function Pointmap() {
     }
   };
 
-
   const findExtremeTweet = (type) => {
     if (pointMapData.length === 0) return 'N/A';
     const sortedData = [...pointMapData].sort((a, b) => a.value - b.value);
     return type === 'high' ? sortedData[sortedData.length - 1].text : sortedData[0].text;
+  };
+
+  const updateTotalPoints = (bounds) => {
+    fetch(`${API}/pointmap?min_lat=${bounds.getSouth()}&max_lat=${bounds.getNorth()}&min_lng=${bounds.getWest()}&max_lng=${bounds.getEast()}`)
+      .then(response => response.json())
+      .then(response => {
+        setTotalPoints(response.data.length);
+      })
+      .catch(error => {
+        console.error('Error fetching dynamic point data:', error);
+      });
   };
 
   useEffect(() => {
@@ -48,6 +59,7 @@ function Pointmap() {
           setPointMapData(newPointMapData);
           setCollectionName(response.collectionName);
           setTotalTweets(response.totalTweets);
+          setTotalPoints(newPointMapData.length);
         } else {
           console.error('Data is missing required properties:', response);
         }
@@ -61,8 +73,6 @@ function Pointmap() {
     if (pointMapData.length === 0) {
       return;
     }
-
-    setTotalPoints(pointMapData.length);
 
     if (!mapInstance.current) {
       mapInstance.current = L.map(mapContainer.current, {
@@ -100,11 +110,6 @@ function Pointmap() {
         });
       }
     });
-    
-    
-    
-    
-    
 
     pointMapData.forEach(point => {
       const { lat, lng, value, text } = point;
@@ -122,11 +127,9 @@ function Pointmap() {
         </div>
       `;
 
-    
       marker.bindPopup(popupContent);
       markers.addLayer(marker);
     });
-    
 
     mapInstance.current.addLayer(markers);
 
@@ -166,6 +169,10 @@ function Pointmap() {
     };
     legend.current.addTo(mapInstance.current);
 
+    mapInstance.current.on('moveend', () => {
+      const bounds = mapInstance.current.getBounds();
+      updateTotalPoints(bounds);
+    });
 
     return () => {
       markers.clearLayers();
@@ -178,34 +185,30 @@ function Pointmap() {
 
   return (
     <div className="dashboard-container-pointmap">
-        <div className="main-content-pointmap">
-            <div className="map-and-data-pointmap">
-                <div className="map-section-pointmap">
-                    <div className="map-header-pointmap">
-                        <h5 style={{ textAlign: 'center' }}>Tweet distribution: Visualizing clusters by volume in '{collectionName}'</h5>
-                    </div>
-                    <div ref={mapContainer} className="map-map"></div>
-                </div>
-
-                <div className="data-summary-section-pointmap">
-                    <div className="data-summary-header-pointmap">
-                        <h5 className="map-title-pointmap">Tweets summary</h5>
-                    </div>
-                    <div className="total-tweets-summary-pointmap">
-                      <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
-                    </div>
-                    
-                    <div className="Highest-Sentiment-tweets-summary-pointmap">
-                      <p>Highest Sentiment Tweet: <span>"{findExtremeTweet('high')}"</span></p>
-                    </div>
-
-                    <div className="Lowest-Sentiment-tweets-summary-pointmap">
-                        <p>Lowest Sentiment Tweet: <span>"{findExtremeTweet('low')}"</span></p>
-                    </div>
-
-                </div>
+      <div className="main-content-pointmap">
+        <div className="map-and-data-pointmap">
+          <div className="map-section-pointmap">
+            <div className="map-header-pointmap">
+              <h5 style={{ textAlign: 'center' }}>Tweet distribution: Visualizing clusters by volume in '{collectionName}'</h5>
             </div>
+            <div ref={mapContainer} className="map-map"></div>
+          </div>
+          <div className="data-summary-section-pointmap">
+            <div className="data-summary-header-pointmap">
+              <h5 className="map-title-pointmap">Tweets summary</h5>
+            </div>
+            <div className="total-tweets-summary-pointmap">
+              <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
+            </div>
+            <div className="Highest-Sentiment-tweets-summary-pointmap">
+              <p>Highest Sentiment Tweet: <span>"{findExtremeTweet('high')}"</span></p>
+            </div>
+            <div className="Lowest-Sentiment-tweets-summary-pointmap">
+              <p>Lowest Sentiment Tweet: <span>"{findExtremeTweet('low')}"</span></p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
   );
 }
