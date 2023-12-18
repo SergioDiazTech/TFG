@@ -13,6 +13,8 @@ function Pointmap() {
   const [collectionName, setCollectionName] = useState('');
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalTweets, setTotalTweets] = useState(0);
+  const [highestSentimentTweet, setHighestSentimentTweet] = useState('');
+
   
   const mapContainer = useRef(null);
   const mapInstance = useRef(null);
@@ -39,12 +41,13 @@ function Pointmap() {
       .then(response => response.json())
       .then(response => {
         setTotalPoints(response.data.length);
+        setHighestSentimentTweet(response.highestSentimentTweet);
       })
       .catch(error => {
         console.error('Error fetching dynamic point data:', error);
       });
   };
-
+  
   useEffect(() => {
     fetch(`${API}/pointmap`)
       .then(response => response.json())
@@ -201,8 +204,9 @@ function Pointmap() {
               <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
             </div>
             <div className="Highest-Sentiment-tweets-summary-pointmap">
-              <p>Highest Sentiment Tweet: <span>"{findExtremeTweet('high')}"</span></p>
+              <p>Highest Sentiment Tweet: <span>"{highestSentimentTweet}"</span></p>
             </div>
+
             <div className="Lowest-Sentiment-tweets-summary-pointmap">
               <p>Lowest Sentiment Tweet: <span>"{findExtremeTweet('low')}"</span></p>
             </div>
