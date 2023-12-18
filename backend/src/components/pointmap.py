@@ -28,10 +28,12 @@ def draw_pointmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
         map_data.dropna(subset=['latitude', 'longitude', 'sentiment'], inplace=True)
 
         highest_sentiment_tweet = map_data.sort_values(by='sentiment', ascending=False).iloc[0]['text'] if not map_data.empty else 'N/A'
+        lowest_sentiment_tweet = map_data.sort_values(by='sentiment', ascending=True).iloc[0]['text'] if not map_data.empty else 'N/A'
 
         data_formatted = map_data.to_dict('records')
     else:
         highest_sentiment_tweet = 'N/A'
+        lowest_sentiment_tweet = 'N/A'
         data_formatted = []
 
     registry_document = db['Ingestion_Registry'].find_one({"CollectionName": twitter_collection_name})
@@ -41,5 +43,6 @@ def draw_pointmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
         'data': data_formatted, 
         'collectionName': collection_display_name, 
         'totalTweets': total_tweets,
-        'highestSentimentTweet': highest_sentiment_tweet
+        'highestSentimentTweet': highest_sentiment_tweet,
+        'lowestSentimentTweet': lowest_sentiment_tweet
     }

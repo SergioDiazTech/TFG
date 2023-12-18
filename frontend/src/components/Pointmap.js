@@ -14,6 +14,7 @@ function Pointmap() {
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalTweets, setTotalTweets] = useState(0);
   const [highestSentimentTweet, setHighestSentimentTweet] = useState('');
+  const [lowestSentimentTweet, setlowestSentimentTweet] = useState('');
 
   
   const mapContainer = useRef(null);
@@ -30,18 +31,13 @@ function Pointmap() {
     }
   };
 
-  const findExtremeTweet = (type) => {
-    if (pointMapData.length === 0) return 'N/A';
-    const sortedData = [...pointMapData].sort((a, b) => a.value - b.value);
-    return type === 'high' ? sortedData[sortedData.length - 1].text : sortedData[0].text;
-  };
-
   const updateTotalPoints = (bounds) => {
     fetch(`${API}/pointmap?min_lat=${bounds.getSouth()}&max_lat=${bounds.getNorth()}&min_lng=${bounds.getWest()}&max_lng=${bounds.getEast()}`)
       .then(response => response.json())
       .then(response => {
         setTotalPoints(response.data.length);
         setHighestSentimentTweet(response.highestSentimentTweet);
+        setlowestSentimentTweet(response.lowestSentimentTweet);
       })
       .catch(error => {
         console.error('Error fetching dynamic point data:', error);
@@ -208,7 +204,7 @@ function Pointmap() {
             </div>
 
             <div className="Lowest-Sentiment-tweets-summary-pointmap">
-              <p>Lowest Sentiment Tweet: <span>"{findExtremeTweet('low')}"</span></p>
+              <p>Lowest Sentiment Tweet: <span>"{lowestSentimentTweet}"</span></p>
             </div>
           </div>
         </div>
