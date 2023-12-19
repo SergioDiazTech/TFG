@@ -1042,54 +1042,79 @@ h1 {
 
 .top-section {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 90px;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+
 .doughnut-chart-container,
-.top-tweets-table-container {
-  flex: 1 1 30%;
-  max-width: calc(50% - 20px);
+.top-tweets-table-container-positive,
+.top-tweets-table-container-negative {
   box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-  .doughnut-chart-container,
-  .top-tweets-table-container {
-    max-width: 100%;
-  }
 
-  .top-section {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-.top-tweets-table-container table {
+.top-tweets-table-container-positive table,
+.top-tweets-table-container-negative table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
 }
 
-.top-tweets-table-container th,
-.top-tweets-table-container td {
+.top-tweets-table-container-positive th,
+.top-tweets-table-container-negative th,
+.top-tweets-table-container-positive td,
+.top-tweets-table-container-negative td {
   border: 1px solid #ddd;
   padding: 5px;
   text-align: left;
 }
 
-.top-tweets-table-container th {
-  background-color: #4CAF50;
+.top-tweets-table-container-positive th {
+  background-color: #2bcf30bc;
+  color: white;
+}
+.top-tweets-table-container-negative th {
+  background-color: #ff0000a1;
   color: white;
 }
 
-.top-tweets-table-container tr:nth-child(even) {
+.top-tweets-table-container-positive tr:nth-child(even),
+.top-tweets-table-container-negative tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.top-tweets-table-container tr:hover {
+.top-tweets-table-container-positive tr:hover,
+.top-tweets-table-container-negative tr:hover {
   background-color: #ddd;
+}
+
+@media (max-width: 768px) {
+  .top-section {
+    flex-direction: column;
+  }
+
+  .left-section,
+  .right-section {
+    width: 100%;
+  }
+}
+
+.bottom-section {
+  margin-top: 20px;
 }
 
 .sentiment-over-time-chart {
@@ -1104,8 +1129,6 @@ h1 {
   max-width: 50%;
 }
 
-
 .doughnut-chart-container {
   min-width: 250px;
 }
-

@@ -79,13 +79,14 @@ def get_data_route(collection_name):
 @app.route('/sentiment_count', methods=['GET'])
 def sentiment_count_route():
     try:
-        total_tweets, positive_tweets, negative_tweets, top_tweets = load_information()
+        total_tweets, positive_tweets, negative_tweets, top_tweets, top_negative_tweets = load_information()
         sentiment_over_time = load_sentiment_over_time()
         return jsonify({
             'total_tweets': total_tweets,
             'positive_tweets': positive_tweets,
             'negative_tweets': negative_tweets,
             'top_tweets': top_tweets,
+            'top_negative_tweets': top_negative_tweets,
             'sentiment_over_time': sentiment_over_time
         })
     except Exception as e:
