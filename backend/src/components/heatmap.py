@@ -49,7 +49,7 @@ def draw_heatmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
 
     min_sentiment = min(item['sentiment'] for item in data) if data else 0
     max_sentiment = max(item['sentiment'] for item in data) if data else 0
-    percentiles = np.percentile([item['sentiment'] for item in data], [25, 50, 75]) if data else [0, 0, 0]
+    percentiles = np.percentile([item['sentiment'] for item in data], [0, 25, 50, 75, 100]) if data else [0,0, 0, 0, 0]
 
 
     registry_document = db['Ingestion_Registry'].find_one({"CollectionName": twitter_collection_name})

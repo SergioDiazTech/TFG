@@ -40,13 +40,13 @@ function Heatmap() {
           setGlobalSentiment(response.globalSentiment);
           setCoordinateGroups(response.coordinateGroups);
 
-          const [p25, p50, p75] = response.percentiles;
+          const [p0, p25, p50, p75, p100] = response.percentiles;
           setGradient({
-            0: "red",
+            [p0]: "red",
             [p25]: "orange",
             [p50]: "yellow",
             [p75]: "lime",
-            1: "green"
+            [p100]: "green"
           });
         } else {
           console.error('Data is missing required properties:', response);
@@ -79,8 +79,8 @@ function Heatmap() {
       radius: 15,
       gradient,
       blur: 10,
-      maxZoom: 25,
-      minOpacity: 0.4,
+      maxZoom: 1,
+      minOpacity: 0.6,
     }).addTo(mapInstance);
 
     heatMapData.forEach(point => {
