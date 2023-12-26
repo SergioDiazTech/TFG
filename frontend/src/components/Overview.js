@@ -20,9 +20,9 @@ function TotalTweets() {
       const response = await fetch(`${API}/sentiment_count`);
       const data = await response.json();
       setSentimentData({
-        labels: ['Positivos', 'Negativos'],
+        labels: ['Positives', 'Negatives'],
         datasets: [{
-          label: 'Sentimiento de Tweets',
+          label: 'Number of Tweets',
           data: [data.positive_tweets, data.negative_tweets],
           backgroundColor: ['#4CAF50', '#F44336'],
           borderColor: ['white'],
@@ -35,7 +35,7 @@ function TotalTweets() {
         labels: data.sentiment_over_time.map(d => d._id),
         datasets: [
           {
-            label: 'Sentimiento Promedio por Día',
+            label: 'Average daily sentiment',
             data: data.sentiment_over_time.map(d => d.average_sentiment),
             borderColor: 'rgb(75, 192, 192)',
             backgroundColor: 'rgba(75, 192, 192, 0.5)',
@@ -44,7 +44,7 @@ function TotalTweets() {
       });
       setIsLoading(false);
     } catch (error) {
-      console.error("Error al obtener los datos de sentimiento:", error);
+      console.error("Error in obtaining sentiment data:", error);
     }
   };
 
