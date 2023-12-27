@@ -81,7 +81,7 @@ def sentiment_count_route():
     try:
         total_tweets, positive_tweets, negative_tweets, top_tweets, top_negative_tweets = load_information()
         sentiment_over_time_general, sentiment_over_time_positive, sentiment_over_time_negative = load_sentiment_over_time()
-        print(sentiment_over_time_general)  # Imprimir para depurar
+        #print(sentiment_over_time_general)
 
         return jsonify({
             'total_tweets': total_tweets,

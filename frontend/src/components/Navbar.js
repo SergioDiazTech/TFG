@@ -74,7 +74,7 @@ const Navbar = () => {
                             Heatmap
                         </Link>
                         <Link className={`nav-link ${location.pathname === "/pointmap" ? "active" : ""}`} to="/pointmap">
-                            Pointmap
+                            TweetsMap
                         </Link>
                         <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">
                             About
