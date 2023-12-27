@@ -30,11 +30,11 @@ def load_sentiment_over_time():
     db = client['DB_External_Data_Ingestion']
     twitter_collection = db['tweets_colombia']
 
-    pipeline = [
+    pipeline_general = [
         {
             "$project": {
                 "dateHour": {
-                    "$dateToString": { "format": "%Y-%m-%dT%H", "date": { "$toDate": "$created_at" } }
+                    "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
                 },
                 "sentiment": 1
             }
@@ -42,14 +42,55 @@ def load_sentiment_over_time():
         {
             "$group": {
                 "_id": "$dateHour",
-                "average_sentiment": { "$avg": "$sentiment" }
+                "average_sentiment": {"$avg": "$sentiment"},
+                "tweet_count": {"$sum": 1}
             }
         },
-        { "$sort": { "_id": 1 } }
+        {"$sort": {"_id": 1}}
     ]
 
-    sentiment_over_time = list(twitter_collection.aggregate(pipeline))
+    pipeline_positive = [
+        {"$match": {"sentiment": {"$gt": 0}}},
+        {
+            "$project": {
+                "dateHour": {
+                    "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
+                },
+                "sentiment": 1
+            }
+        },
+        {
+            "$group": {
+                "_id": "$dateHour",
+                "average_sentiment": {"$avg": "$sentiment"},
+                "tweet_count": {"$sum": 1}
+            }
+        },
+        {"$sort": {"_id": 1}}
+    ]
 
-    return sentiment_over_time
+    pipeline_negative = [
+        {"$match": {"sentiment": {"$lt": 0}}},
+        {
+            "$project": {
+                "dateHour": {
+                    "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
+                },
+                "sentiment": 1
+            }
+        },
+        {
+            "$group": {
+                "_id": "$dateHour",
+                "average_sentiment": {"$avg": "$sentiment"},
+                "tweet_count": {"$sum": 1}
+            }
+        },
+        {"$sort": {"_id": 1}}
+    ]
 
+    sentiment_over_time_general = list(twitter_collection.aggregate(pipeline_general))
+    sentiment_over_time_positive = list(twitter_collection.aggregate(pipeline_positive))
+    sentiment_over_time_negative = list(twitter_collection.aggregate(pipeline_negative))
 
+    return sentiment_over_time_general, sentiment_over_time_positive, sentiment_over_time_negative

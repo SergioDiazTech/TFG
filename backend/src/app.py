@@ -80,14 +80,20 @@ def get_data_route(collection_name):
 def sentiment_count_route():
     try:
         total_tweets, positive_tweets, negative_tweets, top_tweets, top_negative_tweets = load_information()
-        sentiment_over_time = load_sentiment_over_time()
+        sentiment_over_time_general, sentiment_over_time_positive, sentiment_over_time_negative = load_sentiment_over_time()
+        print(sentiment_over_time_general)  # Imprimir para depurar
+
         return jsonify({
             'total_tweets': total_tweets,
             'positive_tweets': positive_tweets,
             'negative_tweets': negative_tweets,
             'top_tweets': top_tweets,
             'top_negative_tweets': top_negative_tweets,
-            'sentiment_over_time': sentiment_over_time
+            'sentiment_over_time': {
+                'general': sentiment_over_time_general,
+                'positive': sentiment_over_time_positive,
+                'negative': sentiment_over_time_negative
+            }
         })
     except Exception as e:
         print(f'Error: {e}')
