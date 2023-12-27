@@ -31,63 +31,67 @@ def load_sentiment_over_time():
     twitter_collection = db['tweets_colombia']
 
     pipeline_general = [
-        {
-            "$project": {
-                "dateHour": {
-                    "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
-                },
-                "sentiment": 1
-            }
-        },
-        {
-            "$group": {
-                "_id": "$dateHour",
-                "average_sentiment": {"$avg": "$sentiment"},
-                "tweet_count": {"$sum": 1}
-            }
-        },
-        {"$sort": {"_id": 1}}
+    {"$match": {"referenced_tweets": {"$exists": False}}},
+    {
+        "$project": {
+            "dateHour": {
+                "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
+            },
+            "sentiment": 1
+        }
+    },
+    {
+        "$group": {
+            "_id": "$dateHour",
+            "average_sentiment": {"$avg": "$sentiment"},
+            "tweet_count": {"$sum": 1}
+        }
+    },
+    {"$sort": {"_id": 1}}
     ]
+
 
     pipeline_positive = [
-        {"$match": {"sentiment": {"$gt": 0}}},
-        {
-            "$project": {
-                "dateHour": {
-                    "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
-                },
-                "sentiment": 1
-            }
-        },
-        {
-            "$group": {
-                "_id": "$dateHour",
-                "average_sentiment": {"$avg": "$sentiment"},
-                "tweet_count": {"$sum": 1}
-            }
-        },
-        {"$sort": {"_id": 1}}
+    {"$match": {"sentiment": {"$gt": 0}, "referenced_tweets": {"$exists": False}}},
+    {
+        "$project": {
+            "dateHour": {
+                "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
+            },
+            "sentiment": 1
+        }
+    },
+    {
+        "$group": {
+            "_id": "$dateHour",
+            "average_sentiment": {"$avg": "$sentiment"},
+            "tweet_count": {"$sum": 1}
+        }
+    },
+    {"$sort": {"_id": 1}}
     ]
 
+
     pipeline_negative = [
-        {"$match": {"sentiment": {"$lt": 0}}},
-        {
-            "$project": {
-                "dateHour": {
-                    "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
-                },
-                "sentiment": 1
-            }
-        },
-        {
-            "$group": {
-                "_id": "$dateHour",
-                "average_sentiment": {"$avg": "$sentiment"},
-                "tweet_count": {"$sum": 1}
-            }
-        },
-        {"$sort": {"_id": 1}}
+    {"$match": {"sentiment": {"$lt": 0}, "referenced_tweets": {"$exists": False}}},
+    {
+        "$project": {
+            "dateHour": {
+                "$dateToString": {"format": "%Y-%m-%dT%H", "date": {"$toDate": "$created_at"}}
+            },
+            "sentiment": 1
+        }
+    },
+    {
+        "$group": {
+            "_id": "$dateHour",
+            "average_sentiment": {"$avg": "$sentiment"},
+            "tweet_count": {"$sum": 1}
+        }
+    },
+    {"$sort": {"_id": 1}}
     ]
+
 
     sentiment_over_time_general = list(twitter_collection.aggregate(pipeline_general))
     sentiment_over_time_positive = list(twitter_collection.aggregate(pipeline_positive))
