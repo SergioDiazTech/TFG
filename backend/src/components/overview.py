@@ -9,8 +9,16 @@ def load_information():
 
     total_tweets = twitter_collection.count_documents({})
 
-    positive_tweets = twitter_collection.count_documents({'sentiment': {'$gt': 0}})
-    negative_tweets = twitter_collection.count_documents({'sentiment': {'$lt': 0}})
+    positive_tweets = twitter_collection.count_documents({
+        'sentiment': {'$gt': 0},
+        'referenced_tweets': {'$exists': False}
+    })
+    
+    negative_tweets = twitter_collection.count_documents({
+    'sentiment': {'$lt': 0},
+    'referenced_tweets': {'$exists': False}
+})
+
 
 
     top_positive_retweeted_tweets = list(twitter_collection.find({"sentiment": {"$gt": 0}, "referenced_tweets": {"$exists": False}}, 
