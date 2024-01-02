@@ -12,30 +12,6 @@
   pointer-events: none;
 }
 
-.tweet-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.tweet-table th,
-.tweet-table td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-
-
-.tweet-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-  font-size: 15px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.tweet-table tbody tr:hover {
-  background-color: #f9f9f9;
-}
-
 
 .title {
   text-align: center;
@@ -48,16 +24,6 @@
 }
 
 
-
-.containerApiTwitter {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f2f2f2;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  margin-top: 8%;
-}
 
 h1 {
   text-align: center;
@@ -87,27 +53,6 @@ h1 {
 }
 
 
-.btnApiTwitter {
-  display: block;
-  margin: 0 auto;
-  width: 25%;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  text-align: center;
-  color: #fff;
-  background-color: #3ac775;
-  border: none;
-  border-radius: 18px;
-  cursor: pointer;
-  transition: background-color 0.5s ease-in-out;
-}
-
-.btnApiTwitter:hover {
-  background-color: #1c8343;
-  font-size: 17px;
-}
-
 
 .input {
   display: block;
@@ -119,31 +64,6 @@ h1 {
   border: 1px solid #ccc;
 }
 
-.messageApiTwitter {
-  margin-top: 40px;
-  padding: 3px;
-  width: 50%;
-  margin: 0 auto;
-  font-size: 14px;
-  text-align: center;
-  color: #ffffff;
-  background-color: #1eac81;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  animation: pulse 5s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 
 
 
@@ -340,142 +260,6 @@ h1 {
 }
 
 
-
-/* Estilo del círculo verde (positivo) */
-.green-circle {
-  width: 10px;
-  height: 10px;
-  background-color: rgb(41, 206, 41);
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 15%;
-}
-
-/* Estilo del círculo amarillo (neutral) */
-.yellow-circle {
-  width: 10px;
-  height: 10px;
-  background-color: rgb(228, 238, 83);
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 7%;
-}
-
-/* Estilo del círculo rojo (negativo) */
-.red-circle {
-  width: 10px;
-  height: 10px;
-  background-color: rgb(213, 53, 53);
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 7%;
-}
-
-
-.user-selector {
-  display: block;
-  width: 100%;
-  max-width: 350px;
-  margin: 0 auto;
-  padding: 10px;
-  font-size: 16px;
-  background-color: #f4f4f4;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.user-selector:focus {
-  border-color: #007BFF;
-}
-
-
-.user-selector option {
-  background-color: #f4f4f4;
-  color: #333;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-
-.user-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.user-list li {
-  border: 1px solid #e1e1e1;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.user-list li:hover {
-  background-color: #f5f5f5;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.user-list li:last-child {
-  margin-bottom: 0;
-}
-
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-  margin-top: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  background: #fff;
-}
-
-.user-table th, .user-table td {
-  border: 1px solid #eee;
-  padding: 12px;
-  text-align: left;
-}
-
-.user-table th {
-  background-color: #4CAF50;
-  color: #fff;
-}
-
-.user-table tbody tr:nth-child(odd) {
-  background-color: #f2f2f2;
-}
-
-.user-table tbody tr:nth-child(even) {
-  background-color: #e6e6e6;
-}
-
-.user-table th, .user-table td {
-  border: 1px solid #ddd;
-}
-
-.user-table th {
-  background-color: #4CAF50;
-  color: #fff;
-}
-
-.user-table tbody tr:hover {
-  background-color: #d9d9d9;
-}
-
-
-
 :root {
   --primary-color: #00060f1b;
   --secondary-color: #f8f9fa;
@@ -483,56 +267,6 @@ h1 {
   --card-width: 250px;
   --card-height: 50px;
   --card-gap: 20px;
-}
-
-.collections-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.collections-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
-  grid-gap: var(--card-gap);
-  list-style: none;
-  padding: 0;
-}
-
-.collection-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: var(--card-width);
-  height: var(--card-height);
-  border: 2px solid var(--primary-color);
-  border-radius: 10px;
-  background-color: var(--secondary-color);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.collection-icon {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 10%;
-}
-
-.collection-name {
-  color: var(--text-color);
-  font-weight: bold;
-  margin-bottom: 24px;
-}
-
-.collection-card:hover {
-  transform: scale(1.05);
-  transition: transform 0.2s ease-in-out;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.278);
-}
-
-.collection-card:focus {
-  outline: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .button-load-more{

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import "../styles/users.css"
 
 const API = process.env.REACT_APP_API;
 const USERS_PER_PAGE = 5;
