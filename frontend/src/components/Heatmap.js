@@ -70,8 +70,7 @@ function Heatmap() {
     });
 
     L.control.zoom({
-      position: 'topright',
-      className: 'custom-zoom-control'
+      position: 'topright'
     }).addTo(mapInstance);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
