@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import "../App.css";
+import "../styles/App.css";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 
 const API = process.env.REACT_APP_API;

@@ -146,52 +146,6 @@ h1 {
 }
 
 
-.about-container {
-  max-width: 800px;
-  margin: 0 auto;
-  margin-top: 15%;
-  padding: 15px;
-  background-color: #f1f1f1;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-.about-title {
-  font-size: 24px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.about-description {
-  font-size: 16px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.about-section-title {
-  font-size: 20px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.about-section-description {
-  font-size: 14px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.about-team-list {
-  list-style: none;
-  
-  padding: 0;
-  margin: 0;
-}
-
-.about-team-list li {
-  font-size: 14px;
-  text-align: center;
-  margin-bottom: 5px;
-}
 
 .dataset-container {
   display: flex;
@@ -371,15 +325,6 @@ h1 {
 }
 
 
-.heatmap-container {
-  width: 100%;
-  height: 500px;
-  border-radius: 5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-  
-}
-
-
 .map-map {
   width: 100%;
   height: 500px;
@@ -387,13 +332,6 @@ h1 {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-.pointmap-marker {
-  stroke: #ffffff;
-  stroke-width: 1.5;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-}
 
 
 .leaflet-interactive {
@@ -536,148 +474,8 @@ h1 {
   background-color: #d9d9d9;
 }
 
-.nav-link {
-  padding-bottom: 0.5rem;
-  transition: color 0.3s ease-in-out;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #1d3b5b49;
-  transition: width 0.3s ease-in-out;
-}
-
-.nav-link:hover::after, .nav-link.active::after {
-  width: 50%;
-}
-
-.ingestion-link-content::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -0px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #1d3b5b49;
-  transition: width 0.3s ease-in-out;
-}
-
-.nav-link.dropdown-toggle:hover .ingestion-link-content::after, 
-.nav-link.dropdown-toggle.active .ingestion-link-content::after {
-  width: 50%;
-}
 
 
-
-.navbar {
-  background-color: #000000dd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.125);
-}
-
-.nav-link:hover, .nav-link.active {
-  color: #000000;
-  font-weight: bold;
-  font-size: 102%;
-}
-
-
-.nav-item.dropdown .nav-link.dropdown-toggle:hover,
-.nav-item.dropdown .nav-link.dropdown-toggle:focus {
-  font-size: inherit;
-  background-color: inherit;
-  color: inherit;
-}
-
-
-.nav-item.dropdown .nav-link.dropdown-toggle::after {
-  display: none;
-}
-
-
-.navbar-brand:hover, .navbar-brand.active {
-  font-weight: bold;
-}
-
-.navbar-toggler {
-  border-color: rgba(0, 0, 0, 0.1);
-}
-
-.navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-#navbarNavAltMarkup {
-  background-color: #f8f9fa;
-}
-
-@media (max-width: 992px) {
-  .navbar-nav .nav-link {
-    padding-left: 15px;
-    padding-right: 15px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .navbar-nav .nav-link:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-}
-
-
-
-.navbar-nav .nav-link,
-.navbar-nav .nav-item.dropdown {
-    margin-right: 3px;
-}
-
-.navbar-nav .nav-link:last-child,
-.navbar-nav .nav-item.dropdown:last-child {
-    margin-right: 0;
-}
-
-@media (max-width: 992px) {
-  .navbar-nav .nav-link,
-  .navbar-nav .nav-item.dropdown {
-    margin-right: 0;
-    padding: 8px 15px;
-  }
-}
-
-
-.nav-link:hover,
-.nav-link.active {
-  color: #000000;
-  font-weight: bold;
-}
-
-
-.nav-item.dropdown .nav-link.dropdown-toggle:hover,
-.nav-item.dropdown .nav-link.dropdown-toggle:focus {
-  color: #000000;
-  font-weight: bold;
-  background-color: inherit;
-  font-size: 102%;
-}
-
-.ingestion-link::after {
-  content: "▼";
-  font-size: 0.7em;
-  margin-left: 5px;
-  vertical-align: middle;
-}
-
-
-
-/* Definimos algunas variables css para los colores y los tamaños */
 :root {
   --primary-color: #00060f1b;
   --secondary-color: #f8f9fa;
@@ -687,14 +485,12 @@ h1 {
   --card-gap: 20px;
 }
 
-/* Usamos flexbox para centrar el título y la lista de colecciones */
 .collections-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Usamos grid para crear una cuadrícula de colecciones con espacios entre ellas */
 .collections-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
@@ -703,7 +499,6 @@ h1 {
   padding: 0;
 }
 
-/* Estilizamos cada elemento de la lista como una tarjeta con un borde, un fondo y un efecto de sombra */
 .collection-card {
   display: flex;
   flex-direction: column;
@@ -717,28 +512,24 @@ h1 {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Estilizamos el icono o la imagen de cada colección con un tamaño y un margen */
 .collection-icon {
   width: 80px;
   height: 80px;
   margin-bottom: 10%;
 }
 
-/* Estilizamos el nombre de cada colección con un color y una fuente */
 .collection-name {
   color: var(--text-color);
   font-weight: bold;
   margin-bottom: 24px;
 }
 
-/* Añadimos un efecto de transición al pasar el cursor sobre cada tarjeta */
 .collection-card:hover {
   transform: scale(1.05);
   transition: transform 0.2s ease-in-out;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.278);
 }
 
-/* Añadimos un efecto de enfoque al hacer clic sobre cada tarjeta */
 .collection-card:focus {
   outline: none;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -777,28 +568,6 @@ h1 {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-
-.total-tweets-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-
-
-.doughnut-chart-container {
-  width: 400px;
-  height: 400px;
-  position: relative;
-}
-
-/* Cargando... estilo */
-.total-tweets-container p {
-  color: #555;
-  font-size: 18px;
 }
 
 
@@ -845,299 +614,4 @@ h1 {
   float: left;
   margin-right: 8px;
   opacity: 0.7;
-}
-
-
-.dashboard-container-pointmap {
-  display: flex;
-  height: 80vh;
-}
-
-.main-content-pointmap {
-  flex-grow: 1;
-  display: flex;
-  padding: 20px;
-}
-
-.map-and-data-pointmap {
-  display: flex;
-  flex-grow: 1;
-}
-
-.map-section-pointmap {
-  flex-grow: 4;
-  margin-right: 40px;
-}
-
-.data-summary-section-pointmap {
-  flex-grow: 4;
-  margin-right: 40px;
-}
-
-.data-summary-header-pointmap {
-  text-align: center;
-  font-size: 110%;
-  font: bold;
-}
-
-.data-summary-pointmap {
-  flex-grow: 4;
-  background-color: #6b6b6b16;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  max-height: 250px;
-}
-
-.total-tweets-summary-pointmap {
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10px;
-}
-
-.total-tweets-summary-pointmap p {
-  margin: 0;
-  color: #333;
-  font-weight: bold;
-}
-
-
-.Highest-Sentiment-tweets-summary-pointmap span,
-.Lowest-Sentiment-tweets-summary-pointmap span {
-  font-size: 90%;
-  color: #4c4c4c;
-}
-
-
-.Highest-Sentiment-tweets-summary-pointmap {
-  background-color: #28a7463f;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  margin-bottom: 10px;
-  color: #000000;
-  
-}
-
-.Lowest-Sentiment-tweets-summary-pointmap {
-  background-color: #df001645;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  margin-bottom: 10px;
-  color: #000000;
-}
-
-
-.map-section-pointmap {
-  flex-basis: auto;
-  flex-shrink: 0;
-  flex-grow: 0;
-}
-
-
-
-@media (max-width: 768px) {
-  .main-content-pointmap {
-      flex-direction: column;
-      padding: 10px;
-  }
-
-  .map-and-data-pointmap {
-      flex-direction: column;
-  }
-
-  .map-section-pointmap {
-      margin-right: 0;
-  }
-}
-
-
-.dashboard-container-heatmap {
-  display: flex;
-  height: 80vh;
-}
-
-.main-content-heatmap {
-  flex-grow: 1;
-  display: flex;
-  padding: 20px;
-}
-
-.map-and-data-heatmap {
-  display: flex;
-  flex-grow: 1;
-}
-
-.map-section-heatmap {
-  flex-grow: 3;
-  margin-right: 0;
-  order: 2;
-}
-
-.data-summary-section-heatmap {
-  flex-grow: 1;
-  max-width: 300px;
-  margin-right: 20px;
-  order: 1;
-}
-
-.data-summary-header-heatmap {
-  text-align: center;
-  font-size: 110%;
-  font-weight: bold;
-}
-
-.data-summary-heatmap {
-  flex-grow: 4;
-  background-color: #6b6b6b16;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  max-height: 250px;
-}
-
-.total-tweets-summary-heatmap,
-.average-sentiment-summary-heatmap {
-
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  margin-bottom: 10px;
-  color: #000000;
-}
-
-.explanation-sentiment-summary-heatmap {
-
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  margin-bottom: 10px;
-  color: #000000;
-}
-
-
-.explanation-sentiment-summary-heatmap span {
-  font-size: 90%;
-  color: #4c4c4c;
-}
-
-
-@media (max-width: 768px) {
-  .main-content-heatmap {
-      flex-direction: column;
-  }
-
-  .map-and-data-heatmap {
-      flex-direction: column;
-  }
-
-  .map-section-heatmap,
-  .data-summary-section-heatmap {
-      margin-right: 0;
-      max-width: none;
-      flex-grow: 1;
-  }
-}
-
-.dashboard-container {
-  font-family: 'Arial', sans-serif;
-  font-size: 14px;
-}
-
-.top-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 90px;
-}
-
-.left-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.right-section {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-
-.doughnut-chart-container,
-.top-tweets-table-container-positive,
-.top-tweets-table-container-negative {
-  box-sizing: border-box;
-}
-
-
-.top-tweets-table-container-positive table,
-.top-tweets-table-container-negative table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12px;
-}
-
-.top-tweets-table-container-positive th,
-.top-tweets-table-container-negative th,
-.top-tweets-table-container-positive td,
-.top-tweets-table-container-negative td {
-  border: 1px solid #ddd;
-  padding: 5px;
-  text-align: left;
-}
-
-.top-tweets-table-container-positive th {
-  background-color: #2bcf30bc;
-  color: white;
-}
-.top-tweets-table-container-negative th {
-  background-color: #ff0000a1;
-  color: white;
-}
-
-.top-tweets-table-container-positive tr:nth-child(even),
-.top-tweets-table-container-negative tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.top-tweets-table-container-positive tr:hover,
-.top-tweets-table-container-negative tr:hover {
-  background-color: #ddd;
-}
-
-@media (max-width: 768px) {
-  .top-section {
-    flex-direction: column;
-  }
-
-  .left-section,
-  .right-section {
-    width: 100%;
-  }
-}
-
-.bottom-section {
-  margin-top: 20px;
-}
-
-.sentiment-over-time-chart {
-  margin-top: 50px;
-  padding: 10px;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.sentiment-over-time-chart .chart-container {
-  margin: 0 auto;
-  max-width: 50%;
-}
-
-.doughnut-chart-container {
-  min-width: 250px;
 }

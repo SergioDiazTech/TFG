@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import "../styles/navbar.css"
 
 const Navbar = () => {
     const location = useLocation();

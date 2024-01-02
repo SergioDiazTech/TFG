@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat/dist/leaflet-heat.js';
+import "../styles/heatmap.css"
 
 const API = process.env.REACT_APP_API;
 
