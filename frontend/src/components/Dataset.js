@@ -69,7 +69,7 @@ function Dataset() {
         {selectedFile ? (
           <>
             <p className="file-info">Selected file: {selectedFile.name}</p>
-            <input 
+            <input
               className="custom-input"
               type="text"
               placeholder="Enter a name for this dataset"

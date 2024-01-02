@@ -86,7 +86,7 @@ function Data() {
             {collections.map((collection) => (
               <li key={collection} onClick={() => handleCollectionSelect(collection)}>
                 <div className="collection-card">
-                  <div className="collection-icon">{}</div>
+                  <div className="collection-icon">{ }</div>
                   <div className="collection-name">{collection}</div>
                 </div>
               </li>

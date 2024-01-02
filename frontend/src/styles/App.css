@@ -254,7 +254,7 @@ h1 {
 
 .leaflet-interactive {
   fill-opacity: 0.8 !important;
-  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0, 213, 255, 0.732) 100%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(0, 213, 255, 0.732) 100%);
 }
 
 
@@ -267,8 +267,8 @@ h1 {
   --card-gap: 20px;
 }
 
-.button-load-more{
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+.button-load-more {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -298,6 +298,11 @@ h1 {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -1,89 +1,88 @@
-
 .dashboard-container-heatmap {
-    display: flex;
-    height: 80vh;
-  }
-  
+  display: flex;
+  height: 80vh;
+}
+
+.main-content-heatmap {
+  flex-grow: 1;
+  display: flex;
+  padding: 20px;
+}
+
+.map-and-data-heatmap {
+  display: flex;
+  flex-grow: 1;
+}
+
+.map-section-heatmap {
+  flex-grow: 3;
+  margin-right: 0;
+  order: 2;
+}
+
+.data-summary-section-heatmap {
+  flex-grow: 1;
+  max-width: 300px;
+  margin-right: 20px;
+  order: 1;
+}
+
+.data-summary-header-heatmap {
+  text-align: center;
+  font-size: 110%;
+  font-weight: bold;
+}
+
+.data-summary-heatmap {
+  flex-grow: 4;
+  background-color: #6b6b6b16;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  max-height: 250px;
+}
+
+.total-tweets-summary-heatmap,
+.average-sentiment-summary-heatmap {
+
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.explanation-sentiment-summary-heatmap {
+
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+
+.explanation-sentiment-summary-heatmap span {
+  font-size: 90%;
+  color: #4c4c4c;
+}
+
+
+@media (max-width: 768px) {
   .main-content-heatmap {
-    flex-grow: 1;
-    display: flex;
-    padding: 20px;
+    flex-direction: column;
   }
-  
+
   .map-and-data-heatmap {
-    display: flex;
-    flex-grow: 1;
+    flex-direction: column;
   }
-  
-  .map-section-heatmap {
-    flex-grow: 3;
-    margin-right: 0;
-    order: 2;
-  }
-  
+
+  .map-section-heatmap,
   .data-summary-section-heatmap {
+    margin-right: 0;
+    max-width: none;
     flex-grow: 1;
-    max-width: 300px;
-    margin-right: 20px;
-    order: 1;
   }
-  
-  .data-summary-header-heatmap {
-    text-align: center;
-    font-size: 110%;
-    font-weight: bold;
-  }
-  
-  .data-summary-heatmap {
-    flex-grow: 4;
-    background-color: #6b6b6b16;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    max-height: 250px;
-  }
-  
-  .total-tweets-summary-heatmap,
-  .average-sentiment-summary-heatmap {
-  
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    margin-bottom: 10px;
-    color: #000000;
-  }
-  
-  .explanation-sentiment-summary-heatmap {
-  
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    margin-bottom: 10px;
-    color: #000000;
-  }
-  
-  
-  .explanation-sentiment-summary-heatmap span {
-    font-size: 90%;
-    color: #4c4c4c;
-  }
-  
-  
-  @media (max-width: 768px) {
-    .main-content-heatmap {
-        flex-direction: column;
-    }
-  
-    .map-and-data-heatmap {
-        flex-direction: column;
-    }
-  
-    .map-section-heatmap,
-    .data-summary-section-heatmap {
-        margin-right: 0;
-        max-width: none;
-        flex-grow: 1;
-    }
-  }
+}

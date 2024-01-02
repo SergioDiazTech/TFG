@@ -1,105 +1,105 @@
 .dashboard-container {
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
-  }
-  
-  .doughnut-chart-container {
-    width: 400px;
-    height: 400px;
-    position: relative;
-  }
-  
-  
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+}
+
+.doughnut-chart-container {
+  width: 400px;
+  height: 400px;
+  position: relative;
+}
+
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 90px;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+
+.doughnut-chart-container,
+.top-tweets-table-container-positive,
+.top-tweets-table-container-negative {
+  box-sizing: border-box;
+}
+
+
+.top-tweets-table-container-positive table,
+.top-tweets-table-container-negative table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.top-tweets-table-container-positive th,
+.top-tweets-table-container-negative th,
+.top-tweets-table-container-positive td,
+.top-tweets-table-container-negative td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
+
+.top-tweets-table-container-positive th {
+  background-color: #2bcf30bc;
+  color: white;
+}
+
+.top-tweets-table-container-negative th {
+  background-color: #ff0000a1;
+  color: white;
+}
+
+.top-tweets-table-container-positive tr:nth-child(even),
+.top-tweets-table-container-negative tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.top-tweets-table-container-positive tr:hover,
+.top-tweets-table-container-negative tr:hover {
+  background-color: #ddd;
+}
+
+@media (max-width: 768px) {
   .top-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 90px;
-  }
-  
-  .left-section {
-    display: flex;
     flex-direction: column;
-    justify-content: center;
   }
-  
+
+  .left-section,
   .right-section {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-  
-  
-  .doughnut-chart-container,
-  .top-tweets-table-container-positive,
-  .top-tweets-table-container-negative {
-    box-sizing: border-box;
-  }
-  
-  
-  .top-tweets-table-container-positive table,
-  .top-tweets-table-container-negative table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
   }
-  
-  .top-tweets-table-container-positive th,
-  .top-tweets-table-container-negative th,
-  .top-tweets-table-container-positive td,
-  .top-tweets-table-container-negative td {
-    border: 1px solid #ddd;
-    padding: 5px;
-    text-align: left;
-  }
-  
-  .top-tweets-table-container-positive th {
-    background-color: #2bcf30bc;
-    color: white;
-  }
-  .top-tweets-table-container-negative th {
-    background-color: #ff0000a1;
-    color: white;
-  }
-  
-  .top-tweets-table-container-positive tr:nth-child(even),
-  .top-tweets-table-container-negative tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .top-tweets-table-container-positive tr:hover,
-  .top-tweets-table-container-negative tr:hover {
-    background-color: #ddd;
-  }
-  
-  @media (max-width: 768px) {
-    .top-section {
-      flex-direction: column;
-    }
-  
-    .left-section,
-    .right-section {
-      width: 100%;
-    }
-  }
-  
-  .bottom-section {
-    margin-top: 20px;
-  }
-  
-  .sentiment-over-time-chart {
-    margin-top: 50px;
-    padding: 10px;
-    box-sizing: border-box;
-    text-align: center;
-  }
-  
-  .sentiment-over-time-chart .chart-container {
-    margin: 0 auto;
-    max-width: 50%;
-  }
-  
-  .doughnut-chart-container {
-    min-width: 250px;
-  }
-  
+}
+
+.bottom-section {
+  margin-top: 20px;
+}
+
+.sentiment-over-time-chart {
+  margin-top: 50px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.sentiment-over-time-chart .chart-container {
+  margin: 0 auto;
+  max-width: 50%;
+}
+
+.doughnut-chart-container {
+  min-width: 250px;
+}

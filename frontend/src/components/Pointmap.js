@@ -16,7 +16,7 @@ function Pointmap() {
   const [highestSentimentTweet, setHighestSentimentTweet] = useState('');
   const [lowestSentimentTweet, setlowestSentimentTweet] = useState('');
 
-  
+
   const mapContainer = useRef(null);
   const mapInstance = useRef(null);
   const legend = useRef(null);
@@ -43,7 +43,7 @@ function Pointmap() {
         console.error('Error fetching dynamic point data:', error);
       });
   };
-  
+
   useEffect(() => {
     fetch(`${API}/pointmap`)
       .then(response => response.json())
@@ -88,11 +88,11 @@ function Pointmap() {
     }
 
     const markers = L.markerClusterGroup({
-      iconCreateFunction: function(cluster) {
+      iconCreateFunction: function (cluster) {
         var childCount = cluster.getChildCount();
         var className = 'marker-cluster';
         var gradientStyle = '';
-    
+
         if (childCount < 50) {
           gradientStyle = 'background-image: linear-gradient(135deg, rgba(18, 83, 225, 0.3) 0%, rgba(18, 83, 225, 0.5) 70%);';
         } else if (childCount < 1000) {
@@ -100,8 +100,8 @@ function Pointmap() {
         } else {
           gradientStyle = 'background-image: linear-gradient(135deg, rgba(18, 83, 225, 1) 0%, rgba(15, 60, 181, 1) 70%);';
         }
-    
-        return new L.DivIcon({ 
+
+        return new L.DivIcon({
           html: '<div style="' + gradientStyle + '"><span style="color: white;">' + childCount + '</span></div>',
           className: className,
           iconSize: new L.Point(40, 40)
@@ -117,7 +117,7 @@ function Pointmap() {
         fillColor: getFillColor(value),
         className: 'pointmap-marker',
       });
-    
+
       const popupContent = `
         <div class="custom-popup">
           <h5 style="text-align: center;">Sentiment Value: ${value}</h5>

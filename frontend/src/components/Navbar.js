@@ -51,12 +51,12 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <div className="nav-item dropdown">
-                            <Link 
-                                className={`nav-link dropdown-toggle ${location.pathname.includes("/ingestion") ? "active" : ""}`} 
-                                to="#" 
-                                id="navbarDropdownMenuLink" 
-                                role="button" 
-                                data-bs-toggle="dropdown" 
+                            <Link
+                                className={`nav-link dropdown-toggle ${location.pathname.includes("/ingestion") ? "active" : ""}`}
+                                to="#"
+                                id="navbarDropdownMenuLink"
+                                role="button"
+                                data-bs-toggle="dropdown"
                                 aria-expanded={isIngestionOpen}
                                 onClick={toggleIngestion}
                                 style={{ display: 'flex', alignItems: 'center' }}

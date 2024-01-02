@@ -75,7 +75,7 @@ function Users() {
           <tbody>
             {users.slice(0, USERS_PER_PAGE * page).map((user, index) => (
               <tr key={user.id}>
-                <td>{index+1}</td>
+                <td>{index + 1}</td>
                 <td>{user.username}</td>
                 <td>{user.public_metrics.followers_count}</td>
               </tr>

@@ -64,7 +64,7 @@ function TotalTweets() {
           }
         ]
       });
-      
+
 
       setIsLoading(false);
     } catch (error) {
@@ -86,7 +86,7 @@ function TotalTweets() {
       mode: 'index',
       intersect: false,
       callbacks: {
-        label: function(tooltipItem, data) {
+        label: function (tooltipItem, data) {
           const dataset = data.datasets[tooltipItem.datasetIndex];
           const value = dataset.data[tooltipItem.index].toFixed(2);
           const tweetCount = dataset.tweetCount ? dataset.tweetCount[tooltipItem.index] : 'N/A';

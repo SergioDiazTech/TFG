@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
 }
-  
+
 .collections-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
@@ -11,7 +11,7 @@
     list-style: none;
     padding: 0;
 }
-  
+
 .collection-card {
     display: flex;
     flex-direction: column;
@@ -22,30 +22,30 @@
     border: 2px solid var(--primary-color);
     border-radius: 10px;
     background-color: var(--secondary-color);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-  
+
 .collection-icon {
     width: 80px;
     height: 80px;
     margin-bottom: 10%;
 }
-  
+
 .collection-name {
     color: var(--text-color);
     font-weight: bold;
     margin-bottom: 24px;
 }
-  
+
 .collection-card:hover {
     transform: scale(1.05);
     transition: transform 0.2s ease-in-out;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.278);
 }
-  
+
 .collection-card:focus {
     outline: none;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -53,26 +53,26 @@
     width: 100%;
     border-collapse: collapse;
 }
-  
+
 .tweet-table th,
 .tweet-table td {
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-  
-  
+
+
 .tweet-table th {
     background-color: #f2f2f2;
     font-weight: bold;
     font-size: 15px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
-  
+
 .tweet-table tbody tr:hover {
     background-color: #f9f9f9;
 }
-  
+
 .green-circle {
     width: 10px;
     height: 10px;
@@ -81,7 +81,7 @@
     display: inline-block;
     margin-right: 15%;
 }
-  
+
 .yellow-circle {
     width: 10px;
     height: 10px;
@@ -90,7 +90,7 @@
     display: inline-block;
     margin-right: 7%;
 }
-  
+
 .red-circle {
     width: 10px;
     height: 10px;
@@ -99,5 +99,3 @@
     display: inline-block;
     margin-right: 7%;
 }
-  
-  
