@@ -92,11 +92,14 @@ function TotalTweets() {
         onClick: null,
         position: 'bottom',
         labels: {
-          boxWidth: 15,
+          usePointStyle: true,
+          boxWidth: 20,
           padding: 20,
           font: {
-            size: 14
+            size: 15,
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
           },
+          color: '#333',
           generateLabels: (chart) => {
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
@@ -113,6 +116,10 @@ function TotalTweets() {
             }
           }
         }
+      },
+      animation: {
+        animateScale: true,
+        animateRotate: true
       },
       tooltip: {
         callbacks: {
