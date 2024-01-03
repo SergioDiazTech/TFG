@@ -89,33 +89,7 @@ function TotalTweets() {
     cutout: '70%',
     plugins: {
       legend: {
-        onClick: null,
-        position: 'bottom',
-        labels: {
-          usePointStyle: true,
-          boxWidth: 20,
-          padding: 20,
-          font: {
-            size: 15,
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
-          },
-          color: '#333',
-          generateLabels: (chart) => {
-            const data = chart.data;
-            if (data.labels.length && data.datasets.length) {
-              return data.labels.map((label, i) => ({
-                text: `${label}: ${percentages[i]}%`,
-                fillStyle: data.datasets[0].backgroundColor[i],
-                strokeStyle: data.datasets[0].borderColor[i],
-                lineWidth: data.datasets[0].borderWidth,
-                hidden: isNaN(data.datasets[0].data[i]),
-                index: i
-              }));
-            } else {
-              return [];
-            }
-          }
-        }
+        display: false,
       },
       animation: {
         animateScale: true,
@@ -173,6 +147,15 @@ function TotalTweets() {
               <div className="doughnut-chart-container">
                 <h4 style={{ textAlign: 'center' }}>Positive vs Negative Tweets Analysis</h4>
                 <Doughnut data={sentimentData} options={doughnutOptions} />
+                <div className="chart-legend">
+                  {sentimentData.labels && sentimentData.labels.map((label, index) => (
+                    <div key={index} className="legend-item">
+                      <span className="legend-color" style={{ background: sentimentData.datasets[0].backgroundColor[index] }}></span>
+                      <span className="legend-label">{`${label}: ${percentages[index]}%`}</span>
+                    </div>
+                  ))}
+                </div>
+
               </div>
             </div>
             <div className="right-section">

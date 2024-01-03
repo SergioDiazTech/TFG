@@ -7,12 +7,12 @@
   width: 400px;
   height: 400px;
   position: relative;
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   background: #f9f9f9;
-  padding: 20px;
+  padding: 25px;
   transition: all 0.3s ease;
-  padding-bottom: 65px;
+  padding-bottom: 110px;
 }
 
 
@@ -106,6 +106,28 @@
   max-width: 50%;
 }
 
-.doughnut-chart-container {
-  min-width: 250px;
+
+.chart-legend {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.legend-label {
+  font-size: 14px;
 }
