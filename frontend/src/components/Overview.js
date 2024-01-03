@@ -10,6 +10,7 @@ const API = process.env.REACT_APP_API;
 
 function TotalTweets() {
   const [sentimentData, setSentimentData] = useState({});
+  const [percentages, setPercentages] = useState([]);
   const [topTweets, setTopTweets] = useState([]);
   const [topNegativeTweets, setTopNegativeTweets] = useState([]);
   const [sentimentOverTimeData, setSentimentOverTimeData] = useState({});
@@ -20,16 +21,22 @@ function TotalTweets() {
       const response = await fetch(`${API}/sentiment_count`);
       const data = await response.json();
 
+      const sentimentCounts = [data.positive_tweets, data.negative_tweets];
+      const total = sentimentCounts.reduce((acc, val) => acc + val, 0);
+      const percentages = sentimentCounts.map(val => ((val / total) * 100).toFixed(2));
+
       setSentimentData({
         labels: ['Positives', 'Negatives'],
         datasets: [{
           label: 'Number of Tweets',
-          data: [data.positive_tweets, data.negative_tweets],
+          data: sentimentCounts,
           backgroundColor: ['#4CAF50', '#F44336'],
           borderColor: ['white'],
           borderWidth: 2
         }]
       });
+
+      setPercentages(percentages);
 
       setTopTweets(data.top_tweets);
       setTopNegativeTweets(data.top_negative_tweets);
@@ -76,6 +83,59 @@ function TotalTweets() {
     getSentimentCount();
   }, []);
 
+  
+  const doughnutOptions = {
+    maintainAspectRatio: false,
+    cutout: '70%',
+    plugins: {
+      legend: {
+        onClick: (e, legendItem, legend) => {
+          ChartJS.defaults.plugins.legend.onClick.call(this, e, legendItem, legend);
+          const index = legendItem.index;
+          sentimentData.datasets[0].data[index] = sentimentData.datasets[0].data[index] ? 0 : percentages[index];
+          setSentimentData({...sentimentData});
+        },
+        position: 'bottom',
+        labels: {
+          boxWidth: 15,
+          padding: 20,
+          font: {
+            size: 14
+          },
+          generateLabels: (chart) => {
+            const data = chart.data;
+            if (data.labels.length && data.datasets.length) {
+              return data.labels.map((label, i) => ({
+                text: `${label}: ${percentages[i]}%`,
+                fillStyle: data.datasets[0].backgroundColor[i],
+                strokeStyle: data.datasets[0].borderColor[i],
+                lineWidth: data.datasets[0].borderWidth,
+                hidden: isNaN(data.datasets[0].data[i]),
+                index: i
+              }));
+            } else {
+              return [];
+            }
+          }
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            let label = context.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed !== null) {
+              label += `${context.parsed} tweets`;
+            }
+            return label;
+          }
+        }
+      }
+    }
+  };
+
   const options = {
     scales: {
       y: {
@@ -109,22 +169,7 @@ function TotalTweets() {
             <div className="left-section">
               <div className="doughnut-chart-container">
                 <h4 style={{ textAlign: 'center' }}>Positive vs Negative Tweets Analysis</h4>
-                <Doughnut data={sentimentData} options={{
-                  maintainAspectRatio: false,
-                  cutout: '70%',
-                  plugins: {
-                    legend: {
-                      position: 'bottom',
-                      labels: {
-                        boxWidth: 15,
-                        padding: 20,
-                        font: {
-                          size: 14
-                        }
-                      }
-                    }
-                  }
-                }} />
+                <Doughnut data={sentimentData} options={doughnutOptions} />
               </div>
             </div>
             <div className="right-section">
