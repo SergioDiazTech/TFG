@@ -89,12 +89,7 @@ function TotalTweets() {
     cutout: '70%',
     plugins: {
       legend: {
-        onClick: (e, legendItem, legend) => {
-          ChartJS.defaults.plugins.legend.onClick.call(this, e, legendItem, legend);
-          const index = legendItem.index;
-          sentimentData.datasets[0].data[index] = sentimentData.datasets[0].data[index] ? 0 : percentages[index];
-          setSentimentData({...sentimentData});
-        },
+        onClick: null,
         position: 'bottom',
         labels: {
           boxWidth: 15,
@@ -135,6 +130,7 @@ function TotalTweets() {
       }
     }
   };
+  
 
   const options = {
     scales: {
