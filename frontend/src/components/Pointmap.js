@@ -189,7 +189,7 @@ function Pointmap() {
             <div className="map-header-pointmap">
               <h5 style={{ textAlign: 'center' }}>Tweet distribution: Visualizing clusters by volume in '{collectionName}'</h5>
             </div>
-            <div ref={mapContainer} className="map-map"></div>
+            <div ref={mapContainer} className="map-map-pointmap"></div>
           </div>
           <div className="data-summary-section-pointmap">
             <div className="data-summary-header-pointmap">

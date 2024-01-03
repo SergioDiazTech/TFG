@@ -91,7 +91,7 @@ function Users() {
       )}
       {users.length > USERS_PER_PAGE * (page - 1) && (
         <div className="button-container">
-          <button className="button-load-more" onClick={loadMoreUsers} disabled={isLoading}>
+          <button className="button-load-more-users" onClick={loadMoreUsers} disabled={isLoading}>
             {isLoading ? 'Loading...' : 'Load more'}
           </button>
         </div>

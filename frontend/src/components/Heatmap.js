@@ -115,7 +115,7 @@ function Heatmap() {
             <div className="map-header-heatmap">
               <h5 style={{ textAlign: 'center' }}>Global sentiment overview: Data from '{collectionName}'</h5>
             </div>
-            <div ref={mapContainer} className="map-map"></div>
+            <div ref={mapContainer} className="map-map-heatmap"></div>
           </div>
           <div className="data-summary-section-heatmap">
             <div className="data-summary-header-heatmap">

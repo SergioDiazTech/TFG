@@ -132,7 +132,7 @@ function Data() {
           </table>
           {tweets.length >= page * TWEETS_PER_PAGE && (
             <div className="button-container">
-              <button className="button-load-more" onClick={loadMoreTweets} disabled={isLoading}>
+              <button className="button-load-more-data" onClick={loadMoreTweets} disabled={isLoading}>
                 {isLoading ? "Loading..." : "Load more"}
               </button>
             </div>
