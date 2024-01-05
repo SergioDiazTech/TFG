@@ -191,21 +191,24 @@ function Pointmap() {
             </div>
             <div ref={mapContainer} className="map-map-pointmap"></div>
           </div>
-          <div className="data-summary-section-pointmap">
-            <div className="data-summary-header-pointmap">
-              <h5 className="map-title-pointmap">Tweets summary</h5>
-            </div>
-            <div className="total-tweets-summary-pointmap">
-              <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
-            </div>
-            <div className="Highest-Sentiment-tweets-summary-pointmap">
-              <p>Highest Sentiment Tweet: <span>"{highestSentimentTweet}"</span></p>
-            </div>
+          <div className="data-summary-background">
+            <div className="data-summary-section-pointmap">
+              <div className="data-summary-header-pointmap">
+                <h5 className="map-title-pointmap">Tweets summary</h5>
+              </div>
+              <div className="total-tweets-summary-pointmap">
+                <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
+              </div>
+              <div className="Highest-Sentiment-tweets-summary-pointmap">
+                <p>Highest Sentiment Tweet: <span>"{highestSentimentTweet}"</span></p>
+              </div>
 
-            <div className="Lowest-Sentiment-tweets-summary-pointmap">
-              <p>Lowest Sentiment Tweet: <span>"{lowestSentimentTweet}"</span></p>
+              <div className="Lowest-Sentiment-tweets-summary-pointmap">
+                <p>Lowest Sentiment Tweet: <span>"{lowestSentimentTweet}"</span></p>
+              </div>
             </div>
           </div>
+          
         </div>
       </div>
     </div>

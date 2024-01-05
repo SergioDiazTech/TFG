@@ -19,15 +19,29 @@
   margin-right: 40px;
 }
 
+.data-summary-background {
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .data-summary-section-pointmap {
   flex-grow: 4;
-  margin-right: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .data-summary-header-pointmap {
   text-align: center;
   font-size: 110%;
   font: bold;
+  margin-bottom: 25px;
 }
 
 .data-summary-pointmap {
@@ -38,6 +52,9 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   max-height: 250px;
 }
+
+
+
 
 .total-tweets-summary-pointmap {
   background-color: #f0f0f0;
