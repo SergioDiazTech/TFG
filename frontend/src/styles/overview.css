@@ -47,7 +47,7 @@
   border-radius: 10px;
 }
 
-.doughnut-chart-container{
+.doughnut-chart-container {
   box-sizing: border-box;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .bottom-section {
-  margin-top: 20px;
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -109,19 +109,22 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   padding: 30px;
   box-sizing: border-box;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .sentiment-over-time-chart {
-  margin-top: 50px;
-  padding: 10px;
+  margin-top: -20px;
+  margin-bottom: -35px;
+  padding: 30px;
   box-sizing: border-box;
   text-align: center;
 }
 
+
+
 .sentiment-over-time-chart .chart-container {
   margin: 0 auto;
-  max-width: 50%;
+  max-width: 30%;
 }
 
 
@@ -148,4 +151,11 @@
 
 .legend-label {
   font-size: 14px;
+}
+
+.date-format-explanation {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
 }

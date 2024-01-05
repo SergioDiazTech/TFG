@@ -207,6 +207,9 @@ function TotalTweets() {
             <div className="sentiment-over-time-chart">
               <h4>Variation of Sentiment over Time</h4>
               <Line data={sentimentOverTimeData} options={options} />
+              <p className="date-format-explanation">
+                * The date format in the chart is Year-Month-Day-Time.
+              </p>
             </div>
           </div>
         </>
