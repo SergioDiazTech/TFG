@@ -3,30 +3,35 @@
   font-size: 14px;
 }
 
-.doughnut-chart-container {
-  width: 400px;
-  height: 400px;
-  position: relative;
-  border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  background: #f9f9f9;
-  padding: 25px;
-  transition: all 0.3s ease;
-  padding-bottom: 110px;
-}
-
 
 .top-section {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 90px;
+  height: 600px;
+}
+
+.doughnut-chart-container {
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  background: #f9f9f9;
+  padding: 25px;
+  transition: all 0.3s ease;
+  padding-bottom: 110px;
+}
+
+.doughnut-chart-container,
+.right-section {
+  height: 600px;
 }
 
 .left-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%
 }
 
 .right-section {
@@ -35,11 +40,13 @@
   gap: 40px;
   background: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
   padding: 25px;
   box-sizing: border-box;
   margin-bottom: 20px;
 }
+
+
 
 .top-tweets-table-container-positive,
 .top-tweets-table-container-negative {
@@ -100,13 +107,13 @@
 }
 
 .bottom-section {
-  margin-top: 25px;
+  margin-top: 70px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   background: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
   padding: 30px;
   box-sizing: border-box;
   margin-bottom: 20px;
