@@ -20,6 +20,7 @@ function TotalTweets() {
     try {
       const response = await fetch(`${API}/sentiment_count`);
       const data = await response.json();
+      console.log(data);
 
       const sentimentCounts = [data.positive_tweets, data.negative_tweets];
       const total = sentimentCounts.reduce((acc, val) => acc + val, 0);
@@ -119,19 +120,25 @@ function TotalTweets() {
         beginAtZero: true
       }
     },
-    tooltips: {
-      mode: 'index',
-      intersect: false,
-      callbacks: {
-        label: function (tooltipItem, data) {
-          const dataset = data.datasets[tooltipItem.datasetIndex];
-          const value = dataset.data[tooltipItem.index].toFixed(2);
-          const tweetCount = dataset.tweetCount ? dataset.tweetCount[tooltipItem.index] : 'N/A';
-          return `${dataset.label}: ${value} (Tweets: ${tweetCount})`;
+    plugins: {
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+        callbacks: {
+          label: function (context) {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            const value = context.parsed.y.toFixed(2);
+            const tweetCount = context.dataset.tweetCount[context.dataIndex];
+            return `${label} ${value} (Tweets: ${tweetCount})`;
+          }
         }
       }
     }
   };
+  
 
   return (
     <div className="dashboard-container">
