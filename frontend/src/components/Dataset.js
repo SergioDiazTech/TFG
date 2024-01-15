@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.css';
+import '../styles/dataset.css'
 
 const API = process.env.REACT_APP_API;
 
