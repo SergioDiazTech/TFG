@@ -50,21 +50,21 @@ function TotalTweets() {
         labels: general.map(d => d._id),
         datasets: [
           {
-            label: 'Average Sentiment',
-            data: general.map(d => d.average_sentiment),
-            tweetCount: general.map(d => d.tweet_count),
-            borderColor: 'rgb(100, 181, 246)',
-            backgroundColor: 'rgba(100, 181, 246, 0.5)',
-          },
-          {
-            label: 'Average Positive Sentiment',
+            label: 'Positive average sentiment',
             data: positive.map(d => d.average_sentiment),
             tweetCount: positive.map(d => d.tweet_count),
             borderColor: 'rgb(75, 192, 192)',
             backgroundColor: 'rgba(75, 192, 192, 0.5)',
           },
           {
-            label: 'Average Negative Sentiment',
+            label: 'Average sentiment',
+            data: general.map(d => d.average_sentiment),
+            tweetCount: general.map(d => d.tweet_count),
+            borderColor: 'rgb(100, 181, 246)',
+            backgroundColor: 'rgba(100, 181, 246, 0.5)',
+          },
+          {
+            label: 'Negative average sentiment',
             data: negative.map(d => d.average_sentiment),
             tweetCount: negative.map(d => d.tweet_count),
             borderColor: 'rgb(255, 99, 132)',
