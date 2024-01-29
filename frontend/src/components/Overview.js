@@ -171,6 +171,7 @@ function TotalTweets() {
                 <table>
                   <thead>
                     <tr>
+                      <th>User</th>
                       <th>Text of the Tweet</th>
                       <th>Retweets</th>
                       <th>Sentiment</th>
@@ -179,6 +180,7 @@ function TotalTweets() {
                   <tbody>
                     {topTweets.map((tweet, index) => (
                       <tr key={index}>
+                        <td>{'@'+tweet.user_of_tweet}</td>
                         <td>{tweet.text}</td>
                         <td>{tweet.public_metrics.retweet_count}</td>
                         <td>{tweet.sentiment}</td>
@@ -192,6 +194,7 @@ function TotalTweets() {
                 <table>
                   <thead>
                     <tr>
+                      <th>User</th>
                       <th>Text of the Tweet</th>
                       <th>Retweets</th>
                       <th>Sentiment</th>
@@ -200,6 +203,7 @@ function TotalTweets() {
                   <tbody>
                     {topNegativeTweets.map((tweet, index) => (
                       <tr key={index}>
+                        <td>{'@'+tweet.user_of_tweet}</td>
                         <td>{tweet.text}</td>
                         <td>{tweet.public_metrics.retweet_count}</td>
                         <td>{tweet.sentiment}</td>

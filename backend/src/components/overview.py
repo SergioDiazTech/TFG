@@ -21,13 +21,59 @@ def load_information():
 
 
 
-    top_positive_retweeted_tweets = list(twitter_collection.find({"sentiment": {"$gt": 0}, "referenced_tweets": {"$exists": False}}, 
-                                              {'text': 1, 'public_metrics.retweet_count': 1, 'sentiment': 1})
-                      .sort([('public_metrics.retweet_count', -1)]).limit(3))
+    # Query to fetch the top 3 most retweeted positive tweets that are not replies
+    top_positive_retweeted_tweets = list(twitter_collection.aggregate([
+        # Filter for positive sentiment tweets that are not replies
+        {"$match": {"sentiment": {"$gt": 0}, "referenced_tweets": {"$exists": False}}},
 
-    top_negative_retweeted_tweets = list(twitter_collection.find({"sentiment": {"$lt": 0}, "referenced_tweets": {"$exists": False}}, 
-                                               {'text': 1, 'public_metrics.retweet_count': 1, 'sentiment': 1})
-                       .sort([('public_metrics.retweet_count', -1)]).limit(3))
+        # Sort by retweet count in descending order
+        {"$sort": {"public_metrics.retweet_count": -1}},
+
+        # Limit to the top 3 documents to reduce processing
+        {"$limit": 3},
+
+        # Lookup the corresponding user in 'users_colombia' collection using 'author_id'
+        {"$lookup": {
+            "from": "users_colombia",
+            "localField": "author_id",
+            "foreignField": "id",
+            "as": "user_info"
+        }},
+
+        # Extract the first element from the resulting user info array
+        {"$addFields": {"user_info": {"$arrayElemAt": ["$user_info", 0]}}},
+
+        # Project required fields including the username as 'user_of_tweet'
+        {"$project": {
+            "text": 1,
+            "public_metrics.retweet_count": 1,
+            "sentiment": 1,
+            "user_of_tweet": "$user_info.username"
+        }}
+    ]))
+
+
+    top_negative_retweeted_tweets = list(twitter_collection.aggregate([
+        {"$match": {"sentiment": {"$lt": 0}, "referenced_tweets": {"$exists": False}}},
+        {"$sort": {"public_metrics.retweet_count": -1}},
+        {"$limit": 3},
+        {"$lookup": {
+            "from": "users_colombia",
+            "localField": "author_id",
+            "foreignField": "id",
+            "as": "user_info"
+        }},
+        {"$addFields": {
+            "user_info": {"$arrayElemAt": ["$user_info", 0]}
+        }},
+        {"$project": {
+            "text": 1,
+            "public_metrics.retweet_count": 1,
+            "sentiment": 1,
+            "user_of_tweet": "$user_info.username"
+        }}
+    ]))
+
 
     return total_tweets, positive_tweets, negative_tweets, top_positive_retweeted_tweets, top_negative_retweeted_tweets
 
