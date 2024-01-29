@@ -92,21 +92,30 @@ function Pointmap() {
         var childCount = cluster.getChildCount();
         var className = 'marker-cluster';
         var gradientStyle = '';
+        var baseSize = 20;
+        var sizeIncrease = Math.min(Math.log(childCount) * 5, 20);
+        var fontSize = Math.min(12 + (Math.log(childCount) * 2), 10);
 
         if (childCount < 50) {
           gradientStyle = 'background-image: linear-gradient(135deg, rgba(18, 83, 225, 0.3) 0%, rgba(18, 83, 225, 0.5) 70%);';
-        } else if (childCount < 1000) {
+        } else if (childCount < 3000) {
           gradientStyle = 'background-image: linear-gradient(135deg, rgba(18, 83, 225, 0.7) 0%, rgba(18, 83, 225, 0.8) 70%);';
         } else {
           gradientStyle = 'background-image: linear-gradient(135deg, rgba(18, 83, 225, 1) 0%, rgba(15, 60, 181, 1) 70%);';
         }
-
+      
+        var size = baseSize + sizeIncrease;
+      
+        var iconHtml = `<div style="width: ${size}px; height: ${size}px; line-height: ${size}px; ${gradientStyle}; border-radius: 50%; text-align: center; font-size: ${fontSize}px; color: white;">${childCount}</div>`;
+      
         return new L.DivIcon({
-          html: '<div style="' + gradientStyle + '"><span style="color: white;">' + childCount + '</span></div>',
+          html: iconHtml,
           className: className,
-          iconSize: new L.Point(40, 40)
+          iconSize: new L.Point(size, size)
         });
       }
+      
+      
     });
 
     pointMapData.forEach(point => {
@@ -145,7 +154,7 @@ function Pointmap() {
     legend.current = L.control({ position: 'bottomright' });
     legend.current.onAdd = function (map) {
       const div = L.DomUtil.create('div', 'info legend');
-      const grades = ["< 50 tweets", "50 - 1000 tweets", "1000+ tweets"];
+      const grades = ["< 50 tweets", "50 - 3000 tweets", "3000+ tweets"];
       const labels = [];
 
       const colors = [
