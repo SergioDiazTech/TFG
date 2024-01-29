@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import json
 import os
 from datetime import datetime
+import time
 
 from geopy.geocoders import ArcGIS
 
@@ -60,6 +61,32 @@ def normalize_source(tweets):
             tweet['source'] = 'Other Source'
 
 
+def load_last_processed_id():
+    client = MongoClient(MONGO_URI)
+    db = client['DB_External_Data_Ingestion']
+    state_collection = db['State']
+    state_document = state_collection.find_one({'name': 'last_processed_id'})
+    if state_document:
+        return state_document['value']
+    return None
+
+def save_last_processed_id(last_id):
+    client = MongoClient(MONGO_URI)
+    db = client['DB_External_Data_Ingestion']
+    state_collection = db['State']
+    state_collection.update_one(
+        {'name': 'last_processed_id'},
+        {'$set': {'value': last_id}},
+        upsert=True
+    )
+
+def format_time(seconds):
+    hours = seconds // 3600
+    minutes = (seconds % 3600) // 60
+    seconds = seconds % 60
+    return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
+
+
 def save_json_to_mongodb(filename, custom_name):
     DATA_FILEPATH = os.path.join(DATA_FOLDER, filename)
     with open(DATA_FILEPATH, 'r', encoding='utf-8') as file:
@@ -87,48 +114,67 @@ def save_json_to_mongodb(filename, custom_name):
                 dataset_collection.insert_one(tweet)
                 print(f"Tweet ID: {tweet['_id']} - Nuevo tweet añadido con sentimiento: {tweet['sentiment']}")
 
-    elif filename == "users_colombia.json":
+    elif filename == "users_colombia21.json":
         dataset_collection = db['users_colombia']
         tweets_collection = db['tweets_colombia']
-        for user in data:
-            user = procesamiento_geoparsing(user)
 
-            user.pop('profile_image_url', None)
-            user.pop('url', None)
-            user.pop('protected', None)
+        last_processed_id = load_last_processed_id()
 
-            user['_id'] = user['_id']['$oid']
-            if dataset_collection.find_one({'_id': user['_id']}) is None:
-                dataset_collection.insert_one(user)
-                print(f"User ID: {user['_id']} - Nuevo usuario añadido con latitud: {user['latitude']} y longitud: {user['longitude']}")
+        start_time = time.time()
+        processed_count = 0
 
-            
-            # Actualiza las coordenadas en los tweets correspondientes
-            tweets_to_update = tweets_collection.find({
-                'author_id': user['id'], 
-                'referenced_tweets': {'$exists': False}
-            })
+        try:
+            for user in data:
+                if last_processed_id and user['_id']['$oid'] <= last_processed_id:
+                    continue
 
-            for tweet in tweets_to_update:
-                update_fields = {
-                    'latitude': user['latitude'], 
-                    'longitude': user['longitude']
-                }
-                if 'location' in user:
-                    update_fields['location'] = user['location']
+                user = procesamiento_geoparsing(user)
 
-                result = tweets_collection.update_one(
-                    {'_id': tweet['_id']},
-                    {'$set': update_fields}
-                )
+                user.pop('profile_image_url', None)
+                user.pop('url', None)
+                user.pop('protected', None)
 
-                if result.modified_count > 0:
+                user['_id'] = user['_id']['$oid']
+                if dataset_collection.find_one({'_id': user['_id']}) is None:
+                    dataset_collection.insert_one(user)
+                    print(f"User ID: {user['_id']} - Nuevo usuario añadido con latitud: {user['latitude']} y longitud: {user['longitude']}")
+
+                # Actualizar coordenadas en los tweets correspondientes
+                tweets_to_update = tweets_collection.find({
+                    'author_id': user['id'], 
+                    'referenced_tweets': {'$exists': False}
+                })
+
+                for tweet in tweets_to_update:
+                    update_fields = {
+                        'latitude': user['latitude'], 
+                        'longitude': user['longitude']
+                    }
+                    if 'location' in user:
+                        update_fields['location'] = user['location']
+
+                    tweets_collection.update_one(
+                        {'_id': tweet['_id']},
+                        {'$set': update_fields}
+                    )
                     updated_tweet = tweets_collection.find_one({'_id': tweet['_id']})
                     print(updated_tweet)
 
-                    
+                save_last_processed_id(user['_id'])
+                processed_count += 1
+                print(f"Procesados {processed_count} usuarios hasta ahora.")
+
+        except KeyboardInterrupt:
+            print("Interrupción por el usuario (CTRL+C). Guardando estado actual...")
+
+        finally:
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"Tiempo total de ejecución: {format_time(elapsed_time)}")
+            print(f"Total de documentos procesados: {processed_count}")
+
             
-    os.remove(DATA_FILEPATH)  # Elimina el archivo después de procesarlo
+    os.remove(DATA_FILEPATH)  # Eliminar el archivo después de procesarlo
 
     # Registro de la ingesta
     registro_collection = db['Ingestion_Registry']
