@@ -76,9 +76,9 @@ function Heatmap() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
     L.heatLayer(heatMapData.map(({ lat, lng, value }) => [lat, lng, value]), {
-      radius: 15,
+      radius: 5,
       gradient,
-      blur: 10,
+      blur: 1,
       maxZoom: 1,
       minOpacity: 0.6,
     }).addTo(mapInstance);
