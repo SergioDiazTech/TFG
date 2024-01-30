@@ -15,6 +15,8 @@ function Pointmap() {
   const [totalTweets, setTotalTweets] = useState(0);
   const [highestSentimentTweet, setHighestSentimentTweet] = useState('');
   const [lowestSentimentTweet, setlowestSentimentTweet] = useState('');
+  const [highestSentimentTweetUsername, setHighestSentimentTweetUsername] = useState('');
+  const [lowestSentimentTweetUsername, setLowestSentimentTweetUsername] = useState('');
 
 
   const mapContainer = useRef(null);
@@ -37,7 +39,9 @@ function Pointmap() {
       .then(response => {
         setTotalPoints(response.data.length);
         setHighestSentimentTweet(response.highestSentimentTweet);
+        setHighestSentimentTweetUsername(response.highestSentimentTweetUsername);
         setlowestSentimentTweet(response.lowestSentimentTweet);
+        setLowestSentimentTweetUsername(response.lowestSentimentTweetUsername);
       })
       .catch(error => {
         console.error('Error fetching dynamic point data:', error);
@@ -209,11 +213,11 @@ function Pointmap() {
                 <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
               </div>
               <div className="Highest-Sentiment-tweets-summary-pointmap">
-                <p>Highest Sentiment Tweet: <span>"{highestSentimentTweet}"</span></p>
+                <p>Highest Sentiment Tweet: <span>"{highestSentimentTweet}"</span> by <span>{highestSentimentTweetUsername}</span></p>
               </div>
 
               <div className="Lowest-Sentiment-tweets-summary-pointmap">
-                <p>Lowest Sentiment Tweet: <span>"{lowestSentimentTweet}"</span></p>
+                <p>Lowest Sentiment Tweet: <span>"{lowestSentimentTweet}"</span> by <span>{lowestSentimentTweetUsername}</span></p>
               </div>
             </div>
           </div>
