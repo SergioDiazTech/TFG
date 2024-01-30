@@ -213,11 +213,11 @@ function Pointmap() {
                 <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
               </div>
               <div className="Highest-Sentiment-tweets-summary-pointmap">
-                <p>Highest Sentiment Tweet: <span>"{highestSentimentTweet}"</span> by <span>{highestSentimentTweetUsername}</span></p>
+                <p>Highest Sentiment Tweet: <span>"{highestSentimentTweet}"</span> by <span>@{highestSentimentTweetUsername}</span></p>
               </div>
 
               <div className="Lowest-Sentiment-tweets-summary-pointmap">
-                <p>Lowest Sentiment Tweet: <span>"{lowestSentimentTweet}"</span> by <span>{lowestSentimentTweetUsername}</span></p>
+                <p>Lowest Sentiment Tweet: <span>"{lowestSentimentTweet}"</span> by <span>@{lowestSentimentTweetUsername}</span></p>
               </div>
             </div>
           </div>

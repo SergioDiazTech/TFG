@@ -61,7 +61,7 @@
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 
 .total-tweets-summary-pointmap p {
@@ -79,23 +79,90 @@
 
 
 .Highest-Sentiment-tweets-summary-pointmap {
-  background-color: #28a7463f;
-  padding: 10px;
+  background-color: #e8f5e9;
+  border-left: 5px solid #28a745;
+  padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  margin-bottom: 10px;
-  color: #000000;
-
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
 }
+
+.Highest-Sentiment-tweets-summary-pointmap:hover {
+  background-color: #daf5dc;
+}
+
+.Highest-Sentiment-tweets-summary-pointmap p {
+  margin: 0;
+  color: #2e7d32;
+  font-size: 1.0rem;
+  font-weight: bold;
+}
+
+.Highest-Sentiment-tweets-summary-pointmap span {
+  display: inline-block;
+  background-color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin: 0 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+
+.Highest-Sentiment-tweets-summary-pointmap span:first-child {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+
+.Highest-Sentiment-tweets-summary-pointmap span:last-child {
+  margin-top: 20px;
+}
+
+
 
 .Lowest-Sentiment-tweets-summary-pointmap {
-  background-color: #df001645;
-  padding: 10px;
+  background-color: #fbe9e7;
+  border-left: 5px solid #d32f2f;
+  padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  margin-bottom: 10px;
-  color: #000000;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
 }
+
+.Lowest-Sentiment-tweets-summary-pointmap:hover {
+  background-color: #ffccbc;
+}
+
+.Lowest-Sentiment-tweets-summary-pointmap p {
+  margin: 0;
+  color: #c62828;
+  font-size: 1.0rem;
+  font-weight: bold;
+}
+
+.Lowest-Sentiment-tweets-summary-pointmap span {
+  display: inline-block;
+  background-color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin: 0 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+}
+
+.Lowest-Sentiment-tweets-summary-pointmap span:first-child {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.Lowest-Sentiment-tweets-summary-pointmap span:last-child {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
 
 
 .map-section-pointmap {

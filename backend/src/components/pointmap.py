@@ -10,7 +10,7 @@ def draw_pointmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
     twitter_collection = db[twitter_collection_name]
     users_collection = db['users_colombia']
 
-    query = {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}}
+    query = {"latitude": {"$exists": True, "$ne": None}, "longitude": {"$exists": True, "$ne": None}, "referenced_tweets": {"$exists": False} }
     if min_lat is not None and max_lat is not None and min_lng is not None and max_lng is not None:
         query['latitude'] = {"$gte": min_lat, "$lte": max_lat}
         query['longitude'] = {"$gte": min_lng, "$lte": max_lng}
@@ -18,7 +18,8 @@ def draw_pointmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
     data = list(twitter_collection.find(
         query,
         {'latitude': 1, 'longitude': 1, 'sentiment': 1, 'text': 1, 'author_id': 1, '_id': 0}
-    ))
+))
+
 
     total_tweets = twitter_collection.count_documents({"referenced_tweets": {"$exists": False}})
 
