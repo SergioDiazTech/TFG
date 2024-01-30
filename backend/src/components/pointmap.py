@@ -20,7 +20,8 @@ def draw_pointmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None):
         {'latitude': 1, 'longitude': 1, 'sentiment': 1, 'text': 1, 'author_id': 1, '_id': 0}
     ))
 
-    total_tweets = twitter_collection.count_documents({})
+    total_tweets = twitter_collection.count_documents({"referenced_tweets": {"$exists": False}})
+
 
     map_data = pd.DataFrame(data)
 
