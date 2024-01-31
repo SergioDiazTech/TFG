@@ -202,12 +202,16 @@ function Pointmap() {
             <div className="map-header-pointmap">
               <h5 style={{ textAlign: 'center' }}>Tweet distribution: Visualizing clusters by volume in '{collectionName}'</h5>
             </div>
-            <div ref={mapContainer} className="map-map-pointmap"></div>
+            <div 
+            ref={mapContainer} className="map-map-pointmap">
+            </div>
+            <p className="map-explanation-box" > <b>Explanation</b>: This map shows geolocated tweets as dots that vary in color: green for positive and red<br /> for negative. Tweets are grouped into clusters, whose blue color intensifies and size increases with  <br /> more tweets, reflecting the density and sentiment of conversations in different areas in a visual and <br /> concise way.</p>
+            
           </div>
           <div className="data-summary-background">
             <div className="data-summary-section-pointmap">
               <div className="data-summary-header-pointmap">
-                <h5 className="map-title-pointmap">Tweets summary</h5>
+                <h4 className="map-title-pointmap">Tweets summary</h4>
               </div>
               <div className="total-tweets-summary-pointmap">
                 <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
