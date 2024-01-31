@@ -24,7 +24,7 @@
   padding: 10px;
   margin-top: 30px;
   border-radius: 5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   font-size: 14px;
   text-align: justify;
   color: #4c4c4c;
@@ -38,7 +38,7 @@
 
 
 .data-summary-background {
-  background: #f9f9f9;
+  background: #f0f0f0;
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   padding: 15px;
@@ -113,7 +113,7 @@
 
 
 .total-tweets-summary-pointmap {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -274,5 +274,5 @@
   width: 100%;
   height: 450px;
   border-radius: 5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
