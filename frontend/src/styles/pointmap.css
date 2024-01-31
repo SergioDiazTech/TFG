@@ -26,8 +26,45 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  overflow: hidden;
+}
+
+.total-tweets-summary-pointmap,
+.Highest-Sentiment-tweets-summary-pointmap,
+.Lowest-Sentiment-tweets-summary-pointmap {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.Highest-Sentiment-tweets-summary-pointmap,
+.Lowest-Sentiment-tweets-summary-pointmap {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Highest-Sentiment-tweets-summary-pointmap p,
+.Lowest-Sentiment-tweets-summary-pointmap p {
+  margin: 0 0 10px 0;
+  word-wrap: break-word;
+}
+
+.Highest-Sentiment-tweets-summary-pointmap span,
+.Lowest-Sentiment-tweets-summary-pointmap span {
+  align-self: center;
+  margin-bottom: 5px;
+}
+
+
+@media (max-width: 768px) {
+  .data-summary-background {
+    width: 100%;
+    padding: 15px;
+  }
 }
 
 
