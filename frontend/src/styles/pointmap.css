@@ -1,6 +1,5 @@
 .dashboard-container-pointmap {
   display: flex;
-  height: 80vh;
 }
 
 .main-content-pointmap {
@@ -23,12 +22,12 @@
   background: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-  padding: 20px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .total-tweets-summary-pointmap,
@@ -69,7 +68,8 @@
 
 
 .data-summary-section-pointmap {
-  flex-grow: 4;
+  flex-grow: 1;
+  overflow: auto;
   margin-right: 10px;
   margin-left: 10px;
 }
