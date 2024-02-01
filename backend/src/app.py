@@ -7,6 +7,7 @@ from components.data import load_data, get_collection_names
 from components.users import load_users
 from components.heatmap import draw_heatmap
 from components.pointmap import draw_pointmap
+from components.trendingtopics import draw_trendingtopics
 from components.overview import load_information, load_sentiment_over_time
 
 import traceback
@@ -139,6 +140,17 @@ def display_pointmap():
     try:
         data = draw_pointmap(min_lat, max_lat, min_lng, max_lng)
         return jsonify(data)
+    except Exception as e:
+        print(f'Error: {e}')
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+    
+@app.route('/trendingtopics', methods=['GET'])
+def display_trendingtopics():
+    try:
+        df_data = draw_trendingtopics()
+        data = df_data.to_dict(orient='records')
+        return jsonify({"data": data})
     except Exception as e:
         print(f'Error: {e}')
         traceback.print_exc()

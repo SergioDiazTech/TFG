@@ -77,6 +77,9 @@ const Navbar = () => {
                         <Link className={`nav-link ${location.pathname === "/pointmap" ? "active" : ""}`} to="/pointmap">
                             TweetsMap
                         </Link>
+                        <Link className={`nav-link ${location.pathname === "/trendingtopics" ? "active" : ""}`} to="/trendingtopics">
+                            Trending-Topics
+                        </Link>
                         <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">
                             About
                         </Link>

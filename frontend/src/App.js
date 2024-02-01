@@ -10,6 +10,7 @@ import Overview from "./components/Overview";
 import Users from "./components/Users";
 import Heatmap from "./components/Heatmap"
 import Pointmap from "./components/Pointmap"
+import Trendingtopics from "./components/Trendingtopics"
 import About from "./components/About"
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/users" element={<Users/>}/>
           <Route path="/heatmap" element={<Heatmap/>}/>
           <Route path="/pointmap" element={<Pointmap/>}/>
+          <Route path="/trendingtopics" element={<Trendingtopics/>}/>
           <Route path="/about" element={<About/>}/>
         </Routes>
       </div>
