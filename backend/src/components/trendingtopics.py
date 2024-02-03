@@ -11,10 +11,11 @@ def draw_trendingtopics():
     twitter_collection = db[twitter_collection_name]
 
     query = {"referenced_tweets": {"$exists": False}}
-    projection = {"text": 1, "_id": 0}
+    projection = {"text": 1, "sentiment": 1, "_id": 0}
     texts = twitter_collection.find(query, projection)
 
-    words_list = []
+    positive_words_list = []
+    negative_words_list = []
     hashtags_list = []
 
     excluded_words = ["a", "ante", "bajo", "cabe", "con", "contra", "de", "desde", "durante", 
@@ -32,17 +33,16 @@ def draw_trendingtopics():
         words = clean_text.split()
         for word in words:
             if word.lower() not in excluded_words and not word.startswith('#'):
-                words_list.append(word.lower())
+                if 'sentiment' in doc and doc['sentiment'] > 0:
+                    positive_words_list.append(word.lower())
+                elif 'sentiment' in doc and doc['sentiment'] < 0:
+                    negative_words_list.append(word.lower())
 
-    df_words = pd.DataFrame(words_list, columns=['word'])
-    
+    df_positive_words = pd.DataFrame(positive_words_list, columns=['word'])
+    df_negative_words = pd.DataFrame(negative_words_list, columns=['word'])
 
     df_hashtags = pd.DataFrame(hashtags_list, columns=['hashtag'])
     df_hashtags_counted = df_hashtags['hashtag'].value_counts().rename_axis('hashtag').reset_index(name='counts')
     top_hashtags = df_hashtags_counted.head(10)
 
-    return df_words, top_hashtags
-
-df_words, top_hashtags = draw_trendingtopics()
-print(df_words)
-print(top_hashtags)
+    return df_positive_words, df_negative_words, top_hashtags

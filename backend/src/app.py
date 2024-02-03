@@ -148,10 +148,11 @@ def display_pointmap():
 @app.route('/trendingtopics', methods=['GET'])
 def display_trendingtopics():
     try:
-        df_words, df_hashtags = draw_trendingtopics()
-        words_data = df_words.to_dict(orient='records')
+        df_positive_words, df_negative_words, df_hashtags = draw_trendingtopics()
+        positive_words_data = df_positive_words.to_dict(orient='records')
+        negative_words_data = df_negative_words.to_dict(orient='records')
         hashtags_data = df_hashtags.to_dict(orient='records')
-        return jsonify({"words": words_data, "hashtags": hashtags_data})
+        return jsonify({"positive_words": positive_words_data, "negative_words": negative_words_data, "hashtags": hashtags_data})
     except Exception as e:
         print(f'Error: {e}')
         traceback.print_exc()
