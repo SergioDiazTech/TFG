@@ -18,12 +18,15 @@ def draw_trendingtopics():
     negative_words_list = []
     hashtags_list = []
 
+    positive_threshold = 0.90
+    negative_threshold = -0.90
+
     excluded_words = ["a", "ante", "bajo", "cabe", "con", "contra", "de", "desde", "durante", 
                       "en", "entre", "hacia", "hasta", "mediante", "para", "por", "según", 
                       "sin", "so", "sobre", "tras", "versus", "vía", "que", "se", "es", "me", 
                       "una", "co", "y", "nos", "su", "del", "le", "t",  "https", "el", "pero", 
                       "lo", "le", "va", "al", "un", "los", "la", "como", "olla", "está", "este", 
-                      "esto", "están", "esmad", "esta", "o", "cuado", "también", "mi","porque", "hay"]
+                      "esto", "están", "esmad", "esta", "o", "cuado", "también", "mi","porque", "hay", "les", "ni", "las", "si", "no", "esos", "7"]
 
     for doc in texts:
         hashtags = re.findall(r'#\w+', doc['text'])
@@ -33,9 +36,9 @@ def draw_trendingtopics():
         words = clean_text.split()
         for word in words:
             if word.lower() not in excluded_words and not word.startswith('#'):
-                if 'sentiment' in doc and doc['sentiment'] > 0:
+                if 'sentiment' in doc and doc['sentiment'] > positive_threshold:
                     positive_words_list.append(word.lower())
-                elif 'sentiment' in doc and doc['sentiment'] < 0:
+                elif 'sentiment' in doc and doc['sentiment'] < negative_threshold:
                     negative_words_list.append(word.lower())
 
     df_positive_words = pd.DataFrame(positive_words_list, columns=['word'])

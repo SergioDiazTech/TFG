@@ -15,7 +15,6 @@ function Trendingtopics() {
       .then(data => {
         const positiveWordsData = processData(data.positive_words, 'word');
         const negativeWordsData = processData(data.negative_words, 'word');
-
         
         const hashtagsData = data.hashtags.map(hashtag => ({
           text: hashtag.hashtag,
@@ -39,29 +38,44 @@ function Trendingtopics() {
         frequencyMap[word] = 1;
       }
     });
-    return Object.keys(frequencyMap).map(word => {
-      return { text: word, value: frequencyMap[word] };
-    });
+
+
+    const sortedFrequencyArray = Object.keys(frequencyMap)
+      .map(word => {
+        return { text: word, value: frequencyMap[word] };
+      })
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 25);
+
+    return sortedFrequencyArray;
   }
 
-  function generateRandomColors(length) {
-    return Array.from({ length }, () => '#' + Math.floor(Math.random() * 16777215).toString(16));
-  }
+
+    const positiveColors = [
+      "#6AA84F", "#38761D", "#274E13", "#4CBB17", "#32CD32",
+      "#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"
+    ];
+
+    const negativeColors = [
+      "#FF6F61", "#C74444", "#990000", "#FF1E1E", "#FF4C4C",
+      "#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"
+    ];
+
 
   const positiveWordsOptions = {
-    fontSizes: [10, 80],
+    fontSizes: [30, 80],
     rotations: 0,
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
-    colors: generateRandomColors(positiveWords.length),
+    colors: positiveColors,
   };
 
   const negativeWordsOptions = {
-    fontSizes: [10, 80],
+    fontSizes: [30, 50],
     rotations: 0,
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
-    colors: generateRandomColors(negativeWords.length),
+    colors: negativeColors,
   };
 
   return (
@@ -95,6 +109,5 @@ function Trendingtopics() {
     </div>
   );
 }
-
 
 export default Trendingtopics;
