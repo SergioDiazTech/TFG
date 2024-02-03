@@ -61,7 +61,7 @@ function Trendingtopics() {
   ];
 
   const positiveWordsOptions = {
-    fontSizes: [40, 80],
+    fontSizes: [35, 80],
     rotations: 0,
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
@@ -69,7 +69,7 @@ function Trendingtopics() {
   };
 
   const negativeWordsOptions = {
-    fontSizes: [20, 50],
+    fontSizes: [10, 50],
     rotations: 0,
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
@@ -78,15 +78,15 @@ function Trendingtopics() {
 
   return (
     <div className="content-container">
-        <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
+        <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
           <h2>Positive Words Cloud</h2>
           <WordCloud words={positiveWords} options={positiveWordsOptions} />
           <div className="explanation-box">
-            <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most positively toned tweets.</p>
+            <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most positively toned<br />  tweets.</p>
           </div>
         </div>
 
-      <div className="hashtags-ranking">
+      <div className="hashtags-ranking"  style={{ height: '400px', width: '700px' }}>
         <h2>Top Hashtags</h2>
         <table>
           <thead>
@@ -110,7 +110,7 @@ function Trendingtopics() {
         
       </div>
 
-      <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
+      <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
         <h2>Negative Words Cloud</h2>
         <WordCloud words={negativeWords} options={negativeWordsOptions} /> 
           <div className="explanation-box">
