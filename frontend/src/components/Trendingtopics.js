@@ -85,13 +85,6 @@ function Trendingtopics() {
         <WordCloud words={positiveWords} options={positiveWordsOptions} />
       </div>
 
-
-      <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
-        <h2>Negative Words Cloud</h2>
-        <WordCloud words={negativeWords} options={negativeWordsOptions} />
-      </div>
-
-
       <div className="hashtags-ranking">
         <h2>Top Hashtags</h2>
         <table>
@@ -111,6 +104,14 @@ function Trendingtopics() {
           </tbody>
         </table>
       </div>
+
+      <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
+        <h2>Negative Words Cloud</h2>
+        <WordCloud words={negativeWords} options={negativeWordsOptions} />
+      </div>
+
+
+      
       
       
     </div>
