@@ -205,7 +205,7 @@ function Pointmap() {
             <div 
             ref={mapContainer} className="map-map-pointmap">
             </div>
-            <p className="map-explanation-box" > <b>Explanation</b>: This map shows geolocated tweets as dots that vary in color: green for positive and red<br /> for negative. Tweets are grouped into clusters, whose blue color intensifies and size increases with  <br /> more tweets, reflecting the density and sentiment of conversations in different areas in a visual and <br /> concise way.</p>
+            <p className="map-explanation-box" > <b>Explanation</b>: This map displays geolocated tweets as dots, varying in color: green indicating positive<br /> sentiment and red indicating negative sentiment. Tweets are aggregated into clusters, with the blue<br /> color of these clusters intensifying and their size expanding in relation to the number of tweets, thereby<br /> visually and concisely reflecting the density and sentiment of conversations across different areas.</p>
             
           </div>
           <div className="data-summary-background">
