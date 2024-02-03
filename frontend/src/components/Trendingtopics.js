@@ -63,7 +63,7 @@ function Trendingtopics() {
 
 
   const positiveWordsOptions = {
-    fontSizes: [30, 80],
+    fontSizes: [40, 80],
     rotations: 0,
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
@@ -71,7 +71,7 @@ function Trendingtopics() {
   };
 
   const negativeWordsOptions = {
-    fontSizes: [30, 50],
+    fontSizes: [20, 50],
     rotations: 0,
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
@@ -83,9 +83,14 @@ function Trendingtopics() {
       <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
         <h2>Positive Words Cloud</h2>
         <WordCloud words={positiveWords} options={positiveWordsOptions} />
+      </div>
+
+
+      <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
         <h2>Negative Words Cloud</h2>
         <WordCloud words={negativeWords} options={negativeWordsOptions} />
       </div>
+
 
       <div className="hashtags-ranking">
         <h2>Top Hashtags</h2>
@@ -106,6 +111,8 @@ function Trendingtopics() {
           </tbody>
         </table>
       </div>
+      
+      
     </div>
   );
 }

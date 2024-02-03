@@ -1,14 +1,17 @@
+
 .content-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: flex-start;
-    gap: 20px;
+    gap: 40px;
     flex-wrap: wrap;
-    margin-top: 20px;
+    margin: 40px auto;
+    max-width: 1200px;
+    padding: 0 20px;
 }
 
-.wordcloud-container h2,
-.hashtags-ranking h2 {
+
+.content-container h2 {
     color: #1a1a2e;
     font-size: 24px;
     text-align: center;
@@ -16,57 +19,61 @@
 }
 
 
-.wordcloud-container {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+.wordcloud-container{
     background-color: #ffffff;
-    border-radius: 10px;
-    padding-top: 20px;
-    padding-bottom: 60px;
-    padding-right: 60px;
-    padding-left: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
 }
+
 
 .hashtags-ranking {
     background-color: #ffffff;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     padding: 20px;
-    flex: 1;
-    max-width: 400px;
+    width: 100%;
+    max-width: 500px;
 }
+
 
 .hashtags-ranking table {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
 }
 
 .hashtags-ranking th,
 .hashtags-ranking td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
 }
 
 .hashtags-ranking th {
-    background-color: #f2f2f2;
+    background-color: #f8f9fa;
     color: #333;
 }
 
-
 .hashtags-ranking tr:hover {
-    background-color: #ddd;
+    background-color: #f1f1f1;
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .content-container {
         flex-direction: column;
-        align-items: center;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        padding: 0 10px;
     }
 
     .wordcloud-container,
     .hashtags-ranking {
-        width: 100%;
         max-width: none;
     }
 }
