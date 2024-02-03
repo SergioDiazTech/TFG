@@ -16,9 +16,10 @@ function Trendingtopics() {
         const positiveWordsData = processData(data.positive_words, 'word');
         const negativeWordsData = processData(data.negative_words, 'word');
         
-        const hashtagsData = data.hashtags.map(hashtag => ({
+        const hashtagsData = data.hashtags.map((hashtag, index) => ({
           text: hashtag.hashtag,
-          value: hashtag.counts
+          value: hashtag.counts,
+          rank: index + 1 // Añadir posición en el ranking
         }));
 
         setPositiveWords(positiveWordsData);
@@ -39,7 +40,6 @@ function Trendingtopics() {
       }
     });
 
-
     const sortedFrequencyArray = Object.keys(frequencyMap)
       .map(word => {
         return { text: word, value: frequencyMap[word] };
@@ -50,17 +50,15 @@ function Trendingtopics() {
     return sortedFrequencyArray;
   }
 
+  const positiveColors = [
+    "#6AA84F", "#38761D", "#274E13", "#4CBB17", "#32CD32",
+    "#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"
+  ];
 
-    const positiveColors = [
-      "#6AA84F", "#38761D", "#274E13", "#4CBB17", "#32CD32",
-      "#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"
-    ];
-
-    const negativeColors = [
-      "#FF6F61", "#C74444", "#990000", "#FF1E1E", "#FF4C4C",
-      "#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"
-    ];
-
+  const negativeColors = [
+    "#FF6F61", "#C74444", "#990000", "#FF1E1E", "#FF4C4C",
+    "#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"
+  ];
 
   const positiveWordsOptions = {
     fontSizes: [40, 80],
@@ -90,13 +88,15 @@ function Trendingtopics() {
         <table>
           <thead>
             <tr>
+              <th>Rank</th>
               <th>Hashtag</th>
-              <th>TIMES</th>
+              <th>Times</th>
             </tr>
           </thead>
           <tbody>
             {hashtags.map(hashtag => (
               <tr key={hashtag.text}>
+                <td>{hashtag.rank}</td>
                 <td>{hashtag.text}</td>
                 <td>{hashtag.value}</td>
               </tr>
@@ -109,11 +109,6 @@ function Trendingtopics() {
         <h2>Negative Words Cloud</h2>
         <WordCloud words={negativeWords} options={negativeWordsOptions} />
       </div>
-
-
-      
-      
-      
     </div>
   );
 }
