@@ -19,7 +19,7 @@ function Trendingtopics() {
         const hashtagsData = data.hashtags.map((hashtag, index) => ({
           text: hashtag.hashtag,
           value: hashtag.counts,
-          rank: index + 1 // Añadir posición en el ranking
+          rank: index + 1
         }));
 
         setPositiveWords(positiveWordsData);
@@ -78,10 +78,13 @@ function Trendingtopics() {
 
   return (
     <div className="content-container">
-      <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
-        <h2>Positive Words Cloud</h2>
-        <WordCloud words={positiveWords} options={positiveWordsOptions} />
-      </div>
+        <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
+          <h2>Positive Words Cloud</h2>
+          <WordCloud words={positiveWords} options={positiveWordsOptions} />
+          <div className="explanation-box">
+            <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most positively toned tweets.</p>
+          </div>
+        </div>
 
       <div className="hashtags-ranking">
         <h2>Top Hashtags</h2>
@@ -103,11 +106,16 @@ function Trendingtopics() {
             ))}
           </tbody>
         </table>
+        
+        
       </div>
 
       <div className="wordcloud-container" style={{ height: '600px', width: '800px' }}>
         <h2>Negative Words Cloud</h2>
-        <WordCloud words={negativeWords} options={negativeWordsOptions} />
+        <WordCloud words={negativeWords} options={negativeWordsOptions} /> 
+          <div className="explanation-box">
+            <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most negatively toned tweets.</p>
+          </div>
       </div>
     </div>
   );
