@@ -25,6 +25,8 @@ function Heatmap() {
   const mapContainer = useRef(null);
 
   const [selectedDateIndex, setSelectedDateIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   
 
   const updateGlobalSentiment = useCallback((bounds) => {
@@ -39,6 +41,28 @@ function Heatmap() {
         console.error('Error fetching dynamic sentiment:', error);
       });
   }, [selectedDateIndex]); 
+
+  const play = () => {
+    if (!isPlaying) {
+      setIsPlaying(true);
+      const intervalId = setInterval(() => {
+        setSelectedDateIndex((prevIndex) => {
+          const nextIndex = prevIndex + 1;
+          if (nextIndex >= dates.length) {
+            clearInterval(intervalId);
+            setIsPlaying(false);
+            return prevIndex;
+          }
+          return nextIndex;
+        });
+      }, 500);
+    }
+  };
+
+
+  const stop = () => {
+    setIsPlaying(false);
+  };
 
   useEffect(() => {
     const selectedDate = dates[selectedDateIndex];
@@ -157,6 +181,9 @@ function Heatmap() {
               <div className="slider-date-display">
                 Showing data up to the date and time: {dates[selectedDateIndex]}
               </div>
+
+              <button onClick={play}>Play</button>
+              <button onClick={stop}>Stop</button>
             </div>
           </div>
         </div>
