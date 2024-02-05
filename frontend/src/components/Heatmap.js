@@ -1,10 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat/dist/leaflet-heat.js';
 import "../styles/heatmap.css"
 
 const API = process.env.REACT_APP_API;
+
+const dates = [
+  "2021-04-28T00", "2021-04-28T03", "2021-04-28T06", "2021-04-28T09", "2021-04-28T12", "2021-04-28T15", "2021-04-28T18", "2021-04-28T21",
+  "2021-04-29T00", "2021-04-29T03", "2021-04-29T06", "2021-04-29T09", "2021-04-29T12", "2021-04-29T15", "2021-04-29T18", "2021-04-29T21",
+  "2021-04-30T00", "2021-04-30T03", "2021-04-30T06", "2021-04-30T09", "2021-04-30T12", "2021-04-30T15", "2021-04-30T18", "2021-04-30T21",
+  "2021-04-01T00", "2021-04-01T03", "2021-04-01T06", "2021-04-01T09", "2021-04-01T12", "2021-04-01T15", "2021-04-01T18", "2021-04-01T21",
+  "2021-04-02T00", "2021-04-02T03", "2021-04-02T06", "2021-04-02T09", "2021-04-02T12", "2021-04-02T15", "2021-04-02T18", "2021-04-02T21",
+  "2021-04-03T00", "2021-04-03T03", "2021-04-03T06", "2021-04-03T09"
+];
+
 
 function Heatmap() {
   const [heatMapData, setHeatMapData] = useState([]);
@@ -14,9 +24,12 @@ function Heatmap() {
   const [coordinateGroups, setCoordinateGroups] = useState(0);
   const mapContainer = useRef(null);
 
-  // Función para actualizar el sentimiento global basado en los límites del mapa
-  const updateGlobalSentiment = (bounds) => {
-    fetch(`${API}/heatmap?min_lat=${bounds.getSouth()}&max_lat=${bounds.getNorth()}&min_lng=${bounds.getWest()}&max_lng=${bounds.getEast()}`)
+  const [selectedDateIndex, setSelectedDateIndex] = useState(0);
+  
+
+  const updateGlobalSentiment = useCallback((bounds) => {
+    const selectedDate = dates[selectedDateIndex];
+    fetch(`${API}/heatmap?min_lat=${bounds.getSouth()}&max_lat=${bounds.getNorth()}&min_lng=${bounds.getWest()}&max_lng=${bounds.getEast()}&date=${selectedDate}`)
       .then(response => response.json())
       .then(response => {
         setGlobalSentiment(response.globalSentiment);
@@ -25,10 +38,13 @@ function Heatmap() {
       .catch(error => {
         console.error('Error fetching dynamic sentiment:', error);
       });
-  };
+  }, [selectedDateIndex]); 
 
   useEffect(() => {
-    fetch(`${API}/heatmap`)
+    const selectedDate = dates[selectedDateIndex];
+    console.log("Fecha seleccionada:", selectedDate);
+
+    fetch(`${API}/heatmap?date=${selectedDate}`)
       .then(response => response.json())
       .then(response => {
         if (response.data && response.data.length > 0) {
@@ -56,7 +72,7 @@ function Heatmap() {
       .catch(error => {
         console.error('Error fetching heatmap data:', error);
       });
-  }, []);
+  }, [selectedDateIndex]);
 
   useEffect(() => {
     if (!mapContainer.current || heatMapData.length === 0) {
@@ -89,13 +105,12 @@ function Heatmap() {
         .on('mouseover', () => {
           L.popup()
             .setLatLng([lat, lng])
-            .setContent(`Sentiment: ${value * 2 - 1}`) // Convierte de nuevo a rango -1 a 1 para mostrar
+            .setContent(`Sentiment: ${value * 2 - 1}`)
             .openOn(mapInstance);
         })
         .addTo(mapInstance);
     });
 
-    // Evento que se dispara cuando se cambia el zoom o se desplaza el mapa
     mapInstance.on('moveend', () => {
       const bounds = mapInstance.getBounds();
       updateGlobalSentiment(bounds);
@@ -105,7 +120,7 @@ function Heatmap() {
       mapInstance.off();
       mapInstance.remove();
     };
-  }, [heatMapData, gradient]);
+  }, [heatMapData, gradient, updateGlobalSentiment]);
 
   return (
     <div className="dashboard-container-heatmap">
@@ -131,6 +146,19 @@ function Heatmap() {
               <p>Explanation: <span><p>Explanation: <span>The interface displays an interactive heatmap, based on Twitter data from Colombia, that visualizes the average geolocated sentiment. You can see the distribution of sentiments in different areas and obtain a summary of the processed data.</span></p></span></p>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="slider-container">
+        <input
+          type="range"
+          min="0"
+          max={dates.length - 1}
+          value={selectedDateIndex}
+          onChange={(e) => setSelectedDateIndex(Number(e.target.value))}
+          className="slider"
+        />
+        <div className="slider-date-display">
+          Fecha seleccionada: {dates[selectedDateIndex]}
         </div>
       </div>
     </div>

@@ -119,8 +119,10 @@ def display_heatmap():
     min_lng = request.args.get('min_lng', default=None, type=float)
     max_lng = request.args.get('max_lng', default=None, type=float)
 
+    end_date = request.args.get('date', default=None, type=str)
+
     try:
-        data = draw_heatmap(min_lat, max_lat, min_lng, max_lng)
+        data = draw_heatmap(min_lat, max_lat, min_lng, max_lng, end_date)
         return jsonify(data)
     except Exception as e:
         print(f'Error: {e}')
