@@ -155,7 +155,7 @@ function Heatmap() {
                 className="slider"
               />
               <div className="slider-date-display">
-                Fecha seleccionada: {dates[selectedDateIndex]}
+                Showing data up to the date and time: {dates[selectedDateIndex]}
               </div>
             </div>
           </div>

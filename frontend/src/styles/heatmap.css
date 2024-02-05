@@ -27,7 +27,7 @@
   outline: none;
   opacity: 0.7;
   -webkit-transition: .9s;
-  transition: opacity .5s;
+  transition: background-color 2.9s ease; /* Anima el color de fondo del slider */
 }
 
 .slider:hover {
@@ -40,17 +40,30 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: #636363;
   cursor: pointer;
+  transition: background-color 2.9s ease;
+
 }
 
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: #4c61af;
   cursor: pointer;
+  transition: background-color 2.9s ease;
+
 }
+
+.slider-date-display {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  font-style: italic;
+}
+
 
 .map-and-data-heatmap {
   display: flex;
