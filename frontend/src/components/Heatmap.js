@@ -126,12 +126,6 @@ function Heatmap() {
     <div className="dashboard-container-heatmap">
       <div className="main-content-heatmap">
         <div className="map-and-data-heatmap">
-          <div className="map-section-heatmap">
-            <div className="map-header-heatmap">
-              <h5 style={{ textAlign: 'center' }}>Global sentiment overview: Data from '{collectionName}'</h5>
-            </div>
-            <div ref={mapContainer} className="map-map-heatmap"></div>
-          </div>
           <div className="data-summary-section-heatmap">
             <div className="data-summary-header-heatmap">
               <h5 className="map-title-heatmap">Data Summary</h5>
@@ -146,19 +140,25 @@ function Heatmap() {
               <p>Explanation: <span><p>Explanation: <span>The interface displays an interactive heatmap, based on Twitter data from Colombia, that visualizes the average geolocated sentiment. You can see the distribution of sentiments in different areas and obtain a summary of the processed data.</span></p></span></p>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="slider-container">
-        <input
-          type="range"
-          min="0"
-          max={dates.length - 1}
-          value={selectedDateIndex}
-          onChange={(e) => setSelectedDateIndex(Number(e.target.value))}
-          className="slider"
-        />
-        <div className="slider-date-display">
-          Fecha seleccionada: {dates[selectedDateIndex]}
+          <div className="map-section-heatmap">
+            <div className="map-header-heatmap">
+              <h5 style={{ textAlign: 'center' }}>Global sentiment overview: Data from '{collectionName}'</h5>
+            </div>
+            <div ref={mapContainer} className="map-map-heatmap"></div>
+            <div className="slider-container">
+              <input
+                type="range"
+                min="0"
+                max={dates.length - 1}
+                value={selectedDateIndex}
+                onChange={(e) => setSelectedDateIndex(Number(e.target.value))}
+                className="slider"
+              />
+              <div className="slider-date-display">
+                Fecha seleccionada: {dates[selectedDateIndex]}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
