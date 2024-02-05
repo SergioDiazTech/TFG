@@ -41,13 +41,13 @@ function Heatmap() {
           setGlobalSentiment(response.globalSentiment);
           setCoordinateGroups(response.coordinateGroups);
 
-          const [p0, p25, p50, p75, p100] = response.percentiles;
           setGradient({
-            [p0]: "red",
-            [p25]: "orange",
-            [p50]: "yellow",
-            [p75]: "lime",
-            [p100]: "green"
+            0.0: 'blue',
+            0.2: 'cyan',
+            0.4: 'lime',
+            0.6: 'yellow',
+            0.8: 'orange',
+            1.0: 'red',   
           });
         } else {
           console.error('Data is missing required properties:', response);
@@ -76,11 +76,11 @@ function Heatmap() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
     L.heatLayer(heatMapData.map(({ lat, lng, value }) => [lat, lng, value]), {
-      radius: 5,
+      radius: 15,
       gradient,
-      blur: 1,
-      maxZoom: 1,
-      minOpacity: 0.6,
+      blur: 10,
+      maxZoom: 25,
+      minOpacity: 0.4,
     }).addTo(mapInstance);
 
     heatMapData.forEach(point => {
