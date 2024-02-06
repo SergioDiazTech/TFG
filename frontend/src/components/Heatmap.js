@@ -45,12 +45,16 @@ function Heatmap() {
   const play = () => {
     if (!isPlaying) {
       setIsPlaying(true);
+      const playButton = document.querySelector('.play-button');
+      if (playButton) playButton.textContent = 'Playing...';
+  
       const intervalId = setInterval(() => {
         setSelectedDateIndex((prevIndex) => {
           const nextIndex = prevIndex + 1;
           if (nextIndex >= dates.length) {
             clearInterval(intervalId);
             setIsPlaying(false);
+            if (playButton) playButton.textContent = 'Play';
             return prevIndex;
           }
           return nextIndex;
@@ -58,11 +62,8 @@ function Heatmap() {
       }, 500);
     }
   };
-
-
-  const stop = () => {
-    setIsPlaying(false);
-  };
+  
+  
 
   useEffect(() => {
     const selectedDate = dates[selectedDateIndex];
@@ -161,7 +162,7 @@ function Heatmap() {
               <p>Average Sentiment: {globalSentiment}</p>
             </div>
             <div className="explanation-sentiment-summary-heatmap">
-              <p>Explanation: <span><p>Explanation: <span>The interface displays an interactive heatmap, based on Twitter data from Colombia, that visualizes the average geolocated sentiment. You can see the distribution of sentiments in different areas and obtain a summary of the processed data.</span></p></span></p>
+              <p>Explanation: <span><p>Explanation: <span>The interface displays an interactive heat map, based on Twitter data from Colombia, which visualizes tweet traffic by zone. It allows observing the distribution of tweets in different zones and provides a summary of the processed data, such as average sentiment.</span></p></span></p>
             </div>
           </div>
           <div className="map-section-heatmap">
@@ -181,9 +182,9 @@ function Heatmap() {
               <div className="slider-date-display">
                 Showing data up to the date and time: {dates[selectedDateIndex]}
               </div>
-
-              <button onClick={play}>Play</button>
-              <button onClick={stop}>Stop</button>
+              <div className="play-button-container">
+                <button onClick={play} className="play-button">Play</button>
+              </div>
             </div>
           </div>
         </div>
