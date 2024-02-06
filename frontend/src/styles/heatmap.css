@@ -64,6 +64,38 @@
   font-style: italic;
 }
 
+.play-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.play-button {
+  background-color: #6893c9;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.6s;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.play-button:hover {
+  background-color: #456fa0;
+}
+
+.play-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+
 
 .map-and-data-heatmap {
   display: flex;
