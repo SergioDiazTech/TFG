@@ -30,7 +30,7 @@ def draw_trendingtopics():
                       "una", "co", "y", "nos", "su", "del", "le", "t", "https", "el", "pero", 
                       "lo", "le", "va", "al", "un", "los", "la", "como", "olla", "está", "este", 
                       "esto", "están", "esmad", "esta", "o", "cuado", "también", "mi","porque", 
-                      "hay", "les", "ni", "las", "si", "no", "esos", "7"]
+                      "hay", "les", "ni", "las", "si", "no", "esos", "7", "ya", "sus", "son", "más", "todo"]
 
     for doc in texts:
         if 'sentiment' in doc:

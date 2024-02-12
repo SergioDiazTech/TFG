@@ -56,7 +56,7 @@ function Trendingtopics() {
 
   const wordCloudOptions = {
     rotations: 0,
-    fontSizes: [30, 80],
+    fontSizes: [25, 70],
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
   };
@@ -71,15 +71,7 @@ function Trendingtopics() {
         </div>
       </div>
 
-      <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
-        <h2>Negative Words Cloud</h2>
-        <WordCloud words={negativeWords} options={{ ...wordCloudOptions, colors: ["#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"] }} />
-        <div className="explanation-box">
-          <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most negatively toned tweets.</p>
-        </div>
-      </div>
-
-      <div className="hashtags-ranking" style={{ height: '400px', width: '700px' }}>
+      <div className="hashtags-ranking" style={{ height: '500px', width: '750px' }}>
         <h2>Top Positive Hashtags</h2>
         <table>
           <thead>
@@ -101,7 +93,17 @@ function Trendingtopics() {
         </table>
       </div>
 
-      <div className="hashtags-ranking" style={{ height: '400px', width: '700px' }}>
+      <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
+        <h2>Negative Words Cloud</h2>
+        <WordCloud words={negativeWords} options={{ ...wordCloudOptions, colors: ["#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"] }} />
+        <div className="explanation-box">
+          <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most negatively toned tweets.</p>
+        </div>
+      </div>
+
+      
+
+      <div className="hashtags-ranking"  style={{ height: '500px', width: '750px' }}>
         <h2>Top Negative Hashtags</h2>
         <table>
           <thead>
