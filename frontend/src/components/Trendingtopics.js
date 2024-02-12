@@ -7,7 +7,8 @@ const API = process.env.REACT_APP_API;
 function Trendingtopics() {
   const [positiveWords, setPositiveWords] = useState([]);
   const [negativeWords, setNegativeWords] = useState([]);
-  const [hashtags, setHashtags] = useState([]);
+  const [positiveHashtags, setPositiveHashtags] = useState([]);
+  const [negativeHashtags, setNegativeHashtags] = useState([]);
 
   useEffect(() => {
     fetch(`${API}/trendingtopics`)
@@ -16,7 +17,13 @@ function Trendingtopics() {
         const positiveWordsData = processData(data.positive_words, 'word');
         const negativeWordsData = processData(data.negative_words, 'word');
         
-        const hashtagsData = data.hashtags.map((hashtag, index) => ({
+        const positiveHashtagsData = data.hashtags_positives.map((hashtag, index) => ({
+          text: hashtag.hashtag,
+          value: hashtag.counts,
+          rank: index + 1
+        }));
+
+        const negativeHashtagsData = data.hashtags_negatives.map((hashtag, index) => ({
           text: hashtag.hashtag,
           value: hashtag.counts,
           rank: index + 1
@@ -24,7 +31,8 @@ function Trendingtopics() {
 
         setPositiveWords(positiveWordsData);
         setNegativeWords(negativeWordsData);
-        setHashtags(hashtagsData);
+        setPositiveHashtags(positiveHashtagsData);
+        setNegativeHashtags(negativeHashtagsData);
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
@@ -40,52 +48,39 @@ function Trendingtopics() {
       }
     });
 
-    const sortedFrequencyArray = Object.keys(frequencyMap)
-      .map(word => {
-        return { text: word, value: frequencyMap[word] };
-      })
-      .sort((a, b) => b.value - a.value)
-      .slice(0, 25);
-
-    return sortedFrequencyArray;
+    return Object.keys(frequencyMap).map(word => ({
+      text: word,
+      value: frequencyMap[word]
+    })).sort((a, b) => b.value - a.value).slice(0, 20);
   }
 
-  const positiveColors = [
-    "#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"
-  ];
-
-  const negativeColors = [
-    "#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"
-  ];
-
-  const positiveWordsOptions = {
-    fontSizes: [30, 80],
+  const wordCloudOptions = {
     rotations: 0,
+    fontSizes: [30, 80],
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
-    colors: positiveColors,
-  };
-
-  const negativeWordsOptions = {
-    fontSizes: [30, 80],
-    rotations: 0,
-    rotationAngles: [-90, 0, 90],
-    fontWeight: 'bold',
-    colors: negativeColors,
   };
 
   return (
     <div className="content-container">
-        <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
-          <h2>Positive Words Cloud</h2>
-          <WordCloud words={positiveWords} options={positiveWordsOptions} />
-          <div className="explanation-box">
-            <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most positively toned<br />  tweets.</p>
-          </div>
+      <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
+        <h2>Positive Words Cloud</h2>
+        <WordCloud words={positiveWords} options={{ ...wordCloudOptions, colors: ["#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"] }} />
+        <div className="explanation-box">
+          <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most positively toned tweets.</p>
         </div>
+      </div>
 
-      <div className="hashtags-ranking"  style={{ height: '400px', width: '700px' }}>
-        <h2>Top Hashtags</h2>
+      <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
+        <h2>Negative Words Cloud</h2>
+        <WordCloud words={negativeWords} options={{ ...wordCloudOptions, colors: ["#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"] }} />
+        <div className="explanation-box">
+          <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most negatively toned tweets.</p>
+        </div>
+      </div>
+
+      <div className="hashtags-ranking" style={{ height: '400px', width: '700px' }}>
+        <h2>Top Positive Hashtags</h2>
         <table>
           <thead>
             <tr>
@@ -95,7 +90,7 @@ function Trendingtopics() {
             </tr>
           </thead>
           <tbody>
-            {hashtags.map(hashtag => (
+            {positiveHashtags.map(hashtag => (
               <tr key={hashtag.text}>
                 <td>{hashtag.rank}</td>
                 <td>{hashtag.text}</td>
@@ -104,16 +99,28 @@ function Trendingtopics() {
             ))}
           </tbody>
         </table>
-        
-        
       </div>
 
-      <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
-        <h2>Negative Words Cloud</h2>
-        <WordCloud words={negativeWords} options={negativeWordsOptions} /> 
-          <div className="explanation-box">
-            <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most negatively toned tweets.</p>
-          </div>
+      <div className="hashtags-ranking" style={{ height: '400px', width: '700px' }}>
+        <h2>Top Negative Hashtags</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Hashtag</th>
+              <th>Times</th>
+            </tr>
+          </thead>
+          <tbody>
+            {negativeHashtags.map(hashtag => (
+              <tr key={hashtag.text}>
+                <td>{hashtag.rank}</td>
+                <td>{hashtag.text}</td>
+                <td>{hashtag.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
