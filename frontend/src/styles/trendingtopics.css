@@ -19,9 +19,9 @@
     background-color: #ffffff;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
-    padding: 20px;
+    padding: 30px;
     width: 600px;
-    height: 300px;
+    height: 320px;
     margin: 0 auto;
 
 }
@@ -40,7 +40,7 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     padding: 20px;
-    width: 370px;
+    width: 392px;
 }
 
 .content-container h2,
@@ -73,6 +73,24 @@
 .hashtags-ranking tr:hover {
     background-color: #f1f1f1;
 }
+
+.info-icon {
+    margin-left: 20px;
+    cursor: help;
+}
+
+.info-popup {
+    position: absolute;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    z-index: 10;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-left: 15px;
+    text-align: justify;
+}
+
 
 @media (max-width: 1024px) {
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import WordCloud from 'react-wordcloud';
 import "../styles/trendingtopics.css";
+import { FaInfoCircle } from 'react-icons/fa';
+
 
 const API = process.env.REACT_APP_API;
 
@@ -9,6 +11,13 @@ function Trendingtopics() {
   const [negativeWords, setNegativeWords] = useState([]);
   const [positiveHashtags, setPositiveHashtags] = useState([]);
   const [negativeHashtags, setNegativeHashtags] = useState([]);
+  const [isPopupPositiveVisible, setIsPopupPositiveVisible] = useState(false);
+  const [isPopupNegativeVisible, setIsPopupNegativeVisible] = useState(false);
+  const [isPopupPositiveHashtagsVisible, setIsPopupPositiveHashtagsVisible] = useState(false);
+  const [isPopupNegativeHashtagsVisible, setIsPopupNegativeHashtagsVisible] = useState(false);
+
+
+
 
   useEffect(() => {
     fetch(`${API}/trendingtopics`)
@@ -37,6 +46,18 @@ function Trendingtopics() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  const InfoPopup = ({ isVisible, children }) => {
+    if (!isVisible) return null;
+
+    return (
+      <div className="info-popup">
+        {children}
+      </div>
+    );
+  };
+
+
+
   function processData(items, key) {
     const frequencyMap = {};
     items.forEach(item => {
@@ -57,27 +78,58 @@ function Trendingtopics() {
   const wordCloudOptions = {
     rotations: 0,
     fontSizes: [15, 50],
-    rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
   };
+
+
 
   return (
     <div className="content-container">
       <div className="wordclouds-section">
         <div className="wordcloud-container" >
-          <h2>Positive Words Cloud</h2>
+          <h2>Positive Words Cloud
+            <span className="info-icon" onMouseEnter={() => setIsPopupPositiveVisible(true)} onMouseLeave={() => setIsPopupPositiveVisible(false)}>
+              <FaInfoCircle />
+            </span>
+          </h2>
+          <InfoPopup isVisible={isPopupPositiveVisible}>
+            <p>This cloud visualizes the most frequent words in the most</p>
+            <p>positively toned tweets. Specifically, the data corresponding </p>
+            <p>to the 10% of the most positive tweets are shown, which is </p>
+            <p>equal to the 95th percentile.</p>
+          </InfoPopup>
+
           <WordCloud words={positiveWords} options={{ ...wordCloudOptions, colors: ["#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"] }} />
         </div>
 
         <div className="wordcloud-container" >
-          <h2>Negative Words Cloud</h2>
+          <h2>Negative Words Cloud
+            <span className="info-icon" onMouseEnter={() => setIsPopupNegativeVisible(true)} onMouseLeave={() => setIsPopupNegativeVisible(false)}>
+              <FaInfoCircle />
+            </span>
+          </h2>
+          <InfoPopup isVisible={isPopupNegativeVisible}>
+            <p>This cloud visualizes the most frequent words in the most</p>
+            <p>negatively toned tweets. Specifically, it shows the data </p>
+            <p>corresponding to the 10% of the most negative tweets, which</p>
+            <p>is equivalent to the 5th percentile.</p>
+          </InfoPopup>
           <WordCloud words={negativeWords} options={{ ...wordCloudOptions, colors: ["#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"] }} />
         </div>
       </div>
 
       <div className="tophashtags-section">
         <div className="hashtags-ranking" >
-          <h2>Top Positive Hashtags</h2>
+          <h2>Top Positive Hashtags
+            <span className="info-icon" onMouseEnter={() => setIsPopupPositiveHashtagsVisible(true)} onMouseLeave={() => setIsPopupPositiveHashtagsVisible(false)}>
+              <FaInfoCircle />
+            </span>
+          </h2>
+          <InfoPopup isVisible={isPopupPositiveHashtagsVisible}>
+            <p>A ranking of the most used hashtags</p>
+            <p>in the top 10% of the most positive</p>
+            <p>tweets (95th percentile) is shown.</p>
+          </InfoPopup>
           <table>
             <thead>
               <tr>
@@ -99,7 +151,17 @@ function Trendingtopics() {
         </div>
 
         <div className="hashtags-ranking">
-          <h2>Top Negative Hashtags</h2>
+          <h2>Top Negative Hashtags
+            <span className="info-icon" onMouseEnter={() => setIsPopupNegativeHashtagsVisible(true)} onMouseLeave={() => setIsPopupNegativeHashtagsVisible(false)}>
+              <FaInfoCircle />
+            </span>
+          </h2>
+
+          <InfoPopup isVisible={isPopupNegativeHashtagsVisible}>
+            <p>A ranking of the most frequently used</p>
+            <p>hashtags in the top 10% of the most</p>
+            <p>negative tweets (5th percentile).</p>
+          </InfoPopup>
           <table>
             <thead>
               <tr>
