@@ -162,12 +162,12 @@ function Heatmap() {
               <p>Average Sentiment: {globalSentiment}</p>
             </div>
             <div className="explanation-sentiment-summary-heatmap">
-              <p>Explanation: <span><p>Explanation: <span>The interface displays an interactive heat map, based on Twitter data from Colombia, which visualizes tweet traffic by zone. It allows observing the distribution of tweets in different zones and provides a summary of the processed data, such as average sentiment.</span></p></span></p>
+              <p>Explanation: <span><p><span>The interface displays an interactive heat map, based on Twitter data from Colombia, which visualizes tweet traffic by zone. It allows observing the distribution of tweets in different zones and provides a summary of the processed data, such as average sentiment.</span></p></span></p>
             </div>
           </div>
           <div className="map-section-heatmap">
             <div className="map-header-heatmap">
-              <h5 style={{ textAlign: 'center' }}>Global sentiment overview: Data from '{collectionName}'</h5>
+              <h5 style={{ textAlign: 'center' }}>Global tweets traffic: Data from '{collectionName}'</h5>
             </div>
             <div ref={mapContainer} className="map-map-heatmap"></div>
             <div className="slider-container">
@@ -180,10 +180,10 @@ function Heatmap() {
                 className="slider"
               />
               <div className="slider-date-display">
-                Showing data up to the date and time: {dates[selectedDateIndex]}
+                  Viewing data from 2021-04-28T00 to {dates[selectedDateIndex]}
               </div>
               <div className="play-button-container">
-                <button onClick={play} className="play-button">Play</button>
+                <button onClick={play} className="play-button">Dynamic Accumulated Traffic</button>
               </div>
             </div>
           </div>
