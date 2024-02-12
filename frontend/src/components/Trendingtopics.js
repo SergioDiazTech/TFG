@@ -51,17 +51,15 @@ function Trendingtopics() {
   }
 
   const positiveColors = [
-    "#6AA84F", "#38761D", "#274E13", "#4CBB17", "#32CD32",
     "#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"
   ];
 
   const negativeColors = [
-    "#FF6F61", "#C74444", "#990000", "#FF1E1E", "#FF4C4C",
     "#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"
   ];
 
   const positiveWordsOptions = {
-    fontSizes: [35, 80],
+    fontSizes: [30, 80],
     rotations: 0,
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
@@ -69,7 +67,7 @@ function Trendingtopics() {
   };
 
   const negativeWordsOptions = {
-    fontSizes: [10, 50],
+    fontSizes: [30, 80],
     rotations: 0,
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
