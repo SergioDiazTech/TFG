@@ -58,10 +58,10 @@ def draw_trendingtopics():
 
     df_positive_hashtags = pd.DataFrame(positive_hashtags_list, columns=['hashtag'])
     df_positive_hashtags_counted = df_positive_hashtags['hashtag'].value_counts().rename_axis('hashtag').reset_index(name='counts')
-    top_hashtags_positives = df_positive_hashtags_counted.head(7)
+    top_hashtags_positives = df_positive_hashtags_counted.head(5)
 
     df_negative_hashtags = pd.DataFrame(negative_hashtags_list, columns=['hashtag'])
     df_negative_hashtags_counted = df_negative_hashtags['hashtag'].value_counts().rename_axis('hashtag').reset_index(name='counts')
-    top_hashtags_negatives = df_negative_hashtags_counted.head(7)
+    top_hashtags_negatives = df_negative_hashtags_counted.head(5)
 
     return df_positive_words, df_negative_words, top_hashtags_positives, top_hashtags_negatives

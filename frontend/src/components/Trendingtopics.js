@@ -16,7 +16,7 @@ function Trendingtopics() {
       .then(data => {
         const positiveWordsData = processData(data.positive_words, 'word');
         const negativeWordsData = processData(data.negative_words, 'word');
-        
+
         const positiveHashtagsData = data.hashtags_positives.map((hashtag, index) => ({
           text: hashtag.hashtag,
           value: hashtag.counts,
@@ -56,76 +56,73 @@ function Trendingtopics() {
 
   const wordCloudOptions = {
     rotations: 0,
-    fontSizes: [25, 70],
+    fontSizes: [15, 50],
     rotationAngles: [-90, 0, 90],
     fontWeight: 'bold',
   };
 
   return (
     <div className="content-container">
-      <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
-        <h2>Positive Words Cloud</h2>
-        <WordCloud words={positiveWords} options={{ ...wordCloudOptions, colors: ["#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"] }} />
-        <div className="explanation-box">
-          <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most positively toned tweets.</p>
+      <div className="wordclouds-section">
+        <div className="wordcloud-container" >
+          <h2>Positive Words Cloud</h2>
+          <WordCloud words={positiveWords} options={{ ...wordCloudOptions, colors: ["#B6D7A8", "#93C47D", "#6AA84F", "#38761D", "#274E13"] }} />
+        </div>
+
+        <div className="wordcloud-container" >
+          <h2>Negative Words Cloud</h2>
+          <WordCloud words={negativeWords} options={{ ...wordCloudOptions, colors: ["#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"] }} />
         </div>
       </div>
 
-      <div className="hashtags-ranking" style={{ height: '500px', width: '750px' }}>
-        <h2>Top Positive Hashtags</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Hashtag</th>
-              <th>Times</th>
-            </tr>
-          </thead>
-          <tbody>
-            {positiveHashtags.map(hashtag => (
-              <tr key={hashtag.text}>
-                <td>{hashtag.rank}</td>
-                <td>{hashtag.text}</td>
-                <td>{hashtag.value}</td>
+      <div className="tophashtags-section">
+        <div className="hashtags-ranking" >
+          <h2>Top Positive Hashtags</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Hashtag</th>
+                <th>Times</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="wordcloud-container" style={{ height: '500px', width: '750px' }}>
-        <h2>Negative Words Cloud</h2>
-        <WordCloud words={negativeWords} options={{ ...wordCloudOptions, colors: ["#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"] }} />
-        <div className="explanation-box">
-          <p><b>Explanation</b>: This cloud visualizes the most frequent words in the most negatively toned tweets.</p>
+            </thead>
+            <tbody>
+              {positiveHashtags.map(hashtag => (
+                <tr key={hashtag.text}>
+                  <td>{hashtag.rank}</td>
+                  <td>{hashtag.text}</td>
+                  <td>{hashtag.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </div>
 
-      
-
-      <div className="hashtags-ranking"  style={{ height: '500px', width: '750px' }}>
-        <h2>Top Negative Hashtags</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Hashtag</th>
-              <th>Times</th>
-            </tr>
-          </thead>
-          <tbody>
-            {negativeHashtags.map(hashtag => (
-              <tr key={hashtag.text}>
-                <td>{hashtag.rank}</td>
-                <td>{hashtag.text}</td>
-                <td>{hashtag.value}</td>
+        <div className="hashtags-ranking">
+          <h2>Top Negative Hashtags</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Hashtag</th>
+                <th>Times</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {negativeHashtags.map(hashtag => (
+                <tr key={hashtag.text}>
+                  <td>{hashtag.rank}</td>
+                  <td>{hashtag.text}</td>
+                  <td>{hashtag.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
+
 }
 
 export default Trendingtopics;
