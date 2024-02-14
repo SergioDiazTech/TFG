@@ -103,7 +103,7 @@ function Heatmap() {
 
           currentIndex++;
         }
-      }, 1000);
+      }, 500);
     }
   };
 
@@ -146,7 +146,7 @@ function Heatmap() {
   
           return nextIndex < dates.length ? nextIndex : prevIndex;
         });
-      }, 1000);
+      }, 500);
     }
   };
   
@@ -306,9 +306,9 @@ function Heatmap() {
 
               <div className="play-button-container">
                 <select onChange={handleSelectChange} className="play-button" disabled={isSelectDisabled}>
-                  <option value="">Select an option</option>.
-                  <option value="accumulated">Dynamic accumulated traffic</option>.
-                  <option value="threeHourInterval">Traffic every 3 hours</option>
+                  <option value="">Choose a display mode</option>.
+                  <option value="accumulated">Dynamic tweet accumulation</option>.
+                  <option value="threeHourInterval">3-hour interval traffic</option>
                 </select>
               </div>
             </div>

@@ -181,3 +181,34 @@
   border-radius: 5px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
+
+.play-button {
+  background-color: #717171;
+  border: 2px solid #94a1b1;
+  color: #ffffff;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  border-radius: 25px;
+  outline: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.play-button:hover {
+  background-color: #7c838d;
+  color: #ffffff;
+  border-color: #94a1b1;
+  font-size: 16.5px;
+  text-align: center;
+
+  transform: scale(1.03);
+}
+
+.play-button:focus {
+  box-shadow: 0 0 0 2px rgba(104, 147, 201, 0.5);
+}
