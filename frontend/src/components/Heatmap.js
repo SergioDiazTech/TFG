@@ -30,8 +30,13 @@ function Heatmap() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSelectDisabled, setIsSelectDisabled] = useState(false);
 
+  const [displayedStartDate, setDisplayedStartDate] = useState(dates[0]);
+  const [displayedEndDate, setDisplayedEndDate] = useState(dates[0]);
+
+
+
   const handleSelectChange = (event) => {
-  console.log("handleSelectChange invoked, value selected:", event.target.value);
+    console.log("handleSelectChange invoked, value selected:", event.target.value);
 
     if (event.target.value === 'accumulated') {
       setIsSelectDisabled(true);
@@ -49,7 +54,6 @@ function Heatmap() {
       setIsPlaying(true);
 
       let currentIndex = 0;
-      const startDateFixed = dates[0];
 
       const intervalId = setInterval(() => {
         if (currentIndex >= dates.length) {
@@ -57,11 +61,17 @@ function Heatmap() {
           setIsPlaying(false);
           setIsSelectDisabled(false);
         } else {
+          const startDate = dates[0]; // La fecha de inicio siempre es la misma
           const endDate = dates[currentIndex];
 
-          console.log(`Fetching data from ${startDateFixed} to ${endDate}`);
+          console.log(`Fetching data from ${startDate} to ${endDate}`);
 
-          fetch(`${API}/heatmap?start_date=${startDateFixed}&end_date=${endDate}`)
+          // Actualiza la fecha de inicio que se muestra
+          setDisplayedStartDate(startDate);
+          // Actualiza la fecha de fin que se muestra
+          setDisplayedEndDate(endDate);
+
+          fetch(`${API}/heatmap?start_date=${startDate}&end_date=${endDate}`)
             .then(response => response.json())
             .then(response => {
               setHeatMapData((currentData) => [...currentData, ...response.data.map(item => ({
@@ -84,6 +94,7 @@ function Heatmap() {
   };
 
 
+
   const playThreeHourInterval = () => {
     console.log("Function playThreeHourInterval invoked");
 
@@ -91,13 +102,17 @@ function Heatmap() {
       setIsPlaying(true);
 
       const intervalId = setInterval(() => {
+
         setSelectedDateIndex((prevIndex) => {
           const nextIndex = prevIndex + 1;
+
+          setDisplayedStartDate(dates[prevIndex]);
           if (nextIndex >= dates.length) {
             clearInterval(intervalId);
             setIsPlaying(false);
             setIsSelectDisabled(false);
             return prevIndex;
+
           }
 
           fetch(`${API}/heatmap?start_date=${dates[prevIndex]}&end_date=${dates[nextIndex]}`)
@@ -117,7 +132,7 @@ function Heatmap() {
             });
           return nextIndex;
         });
-      }, 500);
+      }, 3000);
     }
   };
 
@@ -271,7 +286,7 @@ function Heatmap() {
                 className="slider"
               />
               <div className="slider-date-display">
-                Viewing data from 2021-04-28T00 to {dates[selectedDateIndex]}
+                Viewing data from {displayedStartDate} to {displayedEndDate}
               </div>
               <div className="play-button-container">
                 <select onChange={handleSelectChange} className="play-button" disabled={isSelectDisabled}>
