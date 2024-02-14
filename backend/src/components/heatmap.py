@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import numpy as np
 from datetime import datetime, timedelta
 
-def draw_heatmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None, end_date=None):
+def draw_heatmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None, start_date=None, end_date=None):
     MONGO_URI = 'mongodb://127.0.0.1'
     client = MongoClient(MONGO_URI)
     db = client['DB_External_Data_Ingestion']
@@ -10,21 +10,22 @@ def draw_heatmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None, end_dat
     twitter_collection_name = "tweets_colombia"
     twitter_collection = db[twitter_collection_name]
 
-    start_date = datetime.strptime("2021-04-28T00", "%Y-%m-%dT%H")
-    start_date = start_date.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+    if start_date:
+        start_date = datetime.strptime(start_date, "%Y-%m-%dT%H")
+        start_date = start_date.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
 
     if end_date:
         end_date = datetime.strptime(end_date, "%Y-%m-%dT%H")
-        end_date = (end_date + timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+        end_date = (end_date + timedelta(hours=1) - timedelta(milliseconds=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+
 
     match_stage = {
         "latitude": {"$exists": True, "$ne": None},
         "longitude": {"$exists": True, "$ne": None},
-        "created_at": {"$gte": start_date}
     }
-    
-    if end_date:
-        match_stage["created_at"]["$lte"] = end_date
+
+    if start_date and end_date:
+        match_stage["created_at"] = {"$gte": start_date, "$lte": end_date}
 
     if min_lat is not None and max_lat is not None and min_lng is not None and max_lng is not None:
         match_stage.update({
@@ -73,7 +74,5 @@ def draw_heatmap(min_lat=None, max_lat=None, min_lng=None, max_lng=None, end_dat
         'collectionName': collection_display_name,
         'globalSentiment': global_sentiment_mean
     }
-
-    print(response)
 
     return response

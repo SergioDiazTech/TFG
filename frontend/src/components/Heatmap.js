@@ -17,6 +17,8 @@ const dates = [
 
 
 function Heatmap() {
+  console.log("Heatmap component mounted");
+
   const [heatMapData, setHeatMapData] = useState([]);
   const [gradient, setGradient] = useState({});
   const [collectionName, setCollectionName] = useState('');
@@ -26,12 +28,108 @@ function Heatmap() {
 
   const [selectedDateIndex, setSelectedDateIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isSelectDisabled, setIsSelectDisabled] = useState(false);
 
-  
+  const handleSelectChange = (event) => {
+  console.log("handleSelectChange invoked, value selected:", event.target.value);
+
+    if (event.target.value === 'accumulated') {
+      setIsSelectDisabled(true);
+      play();
+    } else if (event.target.value === 'threeHourInterval') {
+      setIsSelectDisabled(true);
+      playThreeHourInterval();
+    }
+  };
+
+  const play = () => {
+    console.log("Function play invoked");
+
+    if (!isPlaying) {
+      setIsPlaying(true);
+
+      let currentIndex = 0;
+      const startDateFixed = dates[0];
+
+      const intervalId = setInterval(() => {
+        if (currentIndex >= dates.length) {
+          clearInterval(intervalId);
+          setIsPlaying(false);
+          setIsSelectDisabled(false);
+        } else {
+          const endDate = dates[currentIndex];
+
+          console.log(`Fetching data from ${startDateFixed} to ${endDate}`);
+
+          fetch(`${API}/heatmap?start_date=${startDateFixed}&end_date=${endDate}`)
+            .then(response => response.json())
+            .then(response => {
+              setHeatMapData((currentData) => [...currentData, ...response.data.map(item => ({
+                lat: item.latitude,
+                lng: item.longitude,
+                value: item.sentiment,
+              }))]);
+              setCollectionName(response.collectionName);
+              setGlobalSentiment(response.globalSentiment);
+              setCoordinateGroups(response.coordinateGroups);
+            })
+            .catch(error => {
+              console.error('Error fetching heatmap data:', error);
+            });
+
+          currentIndex++;
+        }
+      }, 2000);
+    }
+  };
+
+
+  const playThreeHourInterval = () => {
+    console.log("Function playThreeHourInterval invoked");
+
+    if (!isPlaying) {
+      setIsPlaying(true);
+
+      const intervalId = setInterval(() => {
+        setSelectedDateIndex((prevIndex) => {
+          const nextIndex = prevIndex + 1;
+          if (nextIndex >= dates.length) {
+            clearInterval(intervalId);
+            setIsPlaying(false);
+            setIsSelectDisabled(false);
+            return prevIndex;
+          }
+
+          fetch(`${API}/heatmap?start_date=${dates[prevIndex]}&end_date=${dates[nextIndex]}`)
+            .then(response => response.json())
+            .then(response => {
+              setHeatMapData(response.data.map(item => ({
+                lat: item.latitude,
+                lng: item.longitude,
+                value: item.sentiment,
+              })));
+              setCollectionName(response.collectionName);
+              setGlobalSentiment(response.globalSentiment);
+              setCoordinateGroups(response.coordinateGroups);
+            })
+            .catch(error => {
+              console.error('Error fetching heatmap data:', error);
+            });
+          return nextIndex;
+        });
+      }, 500);
+    }
+  };
+
+
 
   const updateGlobalSentiment = useCallback((bounds) => {
-    const selectedDate = dates[selectedDateIndex];
-    fetch(`${API}/heatmap?min_lat=${bounds.getSouth()}&max_lat=${bounds.getNorth()}&min_lng=${bounds.getWest()}&max_lng=${bounds.getEast()}&date=${selectedDate}`)
+    console.log("Function updateGlobalSentiment invoked");
+
+    const startDate = dates[selectedDateIndex];
+    const endDate = dates[selectedDateIndex + 1];
+
+    fetch(`${API}/heatmap?min_lat=${bounds.getSouth()}&max_lat=${bounds.getNorth()}&min_lng=${bounds.getWest()}&max_lng=${bounds.getEast()}&start_date=${startDate}&end_date=${endDate}`)
       .then(response => response.json())
       .then(response => {
         setGlobalSentiment(response.globalSentiment);
@@ -40,36 +138,18 @@ function Heatmap() {
       .catch(error => {
         console.error('Error fetching dynamic sentiment:', error);
       });
-  }, [selectedDateIndex]); 
+  }, [selectedDateIndex]);
 
-  const play = () => {
-    if (!isPlaying) {
-      setIsPlaying(true);
-      const playButton = document.querySelector('.play-button');
-      if (playButton) playButton.textContent = 'Playing...';
-  
-      const intervalId = setInterval(() => {
-        setSelectedDateIndex((prevIndex) => {
-          const nextIndex = prevIndex + 1;
-          if (nextIndex >= dates.length) {
-            clearInterval(intervalId);
-            setIsPlaying(false);
-            if (playButton) playButton.textContent = 'Play';
-            return prevIndex;
-          }
-          return nextIndex;
-        });
-      }, 500);
-    }
-  };
-  
-  
 
   useEffect(() => {
-    const selectedDate = dates[selectedDateIndex];
-    console.log("Fecha seleccionada:", selectedDate);
+    console.log("useEffect to load initial data on, selected date:", dates[selectedDateIndex]);
 
-    fetch(`${API}/heatmap?date=${selectedDate}`)
+    const startDate = dates[selectedDateIndex];
+    const endDate = startDate;
+
+    console.log("Fetching heatmap data for:", startDate, "to", endDate);
+
+    fetch(`${API}/heatmap?start_date=${startDate}&end_date=${endDate}`)
       .then(response => response.json())
       .then(response => {
         if (response.data && response.data.length > 0) {
@@ -78,9 +158,6 @@ function Heatmap() {
             lng: item.longitude,
             value: item.sentiment,
           })));
-          setCollectionName(response.collectionName);
-          setGlobalSentiment(response.globalSentiment);
-          setCoordinateGroups(response.coordinateGroups);
 
           setGradient({
             0.0: 'blue',
@@ -88,21 +165,27 @@ function Heatmap() {
             0.4: 'lime',
             0.6: 'yellow',
             0.8: 'orange',
-            1.0: 'red',   
+            1.0: 'red',
           });
         } else {
-          console.error('Data is missing required properties:', response);
+          setHeatMapData([]);
         }
+
+        setCollectionName(response.collectionName);
+        setGlobalSentiment(response.globalSentiment);
+        setCoordinateGroups(response.coordinateGroups);
       })
       .catch(error => {
         console.error('Error fetching heatmap data:', error);
       });
   }, [selectedDateIndex]);
 
+
+
   useEffect(() => {
-    if (!mapContainer.current || heatMapData.length === 0) {
-      return;
-    }
+    console.log("useEffect para inicializar el mapa activado");
+
+    if (!mapContainer.current) return;
 
     const mapInstance = L.map(mapContainer.current, {
       center: [0, 0],
@@ -116,13 +199,17 @@ function Heatmap() {
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapInstance);
 
-    L.heatLayer(heatMapData.map(({ lat, lng, value }) => [lat, lng, value]), {
-      radius: 15,
-      gradient,
-      blur: 10,
-      maxZoom: 25,
-      minOpacity: 0.4,
-    }).addTo(mapInstance);
+    let heatLayer;
+
+    if (heatMapData.length > 0) {
+      heatLayer = L.heatLayer(heatMapData.map(({ lat, lng, value }) => [lat, lng, value]), {
+        radius: 15,
+        gradient,
+        blur: 10,
+        maxZoom: 25,
+        minOpacity: 0.4,
+      }).addTo(mapInstance);
+    }
 
     heatMapData.forEach(point => {
       const { lat, lng, value } = point;
@@ -144,8 +231,12 @@ function Heatmap() {
     return () => {
       mapInstance.off();
       mapInstance.remove();
+      if (heatLayer) {
+        mapInstance.removeLayer(heatLayer);
+      }
     };
   }, [heatMapData, gradient, updateGlobalSentiment]);
+
 
   return (
     <div className="dashboard-container-heatmap">
@@ -180,10 +271,14 @@ function Heatmap() {
                 className="slider"
               />
               <div className="slider-date-display">
-                  Viewing data from 2021-04-28T00 to {dates[selectedDateIndex]}
+                Viewing data from 2021-04-28T00 to {dates[selectedDateIndex]}
               </div>
               <div className="play-button-container">
-                <button onClick={play} className="play-button">Dynamic Accumulated Traffic</button>
+                <select onChange={handleSelectChange} className="play-button" disabled={isSelectDisabled}>
+                  <option value="">Select an option</option>.
+                  <option value="accumulated">Dynamic accumulated traffic</option>.
+                  <option value="threeHourInterval">Traffic every 3 hours</option>
+                </select>
               </div>
             </div>
           </div>
