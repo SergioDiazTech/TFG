@@ -247,7 +247,7 @@ function Heatmap() {
         .on('mouseover', () => {
           L.popup()
             .setLatLng([lat, lng])
-            .setContent(`Sentiment: ${value * 2 - 1}`)
+            .setContent(`Sentiment: ${(value * 2 - 1).toFixed(3)}`)
             .openOn(mapInstance);
         })
         .addTo(mapInstance);
