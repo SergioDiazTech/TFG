@@ -40,6 +40,15 @@ function Heatmap() {
     return new Date(completeDateString).toLocaleDateString('en-US', options);
   }
   
+  useEffect(() => {
+    if (selectedDateIndex < dates.length) {
+      const newStartDate = dates[selectedDateIndex];
+      const newEndDate = dates[selectedDateIndex + 1] || newStartDate;
+
+      setDisplayedStartDate(newStartDate);
+      setDisplayedEndDate(newEndDate);
+    }
+  }, [selectedDateIndex]);
 
 
   const handleSelectChange = (event) => {
