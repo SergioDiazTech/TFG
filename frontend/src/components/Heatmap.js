@@ -34,6 +34,13 @@ function Heatmap() {
   const [displayedEndDate, setDisplayedEndDate] = useState(dates[0]);
 
 
+  function formatDate(dateString) {
+    const completeDateString = `${dateString}:00`;
+    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return new Date(completeDateString).toLocaleDateString('en-US', options);
+  }
+  
+
 
   const handleSelectChange = (event) => {
     console.log("handleSelectChange invoked, value selected:", event.target.value);
@@ -61,14 +68,12 @@ function Heatmap() {
           setIsPlaying(false);
           setIsSelectDisabled(false);
         } else {
-          const startDate = dates[0]; // La fecha de inicio siempre es la misma
+          const startDate = dates[0];
           const endDate = dates[currentIndex];
 
           console.log(`Fetching data from ${startDate} to ${endDate}`);
 
-          // Actualiza la fecha de inicio que se muestra
           setDisplayedStartDate(startDate);
-          // Actualiza la fecha de fin que se muestra
           setDisplayedEndDate(endDate);
 
           fetch(`${API}/heatmap?start_date=${startDate}&end_date=${endDate}`)
@@ -89,7 +94,7 @@ function Heatmap() {
 
           currentIndex++;
         }
-      }, 2000);
+      }, 1000);
     }
   };
 
@@ -97,44 +102,45 @@ function Heatmap() {
 
   const playThreeHourInterval = () => {
     console.log("Function playThreeHourInterval invoked");
-
+  
     if (!isPlaying) {
       setIsPlaying(true);
-
+  
       const intervalId = setInterval(() => {
-
         setSelectedDateIndex((prevIndex) => {
           const nextIndex = prevIndex + 1;
-
-          setDisplayedStartDate(dates[prevIndex]);
-          if (nextIndex >= dates.length) {
+  
+          if (nextIndex < dates.length) {
+            setDisplayedStartDate(dates[prevIndex]);
+            setDisplayedEndDate(dates[nextIndex]);
+  
+            fetch(`${API}/heatmap?start_date=${dates[prevIndex]}&end_date=${dates[nextIndex]}`)
+              .then(response => response.json())
+              .then(response => {
+                setHeatMapData(response.data.map(item => ({
+                  lat: item.latitude,
+                  lng: item.longitude,
+                  value: item.sentiment,
+                })));
+                setCollectionName(response.collectionName);
+                setGlobalSentiment(response.globalSentiment);
+                setCoordinateGroups(response.coordinateGroups);
+              })
+              .catch(error => {
+                console.error('Error fetching heatmap data:', error);
+              });
+          } else {
             clearInterval(intervalId);
             setIsPlaying(false);
             setIsSelectDisabled(false);
-            return prevIndex;
-
           }
-
-          fetch(`${API}/heatmap?start_date=${dates[prevIndex]}&end_date=${dates[nextIndex]}`)
-            .then(response => response.json())
-            .then(response => {
-              setHeatMapData(response.data.map(item => ({
-                lat: item.latitude,
-                lng: item.longitude,
-                value: item.sentiment,
-              })));
-              setCollectionName(response.collectionName);
-              setGlobalSentiment(response.globalSentiment);
-              setCoordinateGroups(response.coordinateGroups);
-            })
-            .catch(error => {
-              console.error('Error fetching heatmap data:', error);
-            });
-          return nextIndex;
+  
+          return nextIndex < dates.length ? nextIndex : prevIndex;
         });
-      }, 3000);
+      }, 1000);
     }
   };
+  
 
 
 
@@ -286,8 +292,9 @@ function Heatmap() {
                 className="slider"
               />
               <div className="slider-date-display">
-                Viewing data from {displayedStartDate} to {displayedEndDate}
+                Viewing data from {formatDate(displayedStartDate)} to {formatDate(displayedEndDate)}
               </div>
+
               <div className="play-button-container">
                 <select onChange={handleSelectChange} className="play-button" disabled={isSelectDisabled}>
                   <option value="">Select an option</option>.
