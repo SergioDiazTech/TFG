@@ -12,6 +12,7 @@ import Heatmap from "./components/Heatmap"
 import Pointmap from "./components/Pointmap"
 import Trendingtopics from "./components/Trendingtopics"
 import About from "./components/About"
+import HomePage from "./components/HomePage"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Navbar/>
       <div className="container p-4">
         <Routes>
+          <Route path="/" element={<HomePage/>} />
           <Route path="/twitterapi" element={<TwitterAPI/>}/>
           <Route path="/dataset" element={<Dataset/>}/>
           <Route path="/tweetsData" element={<Data/>}/>
