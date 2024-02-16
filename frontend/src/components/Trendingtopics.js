@@ -95,7 +95,7 @@ function Trendingtopics() {
           <InfoPopup isVisible={isPopupPositiveVisible}>
             <p>This cloud visualizes the most frequent words in the most</p>
             <p>positively toned tweets. Specifically, the data corresponding </p>
-            <p>to the 10% of the most positive tweets are shown, which is </p>
+            <p>to the 5% of the most positive tweets are shown, which is </p>
             <p>equal to the 95th percentile.</p>
           </InfoPopup>
 
@@ -111,7 +111,7 @@ function Trendingtopics() {
           <InfoPopup isVisible={isPopupNegativeVisible}>
             <p>This cloud visualizes the most frequent words in the most</p>
             <p>negatively toned tweets. Specifically, it shows the data </p>
-            <p>corresponding to the 10% of the most negative tweets, which</p>
+            <p>corresponding to the 5% of the most negative tweets, which</p>
             <p>is equivalent to the 5th percentile.</p>
           </InfoPopup>
           <WordCloud words={negativeWords} options={{ ...wordCloudOptions, colors: ["#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"] }} />
@@ -127,7 +127,7 @@ function Trendingtopics() {
           </h2>
           <InfoPopup isVisible={isPopupPositiveHashtagsVisible}>
             <p>A ranking of the most used hashtags</p>
-            <p>in the top 10% of the most positive</p>
+            <p>in the top 5% of the most positive</p>
             <p>tweets (95th percentile) is shown.</p>
           </InfoPopup>
           <table>
@@ -159,7 +159,7 @@ function Trendingtopics() {
 
           <InfoPopup isVisible={isPopupNegativeHashtagsVisible}>
             <p>A ranking of the most frequently used</p>
-            <p>hashtags in the top 10% of the most</p>
+            <p>hashtags in the top 5% of the most</p>
             <p>negative tweets (5th percentile).</p>
           </InfoPopup>
           <table>
