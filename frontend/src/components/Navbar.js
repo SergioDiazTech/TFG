@@ -64,7 +64,7 @@ const Navbar = () => {
                                 <span className="ingestion-link-content">Ingestion {isIngestionOpen ? <FaCaretUp /> : <FaCaretDown />}</span>
                             </Link>
                             <ul className={`dropdown-menu ${isIngestionOpen ? "show" : ""}`} aria-labelledby="navbarDropdownMenuLink">
-                                <li><Link className="dropdown-item" to="/twitterapi" onClick={handleIngestionOptionClick}>Twitter Ingestion</Link></li>
+                                <li><Link className="dropdown-item" to="/twitterapi" onClick={handleIngestionOptionClick}>X Ingestion</Link></li>
                                 <li><Link className="dropdown-item" to="/dataset" onClick={handleIngestionOptionClick}>Dataset Ingestion</Link></li>
                             </ul>
                         </div>
@@ -75,7 +75,7 @@ const Navbar = () => {
                             Heatmap
                         </Link>
                         <Link className={`nav-link ${location.pathname === "/pointmap" ? "active" : ""}`} to="/pointmap">
-                            TweetsMap
+                            PostsMap
                         </Link>
                         <Link className={`nav-link ${location.pathname === "/trendingtopics" ? "active" : ""}`} to="/trendingtopics">
                             Trending-Topics

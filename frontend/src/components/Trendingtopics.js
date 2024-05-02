@@ -94,8 +94,8 @@ function Trendingtopics() {
           </h2>
           <InfoPopup isVisible={isPopupPositiveVisible}>
             <p>This cloud visualizes the most frequent words in the most</p>
-            <p>positively toned tweets. Specifically, the data corresponding </p>
-            <p>to the 5% of the most positive tweets are shown, which is </p>
+            <p>positively toned posts. Specifically, the data corresponding </p>
+            <p>to the 5% of the most positive posts are shown, which is </p>
             <p>equal to the 95th percentile.</p>
           </InfoPopup>
 
@@ -110,8 +110,8 @@ function Trendingtopics() {
           </h2>
           <InfoPopup isVisible={isPopupNegativeVisible}>
             <p>This cloud visualizes the most frequent words in the most</p>
-            <p>negatively toned tweets. Specifically, it shows the data </p>
-            <p>corresponding to the 5% of the most negative tweets, which</p>
+            <p>negatively toned posts. Specifically, it shows the data </p>
+            <p>corresponding to the 5% of the most negative posts, which</p>
             <p>is equivalent to the 5th percentile.</p>
           </InfoPopup>
           <WordCloud words={negativeWords} options={{ ...wordCloudOptions, colors: ["#FF0000", "#D50000", "#B22222", "#8B0000", "#700000"] }} />
@@ -128,7 +128,7 @@ function Trendingtopics() {
           <InfoPopup isVisible={isPopupPositiveHashtagsVisible}>
             <p>A ranking of the most used hashtags</p>
             <p>in the top 5% of the most positive</p>
-            <p>tweets (95th percentile) is shown.</p>
+            <p>posts (95th percentile) is shown.</p>
           </InfoPopup>
           <table>
             <thead>
@@ -160,7 +160,7 @@ function Trendingtopics() {
           <InfoPopup isVisible={isPopupNegativeHashtagsVisible}>
             <p>A ranking of the most frequently used</p>
             <p>hashtags in the top 5% of the most</p>
-            <p>negative tweets (5th percentile).</p>
+            <p>negative posts (5th percentile).</p>
           </InfoPopup>
           <table>
             <thead>

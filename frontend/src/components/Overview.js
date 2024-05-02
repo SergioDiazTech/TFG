@@ -142,7 +142,7 @@ function TotalTweets() {
 
   return (
     <div className="dashboard-container">
-      <h1 className="title">Twitter Sentiment Analysis Dashboard and Twitter Statistics</h1>
+      <h1 className="title">X Sentiment Analysis Dashboard</h1>
       {isLoading ? (
         <div className="processing-container">
           <i className="fas fa-spinner fa-spin"></i> Loading...
@@ -152,7 +152,7 @@ function TotalTweets() {
           <div className="top-section">
             <div className="left-section">
               <div className="doughnut-chart-container">
-                <h4 style={{ textAlign: 'center' }}>Positive vs Negative Tweets Analysis</h4>
+                <h4 style={{ textAlign: 'center' }}>Positive vs Negative Posts Analysis</h4>
                 <Doughnut data={sentimentData} options={doughnutOptions} />
                 <div className="chart-legend">
                   {sentimentData.labels && sentimentData.labels.map((label, index) => (
@@ -167,13 +167,13 @@ function TotalTweets() {
             </div>
             <div className="right-section">
               <div className="top-tweets-table-container-positive">
-                <h4 style={{ textAlign: 'center' }}>Tweets with Most Retweets (Positive)</h4>
+                <h4 style={{ textAlign: 'center' }}>Posts with Most Reposts (Positive)</h4>
                 <table>
                   <thead>
                     <tr>
                       <th>User</th>
-                      <th>Text of the Tweet</th>
-                      <th>Retweets</th>
+                      <th>Text of the post</th>
+                      <th>Reposts</th>
                       <th>Sentiment</th>
                     </tr>
                   </thead>
@@ -190,13 +190,13 @@ function TotalTweets() {
                 </table>
               </div>
               <div className="top-tweets-table-container-negative">
-                <h4 style={{ textAlign: 'center' }}>Tweets with Most Retweets (Negative)</h4>
+                <h4 style={{ textAlign: 'center' }}>Posts with Most Reposts (Negative)</h4>
                 <table>
                   <thead>
                     <tr>
                       <th>User</th>
-                      <th>Text of the Tweet</th>
-                      <th>Retweets</th>
+                      <th>Text of the post</th>
+                      <th>Reposts</th>
                       <th>Sentiment</th>
                     </tr>
                   </thead>

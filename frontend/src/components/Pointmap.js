@@ -200,28 +200,28 @@ function Pointmap() {
         <div className="map-and-data-pointmap">
           <div className="map-section-pointmap">
             <div className="map-header-pointmap">
-              <h5 style={{ textAlign: 'center' }}>Tweet distribution: Visualizing clusters by volume in '{collectionName}'</h5>
+              <h5 style={{ textAlign: 'center' }}>Post distribution: Visualizing clusters by volume in '{collectionName}'</h5>
             </div>
             <div 
             ref={mapContainer} className="map-map-pointmap">
             </div>
-            <p className="map-explanation-box" > <b>Explanation</b>: This map displays geolocated tweets as dots, varying in color: green indicating positive<br /> sentiment and red indicating negative sentiment. Tweets are aggregated into clusters, with the blue<br /> color of these clusters intensifying and their size expanding in relation to the number of tweets, thereby<br /> visually and concisely reflecting the density and sentiment of conversations across different areas.</p>
+            <p className="map-explanation-box" > <b>Explanation</b>: This map displays geolocated posts as dots, varying in color: green indicating positive<br /> sentiment and red indicating negative sentiment. Posts are aggregated into clusters, with the blue<br /> color of these clusters intensifying and their size expanding in relation to the number of posts, thereby<br /> visually and concisely reflecting the density and sentiment of conversations across different areas.</p>
             
           </div>
           <div className="data-summary-background">
             <div className="data-summary-section-pointmap">
               <div className="data-summary-header-pointmap">
-                <h4 className="map-title-pointmap">Tweets summary</h4>
+                <h4 className="map-title-pointmap">Posts summary</h4>
               </div>
               <div className="total-tweets-summary-pointmap">
-                <p>{totalPoints} out of {totalTweets} Tweets Analyzed</p>
+                <p>{totalPoints} out of {totalTweets} Posts Analyzed</p>
               </div>
               <div className="Highest-Sentiment-tweets-summary-pointmap">
-                <p>Highest Sentiment Tweet: <span>"{highestSentimentTweet}"</span> by <span>@{highestSentimentTweetUsername}</span></p>
+                <p>Highest Sentiment Post: <span>"{highestSentimentTweet}"</span> by <span>@{highestSentimentTweetUsername}</span></p>
               </div>
 
               <div className="Lowest-Sentiment-tweets-summary-pointmap">
-                <p>Lowest Sentiment Tweet: <span>"{lowestSentimentTweet}"</span> by <span>@{lowestSentimentTweetUsername}</span></p>
+                <p>Lowest Sentiment Post: <span>"{lowestSentimentTweet}"</span> by <span>@{lowestSentimentTweetUsername}</span></p>
               </div>
             </div>
           </div>

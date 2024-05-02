@@ -13,7 +13,7 @@ function Twitter_API() {
     e.preventDefault();
 
     if (parseInt(numeroDeTweets) <= 0) {
-      setMessage("Please enter a number of tweets greater than zero.");
+      setMessage("Please enter a number of posts greater than zero.");
       return;
     }
 
@@ -35,14 +35,14 @@ function Twitter_API() {
         setMessage(data.message);
       })
       .catch((error) => {
-        console.error('Error while fetching the tweets:', error);
-        setMessage("Error loading the tweets.");
+        console.error('Error while fetching the posts:', error);
+        setMessage("Error loading the posts.");
       });
   };
 
   return (
     <div className="containerApiTwitter">
-      <h1>Fetch Tweets from the Twitter API</h1>
+      <h1>Fetch Posts from the X API</h1>
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label htmlFor="keyword" className="label">
@@ -59,7 +59,7 @@ function Twitter_API() {
         </div>
         <div className="form-group">
           <label htmlFor="numeroDeTweets" className="label">
-            Number of tweets to retrieve
+            Number of posts to retrieve
           </label>
           <input
             type="number"
@@ -82,7 +82,7 @@ function Twitter_API() {
           />
         </div>
         <button type="submit" className="btnApiTwitter">
-          Fetch tweets
+          Fetch posts
         </button>
       </form>
       {message && <p className="messageApiTwitter">{message}</p>}

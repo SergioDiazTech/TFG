@@ -283,12 +283,12 @@ function Heatmap() {
               <p>Average Sentiment: {globalSentiment}</p>
             </div>
             <div className="explanation-sentiment-summary-heatmap">
-              <p>Explanation: <span><p><span>The interface displays an interactive heat map, based on Twitter data from Colombia, which visualizes tweet traffic by zone. It allows observing the distribution of tweets in different zones and provides a summary of the processed data, such as average sentiment.</span></p></span></p>
+              <p>Explanation: <span><p><span>The interface displays an interactive heat map, based on X data from Colombia, which visualizes post traffic by zone. It allows observing the distribution of posts in different zones and provides a summary of the processed data, such as average sentiment.</span></p></span></p>
             </div>
           </div>
           <div className="map-section-heatmap">
             <div className="map-header-heatmap">
-              <h5 style={{ textAlign: 'center' }}>Global tweets traffic: Data from '{collectionName}'</h5>
+              <h5 style={{ textAlign: 'center' }}>Global posts traffic: Data from '{collectionName}'</h5>
             </div>
             <div ref={mapContainer} className="map-map-heatmap"></div>
             <div className="slider-container">
@@ -307,7 +307,7 @@ function Heatmap() {
               <div className="play-button-container">
                 <select onChange={handleSelectChange} className="play-button" disabled={isSelectDisabled}>
                   <option value="">Choose a display mode</option>.
-                  <option value="accumulated">Dynamic tweet accumulation</option>.
+                  <option value="accumulated">Dynamic posts accumulation</option>.
                   <option value="threeHourInterval">3-hour interval traffic</option>
                 </select>
               </div>
