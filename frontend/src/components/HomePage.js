@@ -39,7 +39,7 @@ const HomePage = () => {
     return (
         <div className="home-container" onMouseMove={handleMouseMove}>
             <div className="title-container">
-                <h1 className="main-title">Data Insights Dashboard</h1>
+                <h1 className="main-title">Sentiment and Location Analysis Platform</h1>
             </div>
             <div className="keywords-container">
                 {line1Keywords.map(item => {
