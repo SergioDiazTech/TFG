@@ -1,1 +1,0 @@
-Directorio para los diferentes archivos necesarios en el backend
