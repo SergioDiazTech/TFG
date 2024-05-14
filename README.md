@@ -33,3 +33,18 @@ In today's digital age, social networks play a crucial role in the communication
 
 ### Repository Structure
 
+```plaintext
+.
+├── .gitignore              # Configuration file for files and directories to be ignored by Git
+├── README.md               # Project overview and setup instructions
+├── backend/                # Contains all backend-related files
+└── frontend/               # Contains all frontend-related files
+
+Below is a conceptual visualization of the tool's operation:
+
+![Conceptual Visualization of Tool Operation](./backend/src/Files/Tool.png)
+
+![image](https://github.com/SergioDiazTech/TFG/assets/91019223/4535e200-9c6e-45be-bdeb-f9104ff19302)
+
+
+
