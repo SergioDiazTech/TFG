@@ -1,17 +1,35 @@
-# TFG - Big Data & Natural Language Processing on Twitter
+# Big Data Tool for Analyzing the Evolution of Geolocated Sentiments on Social Network X
 
-This repository is dedicated to tracking and version control for the TFG (Trabajo de Fin de Grado) project focused on Big Data and Natural Language Processing on Twitter.
+## University of Castilla-La Mancha
 
-## Project Overview
+**Author:** Sergio Díaz de la Peña  
+**Academic Tutor:** Ricardo Pérez del Castillo
 
-In today's digital age, the significance of the internet and social media in communication and public opinion analysis cannot be overstated. This holds particularly true during large-scale events such as civic protests, sports events, or political gatherings. One of the key dimensions of analysis in such scenarios is the geographical location of users and their opinions. However, obtaining geolocation information from social media data can be challenging due to the absence of geotags in many posts. To address this challenge, we propose the development of a system capable of extracting and representing geographical references from Twitter posts. This system will leverage a dataset comprising nearly 3,000,000 documents associated with social protest events in Spanish-speaking countries.
+---
 
-## General Objective
+### Abstract
 
-The primary objective of this project is as follows:
+In today's digital age, social networks play a crucial role in the communication and analysis of public opinion, particularly during significant social and political events. This project aims to develop a robust Big Data tool for analyzing, processing, and visualizing sentiments expressed on social network X. Our tool focuses on geolocated sentiment analysis, crucial for tracking the evolution of sentiments and identifying vulnerable areas to combat disinformation campaigns. By leveraging a dataset comprising up to 3 million posts related to social protest events in Spanish-speaking countries, the tool provides a deep dive into public attitudes and emotions, offering insights into user influence and sentiment trends.
 
-**Objective:** To develop a system capable of extracting and representing geographical references from Twitter posts using a dataset of approximately 3,000,000 documents related to social protest events in Spanish-speaking countries.
+---
 
-## Author
+### Main Objective and Specific Goals
 
-This TFG is being conducted by Sergio Díaz de la Peña.
+#### Main Objective
+- **Design and develop a Big Data tool** to ingest, process, analyze, and visualize sentiments extracted from social network X, facilitating the understanding of attitudes and emotions during socially significant events and observing their spatial and temporal evolution.
+
+#### Specific Objectives
+- **OP1:** Ingest data from the REST API of X into a MongoDB database.
+- **OP2:** Allow for the ingestion of alternative datasets in CSV format.
+- **OP3:** Compute sentiment indices from the ingested messages.
+- **OP4:** Design and display a dashboard showing the most positive and negative messages.
+- **OP5:** Highlight the most impactful positive and negative posts and their influential users.
+- **OP6:** Visualize a line graph depicting the evolution of positive, negative, and average sentiments over time.
+- **OP7:** Generate a static heat map reflecting post traffic and average sentiment for specific locations.
+- **OP8:** Dynamically display the heat map to show sentiment evolution over time.
+- **OP9:** Create a clustered point map to display geolocated posts based on sentiment.
+
+---
+
+### Repository Structure
+
