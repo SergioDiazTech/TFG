@@ -4,20 +4,20 @@ import "../styles/about.css"
 const About = () => {
   return (
     <div className="about-container">
-      <h1 className="about-title">UNIVERSIDAD DE CASTILLA-LA MANCHA</h1>
+      <h1 className="about-title">UNIVERSITY OF CASTILLA-LA MANCHA</h1>
       <p className="about-description">
-        FACULTAD DE CIENCIAS SOCIALES Y TECNOLOGÍAS DE LA INFORMACIÓN
+        FACULTY OF SOCIAL SCIENCES AND INFORMATION TECHNOLOGIES
       </p>
-      <h2 className="about-section-title">GRADO EN:</h2>
+      <h2 className="about-section-title">DEGREE IN:</h2>
       <p className="about-section-description">
-        INGENIERÍA INFORMÁTICA
+        COMPUTER ENGINEERING
       </p>
-      <h2 className="about-section-title">Herramienta Big Data para el análisis de la evolución de sentimientos geolocalizados en la red social X POR:</h2>
+      <h2 className="about-section-title">Big Data tool for analyzing the evolution of geolocated sentiments on the social network X BY:</h2>
       <ul className="about-team-list">
         <li>SERGIO DÍAZ DE LA PEÑA</li>
       </ul>
       <a href="https://github.com/SergioDiazTech/TFG" className="about-link">
-        Ver Código en el Repositorio
+        View Code in Repository
       </a>
     </div>
   );
