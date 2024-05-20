@@ -4,7 +4,6 @@ from flask_cors import CORS
 from controllers.twitter_API import get_tweets
 from controllers.dataset import save_json_to_mongodb
 from controllers.data import load_data, get_collection_names
-from controllers.users import load_users
 from controllers.heatmap import draw_heatmap
 from controllers.pointmap import draw_pointmap
 from controllers.trendingtopics import draw_trendingtopics
@@ -100,15 +99,6 @@ def sentiment_count_route():
         print(f'Error: {e}')
         traceback.print_exc()  # Traceback completo
         return jsonify({'error': str(e)}), 500
-
-
-@app.route('/users', methods=['GET'])
-def get_users_route():
-    option = request.args.get('option', 'all')
-    page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 5))
-    result = load_users(option, page, per_page)
-    return jsonify(result)
 
 
 
