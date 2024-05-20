@@ -7,7 +7,7 @@ import time
 from datetime import datetime
 
 # Importamos las claves de Twitter desde el archivo keysTwitter que se encuentra en el directorio Files
-from Files.keysTwitter import consumerKey, consumerSecret, accessToken, accessTokenSecret
+from Utils.keysTwitter import consumerKey, consumerSecret, accessToken, accessTokenSecret
 
 
 def wait_until_reset(api):
