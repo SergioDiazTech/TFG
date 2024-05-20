@@ -1,14 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from flask_cors import CORS
-from components.twitter_API import get_tweets
-from components.dataset import save_json_to_mongodb
-from components.data import load_data, get_collection_names
-from components.users import load_users
-from components.heatmap import draw_heatmap
-from components.pointmap import draw_pointmap
-from components.trendingtopics import draw_trendingtopics
-from components.overview import load_information, load_sentiment_over_time
+from controllers.twitter_API import get_tweets
+from controllers.dataset import save_json_to_mongodb
+from controllers.data import load_data, get_collection_names
+from controllers.users import load_users
+from controllers.heatmap import draw_heatmap
+from controllers.pointmap import draw_pointmap
+from controllers.trendingtopics import draw_trendingtopics
+from controllers.overview import load_information, load_sentiment_over_time
 
 import traceback
 
