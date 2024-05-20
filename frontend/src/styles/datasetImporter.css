@@ -8,7 +8,7 @@
 
 .custom-input:focus {
     outline: none;
-    border-color: #5C7AEA;
+    border-color: #3b974c;
 }
 
 
@@ -52,7 +52,7 @@
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     font-size: 40px;
-    color: #274377;
+    color: #084114;
     display: block;
     margin-bottom: 20px;
 }
@@ -135,7 +135,7 @@
 }
 
 .custom-file-upload {
-    background-color: #4c8baf;
+    background-color: #4caf53;
     color: white;
     border: none;
     border-radius: 18px;
@@ -151,7 +151,7 @@
 }
 
 .custom-file-upload:hover {
-    background-color: #2f6280;
+    background-color: #147c32;
     font-size: 17px;
 }
 

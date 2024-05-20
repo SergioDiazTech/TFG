@@ -18,11 +18,12 @@
   font-size: 16px;
   text-align: center;
   color: #fff;
-  background-color: #3ac775;
+  background-color: #4caf53;
   border: none;
   border-radius: 18px;
   cursor: pointer;
   transition: background-color 0.5s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .btnApiTwitter:hover {
@@ -39,7 +40,7 @@
   font-size: 14px;
   text-align: center;
   color: #ffffff;
-  background-color: #1eac81;
+  background-color: #4caf53;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   animation: pulse 5s infinite;
