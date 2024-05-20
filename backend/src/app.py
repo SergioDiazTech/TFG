@@ -3,7 +3,6 @@ from flask_pymongo import PyMongo
 from flask_cors import CORS
 from services.twitterClient import get_tweets
 from services.datasetImporter import save_json_to_mongodb
-from controllers.data import load_data, get_collection_names
 from controllers.heatmap import draw_heatmap
 from controllers.pointmap import draw_pointmap
 from controllers.trendingtopics import draw_trendingtopics
@@ -60,20 +59,6 @@ def upload_file():
 
     return jsonify({'error': 'Error al cargar el archivo.'}), 500
 
-
-@app.route('/tweetsData', methods=['GET'])
-def get_collections_route():
-    collection_names = get_collection_names()
-    return jsonify(collection_names)
-
-
-@app.route('/tweetsData/<collection_name>', methods=['GET'])
-def get_data_route(collection_name):
-    print(collection_name)
-    page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 5))
-    result = load_data(collection_name, page, per_page)
-    return jsonify(result)
 
 
 @app.route('/sentiment_count', methods=['GET'])
