@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import WordCloud from 'react-wordcloud';
-import "../styles/trendingtopics.css";
+import "../styles/trendingTopics.css";
 import { FaInfoCircle } from 'react-icons/fa';
 
 

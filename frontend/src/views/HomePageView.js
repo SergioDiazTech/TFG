@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { FaDatabase, FaBrain, FaChartLine, FaGlobeAmericas } from 'react-icons/fa';
-import '../styles/HomePage.css';
+import '../styles/homePage.css';
 
 const HomePage = () => {
     const line1Keywords = [

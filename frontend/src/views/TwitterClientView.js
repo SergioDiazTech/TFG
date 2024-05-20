@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../styles/twitterApi.css"
+import "../styles/twitterClient.css"
 
 const API = process.env.REACT_APP_API;
 
