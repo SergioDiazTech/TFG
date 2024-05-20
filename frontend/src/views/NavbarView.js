@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import "../styles/navbar.css"
+import "../styles/navbar.css";
 
 const Navbar = () => {
     const location = useLocation();
@@ -35,7 +35,8 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
                 <Link className={`navbar-brand ${location.pathname === "/" ? "active" : ""}`} to="/">
-                 SLAP
+                    <img src="/favicon.ico" alt="favicon" className="navbar-favicon" />
+                    SLAP
                 </Link>
                 <button
                     className="navbar-toggler"
