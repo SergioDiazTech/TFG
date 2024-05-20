@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from flask_cors import CORS
-from services.twitter_API import get_tweets
-from services.dataset import save_json_to_mongodb
+from services.twitterClient import get_tweets
+from services.datasetImporter import save_json_to_mongodb
 from controllers.data import load_data, get_collection_names
 from controllers.heatmap import draw_heatmap
 from controllers.pointmap import draw_pointmap
