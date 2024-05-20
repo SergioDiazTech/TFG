@@ -2,16 +2,15 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
-import Navbar from "./views/Navbar"
-import TwitterAPI from "./views/Twitter_API"
-import Dataset from "./views/Dataset"
-import Data from "./views/Data";
-import Overview from "./views/Overview";
-import Heatmap from "./views/Heatmap"
-import Pointmap from "./views/Pointmap"
-import Trendingtopics from "./views/Trendingtopics"
-import About from "./views/About"
-import HomePage from "./views/HomePage"
+import Navbar from "./views/NavbarView"
+import TwitterAPI from "./views/TwitterClientView"
+import Dataset from "./views/DatasetImporterView"
+import Overview from "./views/DashboardView";
+import Heatmap from "./views/HeatmapView"
+import Pointmap from "./views/PointmapView"
+import Trendingtopics from "./views/TrendingTopicsView"
+import About from "./views/AboutView"
+import HomePage from "./views/HomePageView"
 
 
 function App() {
@@ -24,7 +23,6 @@ function App() {
           <Route path="/" element={<HomePage/>} />
           <Route path="/twitterapi" element={<TwitterAPI/>}/>
           <Route path="/dataset" element={<Dataset/>}/>
-          <Route path="/tweetsData" element={<Data/>}/>
           <Route path="/overview" element={<Overview/>}/>
           <Route path="/heatmap" element={<Heatmap/>}/>
           <Route path="/pointmap" element={<Pointmap/>}/>
