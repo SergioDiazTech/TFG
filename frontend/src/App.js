@@ -2,16 +2,16 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
-import Navbar from "./components/Navbar"
-import TwitterAPI from "./components/Twitter_API"
-import Dataset from "./components/Dataset"
-import Data from "./components/Data";
-import Overview from "./components/Overview";
-import Heatmap from "./components/Heatmap"
-import Pointmap from "./components/Pointmap"
-import Trendingtopics from "./components/Trendingtopics"
-import About from "./components/About"
-import HomePage from "./components/HomePage"
+import Navbar from "./views/Navbar"
+import TwitterAPI from "./views/Twitter_API"
+import Dataset from "./views/Dataset"
+import Data from "./views/Data";
+import Overview from "./views/Overview";
+import Heatmap from "./views/Heatmap"
+import Pointmap from "./views/Pointmap"
+import Trendingtopics from "./views/Trendingtopics"
+import About from "./views/About"
+import HomePage from "./views/HomePage"
 
 
 function App() {
