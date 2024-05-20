@@ -3,10 +3,10 @@ from flask_pymongo import PyMongo
 from flask_cors import CORS
 from services.twitterClient import get_tweets
 from services.datasetImporter import save_json_to_mongodb
-from controllers.heatmap import draw_heatmap
-from controllers.pointmap import draw_pointmap
-from controllers.trendingtopics import draw_trendingtopics
-from controllers.overview import load_information, load_sentiment_over_time
+from controllers.heatmapController import draw_heatmap
+from controllers.pointmapController import draw_pointmap
+from controllers.trendingTopicsController import draw_trendingtopics
+from controllers.dashboardController import load_information, load_sentiment_over_time
 
 import traceback
 
