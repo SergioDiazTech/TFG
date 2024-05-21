@@ -28,6 +28,7 @@ In today's digital age, social networks play a crucial role in the communication
 - **OP7:** Generate a static heat map reflecting post traffic and average sentiment for specific locations.
 - **OP8:** Dynamically display the heat map to show sentiment evolution over time.
 - **OP9:** Create a clustered point map to display geolocated posts based on sentiment.
+- **OP10:** Visualizing word clouds and trending topics for trend analysis.
 
 ---
 
